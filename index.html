@@ -5,30 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weekly Update — David Chen</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap');
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
   width: 100%; height: 100%; overflow: hidden;
-  background: #FFFFFF; color: #000000;
+  background: #fff; color: #000;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Tokens ── */
 :root {
-  --yellow: #FFD600;
-  --black: #000000;
-  --white: #FFFFFF;
-  --gray: rgba(0,0,0,0.45);
-  --border: 3px solid #000000;
+  --y: #FFD600;
+  --b: #000;
+  --w: #fff;
+  --g: rgba(0,0,0,0.4);
+  --gg: rgba(0,0,0,0.08);
 }
 
 /* ── Slides ── */
 .slide {
   position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: flex-start;
-  padding: 100px 80px 80px;
   opacity: 0; pointer-events: none;
   overflow: hidden;
 }
@@ -36,247 +33,402 @@ html, body {
 
 /* ── Counter ── */
 #counter {
-  position: fixed; top: 32px; left: 40px;
-  font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700;
-  letter-spacing: 2px; z-index: 1000; color: #000;
+  position: fixed; top: 36px; left: 48px;
+  font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700;
+  letter-spacing: 3px; z-index: 1000; color: #000;
 }
+.kbd { position: fixed; bottom: 32px; right: 48px; font-family: 'Space Mono', monospace; font-size: 10px; opacity: 0.2; letter-spacing: 2px; z-index: 100; text-transform: uppercase; }
 
 /* ── Shared ── */
-.label {
-  font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 3px;
-  border: var(--border); padding: 10px 24px; display: inline-block; margin-bottom: 40px;
-}
-.yellow { background: var(--yellow); display: inline; padding: 0 10px; }
-.tag {
+.mono { font-family: 'Space Mono', monospace; }
+.sans { font-family: 'Inter', sans-serif; }
+.yellow { background: var(--y); padding: 0 8px; display: inline; }
+.label-box {
   font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 2px; padding: 6px 14px;
-  display: inline-block; border: 2px solid #000;
+  letter-spacing: 3px; text-transform: uppercase;
+  border: 3px solid #000; padding: 8px 20px; display: inline-block;
 }
-.tag-yellow { background: var(--yellow); }
-.tag-black { background: #000; color: #fff; }
 
 /* ── Animations ── */
-@keyframes slam { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes blink { 0%{opacity:0}25%{opacity:1}50%{opacity:0}75%{opacity:1}100%{opacity:1} }
-.slide.active .anim { animation: slam 0.28s cubic-bezier(0.2,0,0.8,0.2) both; }
-.slide.active .a1 { animation-delay: 0s; }
-.slide.active .a2 { animation-delay: 0.05s; }
-.slide.active .a3 { animation-delay: 0.10s; }
-.slide.active .a4 { animation-delay: 0.15s; }
-.slide.active .a5 { animation-delay: 0.20s; }
-.slide.active .a6 { animation-delay: 0.25s; }
-.slide.active .a7 { animation-delay: 0.30s; }
+@keyframes slam {
+  from { transform: translateY(-40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes wipeIn {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.slide.active [data-a] { animation: slam 0.3s cubic-bezier(0.22,0,0.36,1) both; }
+.slide.active [data-a="1"] { animation-delay: 0s; }
+.slide.active [data-a="2"] { animation-delay: 0.06s; }
+.slide.active [data-a="3"] { animation-delay: 0.12s; }
+.slide.active [data-a="4"] { animation-delay: 0.18s; }
+.slide.active [data-a="5"] { animation-delay: 0.24s; }
+.slide.active [data-a="6"] { animation-delay: 0.30s; }
+.slide.active [data-a="7"] { animation-delay: 0.36s; }
+.slide.active [data-f] { animation-name: fadeUp; animation-duration: 0.5s; animation-timing-function: ease-out; }
 
-/* ===================== SLIDE 1: TITLE ===================== */
-.s1 { padding: 0; justify-content: center; align-items: flex-start; }
-.s1 .title-block { padding-left: 80px; }
-.s1 .big {
+/* ==================== SLIDE 1: TITLE ==================== */
+.s1 { display: grid; grid-template-columns: 1fr 1fr; height: 100vh; }
+.s1-left {
+  background: var(--b); color: var(--w);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 64px;
+}
+.s1-left .big {
   font-family: 'Inter', sans-serif; font-weight: 900;
-  font-size: clamp(90px, 11vw, 150px); line-height: 0.9;
-  text-transform: uppercase; letter-spacing: -5px;
+  font-size: clamp(72px, 8vw, 110px); line-height: 0.88;
+  text-transform: uppercase; letter-spacing: -4px;
 }
-.s1 .sub {
-  font-family: 'Inter', sans-serif; font-weight: 700;
-  font-size: 20px; margin-top: 24px; letter-spacing: -0.3px;
+.s1-left .big .yl { color: var(--y); }
+.s1-left .sub {
+  font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px;
+  margin-top: 32px; opacity: 0.5; letter-spacing: 0.5px;
 }
-.s1 .date-box {
-  position: absolute; bottom: 80px; right: 80px;
-  border: 4px solid #000; padding: 18px 28px;
-  font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 3px;
+.s1-right {
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 64px;
 }
-.s1 .corner {
-  position: absolute; bottom: 80px; left: 80px;
-  font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 2px;
-  text-transform: uppercase; opacity: 0.3;
+.s1-right .date {
+  font-family: 'Space Mono', monospace; font-size: 48px; font-weight: 700;
+  letter-spacing: -1px; line-height: 1.1;
 }
-.s1 .vr { position: absolute; top: 0; right: 33%; height: 100%; border-left: 3px solid #000; opacity: 0.05; }
-.s1 .hr { position: absolute; left: 0; bottom: 40%; width: 100%; border-top: 3px solid #000; opacity: 0.05; }
+.s1-right .date-sub {
+  font-family: 'Space Mono', monospace; font-size: 14px; letter-spacing: 3px;
+  text-transform: uppercase; opacity: 0.3; margin-top: 8px;
+}
+.s1-right .bottom-mark {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase; opacity: 0.2;
+}
+.s1-deco {
+  position: absolute; top: 50%; right: 50%; transform: translate(50%, -50%);
+  width: 120px; height: 120px; border: 4px solid var(--y);
+}
 
-/* ===================== SLIDE 2: CHROMIUM ===================== */
-.s2 { padding: 100px 60px 60px; }
-.s2 .callout {
-  background: var(--yellow); border: var(--border); padding: 16px 24px; margin-bottom: 28px;
+/* ==================== SLIDE 2: CHROMIUM ==================== */
+.s2 {
+  display: grid; grid-template-columns: 340px 1fr; grid-template-rows: 1fr; height: 100vh;
 }
-.s2 .callout li {
-  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; line-height: 1.7; list-style: none;
+.s2-sidebar {
+  background: var(--b); color: var(--w);
+  padding: 100px 36px 48px;
+  display: flex; flex-direction: column; justify-content: space-between;
 }
-.s2 .callout li::before { content: "■ "; }
+.s2-sidebar .sec-title {
+  font-family: 'Inter', sans-serif; font-weight: 900; font-size: 28px;
+  line-height: 1.15; letter-spacing: -0.5px;
+}
+.s2-sidebar .milestone {
+  background: var(--y); color: #000; padding: 16px 20px; margin-top: 32px;
+}
+.s2-sidebar .milestone li {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  line-height: 1.6; list-style: none;
+}
+.s2-sidebar .milestone li::before { content: "■ "; }
+.s2-sidebar .stats { margin-top: auto; }
+.s2-sidebar .stat-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.s2-sidebar .stat-row:last-child { border: none; }
+.s2-sidebar .stat-label { font-family: 'Inter', sans-serif; font-size: 12px; opacity: 0.5; }
+.s2-sidebar .stat-val { font-family: 'Space Mono', monospace; font-size: 20px; font-weight: 700; }
+.s2-sidebar .stat-val.yl { color: var(--y); }
 
-/* Data table */
-.dtable { width: 100%; max-width: 1000px; border-collapse: collapse; margin-bottom: 24px; }
-.dtable th {
-  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+.s2-main { padding: 100px 48px 48px; overflow-y: auto; }
+.s2-main .section-label {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; opacity: 0.3;
+  margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #000;
+}
+.s2-main .disc-item {
+  display: grid; grid-template-columns: 32px 1fr; gap: 0;
+  padding: 14px 0; border-bottom: 1px solid var(--gg);
+}
+.s2-main .disc-item:last-child { border: none; }
+.s2-main .disc-num {
+  font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; padding-top: 2px;
+}
+.s2-main .disc-content { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65; }
+.s2-main .disc-content strong { font-weight: 700; }
+.s2-main .disc-content .issue {
+  font-family: 'Space Mono', monospace; font-size: 10px; background: var(--gg);
+  padding: 2px 8px; border-radius: 2px; margin-left: 4px;
+}
+.s2-main .breakdown {
+  font-family: 'Inter', sans-serif; font-size: 12px; color: var(--g);
+  margin-top: 20px; padding-top: 16px; border-top: 2px solid #000;
+}
+.s2-main .breakdown table { width: 100%; border-collapse: collapse; }
+.s2-main .breakdown th {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
   letter-spacing: 2px; text-transform: uppercase; text-align: left;
-  padding: 0 0 10px; border-bottom: var(--border);
+  padding: 0 0 8px; color: rgba(0,0,0,0.3);
 }
-.dtable td {
-  font-family: 'Inter', sans-serif; font-size: 14px; padding: 10px 16px 10px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.1); vertical-align: top;
+.s2-main .breakdown td {
+  font-family: 'Inter', sans-serif; font-size: 13px; padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--gg); color: #000;
 }
-.dtable td:nth-child(2) { font-weight: 900; font-size: 18px; font-variant-numeric: tabular-nums; width: 70px; }
-.dtable td:nth-child(3) { color: var(--gray); font-size: 13px; }
+.s2-main .breakdown td:nth-child(2) { font-weight: 800; font-variant-numeric: tabular-nums; }
+.s2-main .breakdown td:nth-child(3) { color: var(--g); font-size: 12px; }
 
-/* Discussion */
-.dlist { list-style: none; max-width: 1000px; }
-.dlist li {
-  font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6;
-  padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.08);
+/* ==================== SLIDE 3: PHASE 3 ==================== */
+.s3 { display: flex; flex-direction: column; height: 100vh; }
+.s3-top {
+  background: var(--b); color: var(--w);
+  padding: 80px 64px 40px;
+  display: flex; align-items: flex-end; gap: 0;
 }
-.dlist li:last-child { border: none; }
-.dlist .n { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 12px; margin-right: 6px; }
-.dlist strong { font-weight: 700; }
-.dlist .issue { font-family: 'Space Mono', monospace; font-size: 11px; opacity: 0.4; }
+.s3-phase {
+  flex: 1; padding: 24px 28px; border-right: 1px solid rgba(255,255,255,0.08);
+}
+.s3-phase:last-child { border-right: none; }
+.s3-phase .ph-label {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; opacity: 0.3; margin-bottom: 10px;
+}
+.s3-phase.now .ph-label { opacity: 1; color: var(--y); }
+.s3-phase h3 {
+  font-family: 'Inter', sans-serif; font-weight: 800; font-size: 18px;
+  letter-spacing: -0.3px; margin-bottom: 10px; opacity: 0.4;
+}
+.s3-phase.now h3 { opacity: 1; }
+.s3-phase li {
+  font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.6;
+  list-style: none; opacity: 0.25;
+}
+.s3-phase.now li { opacity: 0.7; }
 
-/* ===================== SLIDE 3: PHASE 3 ===================== */
-.s3 { padding: 100px 60px 60px; }
-.phase-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 32px; max-width: 1100px; }
-.phase-card { border: var(--border); padding: 20px 24px; }
-.phase-card.now { background: var(--yellow); }
-.phase-card .ph {
-  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.5;
+.s3-bottom {
+  flex: 1; display: grid; grid-template-columns: 1fr 1fr; padding: 0;
 }
-.phase-card.now .ph { opacity: 1; }
-.phase-card h3 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 16px; margin-bottom: 10px; letter-spacing: -0.3px; }
-.phase-card li { font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6; list-style: none; opacity: 0.55; }
-.phase-card.now li { opacity: 0.75; }
+.s3-col {
+  padding: 40px 48px;
+}
+.s3-col:first-child { border-right: 2px solid #000; }
+.s3-col .col-label {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px;
+  padding-bottom: 12px; border-bottom: 3px solid #000;
+}
+.s3-col.highlight .col-label { background: var(--y); padding: 8px 12px; border-bottom: none; display: inline-block; margin-bottom: 20px; }
+.s3-col li {
+  font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7;
+  list-style: none; padding: 6px 0;
+}
+.s3-col strong { font-weight: 700; }
 
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; }
-.col-title {
-  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
-  padding-bottom: 10px; border-bottom: var(--border);
+/* ==================== SLIDE 4: BUG SKILL ==================== */
+.s4 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; height: 100vh; }
+.s4-before {
+  background: #f5f5f5; padding: 100px 48px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
 }
-.col li {
-  font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; list-style: none;
+.s4-before::after {
+  content: "BEFORE"; position: absolute; top: 100px; left: 48px;
+  font-family: 'Inter', sans-serif; font-weight: 900; font-size: 64px;
+  letter-spacing: -2px; opacity: 0.04; text-transform: uppercase;
+}
+.s4-after {
+  background: var(--y); padding: 100px 48px 48px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+}
+.s4-after::after {
+  content: "AFTER"; position: absolute; top: 100px; left: 48px;
+  font-family: 'Inter', sans-serif; font-weight: 900; font-size: 64px;
+  letter-spacing: -2px; opacity: 0.08; text-transform: uppercase;
+}
+.s4-card-label {
+  font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px;
+}
+.s4-time {
+  font-family: 'Inter', sans-serif; font-weight: 900; font-size: 48px;
+  letter-spacing: -2px; margin-bottom: 28px;
+}
+.s4-before .s4-time { opacity: 0.15; }
+.s4-list { list-style: none; }
+.s4-list li {
+  font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7;
   padding: 4px 0;
 }
-.col strong { font-weight: 700; }
+.s4-list li::before { content: "— "; font-weight: 700; }
+.s4-before .s4-list li { opacity: 0.5; text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.15); }
 
-/* ===================== SLIDE 4: BUG SKILL ===================== */
-.s4 { padding: 100px 60px 60px; }
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; max-width: 1100px; }
-.ccard { border: var(--border); padding: 24px 28px; }
-.ccard.after { background: var(--yellow); }
-.ccard .clabel {
-  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+.s4-metrics {
+  grid-column: 1 / -1; background: var(--b); color: var(--w);
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  padding: 0;
 }
-.ccard.before { opacity: 0.5; }
-.ccard li {
-  font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; list-style: none;
-  padding: 3px 0;
+.s4-metric {
+  padding: 28px 36px; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
 }
-.ccard li::before { content: "— "; font-weight: 700; }
+.s4-metric:last-child { border-right: none; }
+.s4-metric .val {
+  font-family: 'Inter', sans-serif; font-weight: 900; font-size: 36px;
+  letter-spacing: -1px; color: var(--y);
+}
+.s4-metric .desc {
+  font-family: 'Inter', sans-serif; font-size: 12px; opacity: 0.4; margin-top: 4px;
+}
 
-.metrics { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; max-width: 1100px; }
-.metric { border: var(--border); padding: 24px; text-align: center; }
-.metric .val {
+/* ==================== SLIDE 5: NEXT WEEK ==================== */
+.s5 { display: grid; grid-template-columns: 1fr 1fr; height: 100vh; }
+.s5-left {
+  background: var(--b); color: var(--w);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 64px;
+}
+.s5-left .big {
   font-family: 'Inter', sans-serif; font-weight: 900;
-  font-size: clamp(36px, 5vw, 52px); letter-spacing: -2px; line-height: 1;
+  font-size: clamp(60px, 7vw, 100px); line-height: 0.9;
+  text-transform: uppercase; letter-spacing: -3px;
 }
-.metric .val .yellow { padding: 0 8px; }
-.metric .desc { font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 6px; opacity: 0.5; }
+.s5-left .big .yl { color: var(--y); }
+.s5-right {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 64px;
+}
+.s5-item {
+  padding: 18px 0; border-bottom: 2px solid var(--gg);
+}
+.s5-item:last-child { border: none; }
+.s5-item strong {
+  font-family: 'Inter', sans-serif; font-weight: 800; font-size: 17px;
+  display: block; letter-spacing: -0.3px;
+}
+.s5-item span {
+  font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px;
+  color: var(--g); margin-top: 2px; display: block;
+}
+.s5-deco {
+  position: absolute; bottom: 64px; left: calc(50% - 60px);
+  width: 120px; height: 120px; border: 4px solid var(--y);
+}
 
-/* ===================== SLIDE 5: NEXT WEEK ===================== */
-.s5 { padding: 0; justify-content: center; }
-.s5 .mind-title {
-  font-family: 'Inter', sans-serif; font-weight: 900;
-  font-size: clamp(60px, 9vw, 120px); line-height: 0.92;
-  text-transform: uppercase; letter-spacing: -4px;
-  padding-left: 80px; margin-bottom: 48px;
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .s1, .s5 { grid-template-columns: 1fr; }
+  .s1-right { display: none; }
+  .s2 { grid-template-columns: 1fr; }
+  .s2-sidebar { display: none; }
+  .s3-bottom { grid-template-columns: 1fr; }
+  .s4 { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr auto; }
 }
-.s5 .nlist { list-style: none; padding: 0 80px; max-width: 900px; }
-.s5 .nlist li {
-  font-family: 'Inter', sans-serif; font-size: 17px; line-height: 1.5;
-  padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.1);
-  display: flex; gap: 12px; align-items: baseline;
-}
-.s5 .nlist li:last-child { border: none; }
-.s5 .nlist .icon { font-size: 14px; flex-shrink: 0; }
-.s5 .nlist strong { font-weight: 700; }
-.s5 .nlist span { opacity: 0.5; }
-.s5 .deco { position: absolute; right: 80px; bottom: 80px; width: 180px; height: 180px; border: 4px solid #000; }
-.s5 .deco2 { position: absolute; right: 100px; bottom: 100px; width: 100px; height: 100px; border: 3px solid #000; opacity: 0.12; }
-.s5 .stripe { width: 400px; height: 0; border-top: 4px solid #000; margin-left: 80px; margin-top: 32px; }
-.s5 .stripe2 { width: 240px; height: 0; border-top: 4px solid #000; margin-left: 80px; margin-top: 8px; }
-
-/* Nav hint */
-.kbd { position: fixed; bottom: 32px; left: 40px; font-family: 'Space Mono', monospace; font-size: 11px; opacity: 0.25; letter-spacing: 1px; z-index: 100; }
 </style>
 </head>
 <body>
 
-<div id="counter">01/05</div>
+<div id="counter">01 — 05</div>
+<div class="kbd">← → Navigate</div>
 
-<!-- SLIDE 1: TITLE -->
+<!-- ════════ SLIDE 1: TITLE ════════ -->
 <div class="slide s1 active" data-index="0">
-  <div class="vr"></div><div class="hr"></div>
-  <div class="title-block anim a1">
-    <div class="big">WEEKLY</div>
-    <div class="big"><span class="yellow">UPDATE</span></div>
-    <p class="sub">David Chen · Principal Designer</p>
+  <div class="s1-left">
+    <div data-a="1">
+      <div class="big">WEEKLY<br><span class="yl">UPDATE</span></div>
+      <p class="sub">David Chen · Principal Designer</p>
+    </div>
   </div>
-  <div class="date-box anim a2">03.28 — 04.03</div>
-  <div class="corner">Weekly Report / Brutalist</div>
+  <div class="s1-right">
+    <div data-a="2">
+      <div class="date">03.28<br>04.03</div>
+      <div class="date-sub">Week of</div>
+    </div>
+    <div class="bottom-mark" data-a="3">Copilot Design · Microsoft</div>
+  </div>
+  <div class="s1-deco" data-a="4"></div>
 </div>
 
-<!-- SLIDE 2: CHROMIUM -->
+<!-- ════════ SLIDE 2: CHROMIUM ════════ -->
 <div class="slide s2" data-index="1">
-  <div class="label anim a1">Copilot Mac Chromium</div>
-
-  <div class="callout anim a2">
-    <ul>
-      <li>Dev Build 正式發布 workstream-wide internal dogfood on staging</li>
-      <li>被列入官方公告核心貢獻者（Designer / Tester / PM 代表）</li>
-    </ul>
+  <div class="s2-sidebar">
+    <div>
+      <div class="sec-title" data-a="1">Copilot Mac<br>Chromium</div>
+      <div class="milestone" data-a="2">
+        <ul>
+          <li>Dev Build 正式發布 workstream-wide internal dogfood</li>
+          <li>被列入官方公告核心貢獻者</li>
+        </ul>
+      </div>
+    </div>
+    <div class="stats" data-a="3">
+      <div class="stat-row"><span class="stat-label">In Progress</span><span class="stat-val yl">171</span></div>
+      <div class="stat-row"><span class="stat-label">PR / Merged</span><span class="stat-val">58</span></div>
+      <div class="stat-row"><span class="stat-label">Backlog</span><span class="stat-val">250+</span></div>
+      <div class="stat-row"><span class="stat-label">Closed (7d)</span><span class="stat-val yl">179</span></div>
+    </div>
   </div>
-
-  <table class="dtable anim a3">
-    <thead><tr><th>Status</th><th>Count</th><th>Breakdown</th></tr></thead>
-    <tbody>
-      <tr><td>In Progress</td><td>171</td><td>Urgent 13 · High 85 · Medium 53 · Low 13</td></tr>
-      <tr><td>PR Review / Merged</td><td>58</td><td>21 in review · 37 merged</td></tr>
-      <tr><td>Todo (Backlog)</td><td>250+</td><td>Urgent 7 · High 100 · Medium 124 · Low 18</td></tr>
-      <tr><td>Closed / In Review (7d)</td><td>179</td><td>其中 158 帶 Chromium label</td></tr>
-    </tbody>
-  </table>
-
-  <ol class="dlist anim a4">
-    <li><span class="n">01</span><strong>Navigation & Panel Layout</strong> — 釐清 sidebar / IAB / browser panel 共存規則，提議統一 Pages 互斥邏輯，待 May 出新 spec</li>
-    <li><span class="n">02</span><strong>Win→Mac Leverage 品質落差</strong> — 從 Windows leverage 的還原度比 CMC 更差，建議優先對齊 CMC</li>
-    <li><span class="n">03</span><strong>Browser 空條問題</strong> <span class="issue">MAC-11473</span> — 所有 browser window 頂部空白條，4/3 修復驗證通過</li>
-    <li><span class="n">04</span><strong>Sidebar Profile 滾動</strong> <span class="issue">MAC-11601</span> — profile section 應固定不隨列表滾動，已指派跟進</li>
-    <li><span class="n">05</span><strong>Browser 出現頻率</strong> — 建議降低 browser panel 出現頻率，配合 Sergey 整體 vision</li>
-  </ol>
+  <div class="s2-main">
+    <div class="section-label" data-a="4">Discussion & Design Update</div>
+    <div data-a="5">
+      <div class="disc-item">
+        <span class="disc-num">01</span>
+        <div class="disc-content"><strong>Navigation & Panel Layout</strong> — 釐清 sidebar / IAB / browser panel 三者共存規則，提議統一採用 Pages 互斥邏輯，待 May 出新 spec</div>
+      </div>
+      <div class="disc-item">
+        <span class="disc-num">02</span>
+        <div class="disc-content"><strong>Win→Mac Leverage 品質落差</strong> — 從 Windows leverage 的還原度比 CMC 更差，建議資源有限時優先對齊 CMC</div>
+      </div>
+      <div class="disc-item">
+        <span class="disc-num">03</span>
+        <div class="disc-content"><strong>Browser 空條問題</strong><span class="issue">MAC-11473</span> — 所有 browser window 頂部空白條，4/3 修復驗證通過</div>
+      </div>
+      <div class="disc-item">
+        <span class="disc-num">04</span>
+        <div class="disc-content"><strong>Sidebar Profile 滾動</strong><span class="issue">MAC-11601</span> — profile section 應固定不隨列表滾動，已歸類 Design-Fit</div>
+      </div>
+      <div class="disc-item">
+        <span class="disc-num">05</span>
+        <div class="disc-content"><strong>Browser 出現頻率</strong> — 建議降低 browser panel 出現頻率，配合 Sergey 整體 vision</div>
+      </div>
+    </div>
+    <div class="breakdown" data-a="6">
+      <table>
+        <thead><tr><th>Status</th><th>Count</th><th>Breakdown</th></tr></thead>
+        <tbody>
+          <tr><td>In Progress</td><td>171</td><td>Urgent 13 · High 85 · Medium 53 · Low 13</td></tr>
+          <tr><td>PR Review / Merged</td><td>58</td><td>21 in review · 37 merged</td></tr>
+          <tr><td>Todo (Backlog)</td><td>250+</td><td>Urgent 7 · High 100 · Medium 124 · Low 18</td></tr>
+          <tr><td>Closed (7d)</td><td>179</td><td>其中 158 帶 Chromium label</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-<!-- SLIDE 3: AI PHASE 3 -->
+<!-- ════════ SLIDE 3: PHASE 3 ════════ -->
 <div class="slide s3" data-index="2">
-  <div class="label anim a1">AI Transformation</div>
-
-  <div class="phase-row anim a2">
-    <div class="phase-card">
-      <div class="ph">Phase 1</div>
+  <div class="s3-top" data-a="1">
+    <div class="s3-phase">
+      <div class="ph-label">Phase 1</div>
       <h3>Get everyone started</h3>
       <ul><li>AI curiosity across the team</li><li>Hands-on experimentation</li><li>Learning by doing</li></ul>
     </div>
-    <div class="phase-card">
-      <div class="ph">Phase 2</div>
+    <div class="s3-phase">
+      <div class="ph-label">Phase 2</div>
       <h3>Change how we design</h3>
       <ul><li>From static to dynamic systems</li><li>Designers becoming builders</li><li>AI-augmented craft</li></ul>
     </div>
-    <div class="phase-card now">
-      <div class="ph">Phase 3 · Now</div>
+    <div class="s3-phase now">
+      <div class="ph-label">Phase 3 · Now</div>
       <h3>Change how we work</h3>
       <ul><li>AI as team memory & coordinator</li><li>Automated knowledge management</li><li>Intelligent workflows</li></ul>
     </div>
   </div>
-
-  <div class="two-col anim a3">
-    <div class="col">
-      <div class="col-title">本週推進：Data Connector 全面接入</div>
+  <div class="s3-bottom">
+    <div class="s3-col highlight" data-a="2">
+      <div class="col-label">本週推進：Data Connector</div>
       <ul>
         <li>組織並主持 4/1、4/3 兩場 hands-on session</li>
         <li>帶領團隊完成 Claude Code + connector 配置</li>
@@ -284,10 +436,10 @@ html, body {
         <li>即時排除 MCP 配置、路徑、proxy 等環境故障</li>
       </ul>
     </div>
-    <div class="col">
-      <div class="col-title">為什麼是 Phase 3 的關鍵基礎</div>
+    <div class="s3-col" data-a="3">
+      <div class="col-label">為什麼是 Phase 3 的關鍵基礎</div>
       <ul>
-        <li>Connector = AI agent 具備 team memory</li>
+        <li>Connector = AI agent 具備 team memory — 直接查詢 issue、搜尋 Slack、讀取日曆</li>
         <li>有了 data layer 才能建構 intelligent workflows</li>
         <li>目標：全員 connector 覆蓋，可複製 onboarding 流程</li>
       </ul>
@@ -295,86 +447,75 @@ html, body {
   </div>
 </div>
 
-<!-- SLIDE 4: BUG SKILL -->
+<!-- ════════ SLIDE 4: BUG SKILL ════════ -->
 <div class="slide s4" data-index="3">
-  <div class="label anim a1">CMC Bug Reporting Skill · v1.2.0</div>
-
-  <div class="compare anim a2">
-    <div class="ccard before">
-      <div class="clabel">Before · ~5 min / bug</div>
-      <ul>
-        <li>到 Linear 手動選擇 Team → Project → Label → Priority</li>
-        <li>每次填入重複模板欄位（repro steps、版本號、截圖⋯）</li>
-        <li>中文內容需自己翻譯成英文</li>
-        <li>~5 分鐘 / 每個 bug</li>
-      </ul>
-    </div>
-    <div class="ccard after">
-      <div class="clabel">After · ~1 min / bug</div>
-      <ul>
-        <li>分類和模板已預設 — 回答問題即可建立 issue</li>
-        <li>中文直接輸入，自動翻譯為英文填入 Linear</li>
-        <li>截圖貼入路徑或 URL，自動判斷類型</li>
-        <li>版本號記憶，下次自動帶入</li>
-      </ul>
-    </div>
+  <div class="s4-before" data-a="1">
+    <div class="s4-card-label">Before — 傳統流程</div>
+    <div class="s4-time">~5 min</div>
+    <ul class="s4-list">
+      <li>到 Linear 手動選擇 Team → Project → Label → Priority</li>
+      <li>每次填入重複模板欄位</li>
+      <li>中文內容需自己翻譯成英文</li>
+    </ul>
   </div>
-
-  <div class="metrics anim a3">
-    <div class="metric">
-      <div class="val"><span class="yellow">5×</span></div>
-      <div class="desc">faster · 5 min → 1 min</div>
-    </div>
-    <div class="metric">
-      <div class="val">3</div>
-      <div class="desc">issues created · E2E 驗證</div>
-    </div>
-    <div class="metric">
-      <div class="val"><span class="yellow">Team</span></div>
-      <div class="desc">CM Design Review 群推動採用</div>
-    </div>
+  <div class="s4-after" data-a="2">
+    <div class="s4-card-label">After — Skill 對話式問答 v1.2.0</div>
+    <div class="s4-time">~1 min</div>
+    <ul class="s4-list">
+      <li>分類和模板已預設，回答問題即可建立 issue</li>
+      <li>中文直接輸入，自動翻譯為英文</li>
+      <li>截圖貼入路徑或 URL，自動判斷</li>
+      <li>版本號記憶，下次自動帶入</li>
+    </ul>
+  </div>
+  <div class="s4-metrics" data-a="3">
+    <div class="s4-metric"><div class="val">5×</div><div class="desc">Faster filing</div></div>
+    <div class="s4-metric"><div class="val">3</div><div class="desc">Issues created · E2E verified</div></div>
+    <div class="s4-metric"><div class="val">Team</div><div class="desc">CM Design Review 推動採用</div></div>
   </div>
 </div>
 
-<!-- SLIDE 5: NEXT WEEK -->
+<!-- ════════ SLIDE 5: NEXT WEEK ════════ -->
 <div class="slide s5" data-index="4">
-  <div class="mind-title anim a1">NEXT<br><span class="yellow">WEEK</span></div>
-  <ul class="nlist anim a2">
-    <li><span class="icon">■</span><div><strong>Chromium Dogfood</strong> — <span>持續 design quality review，配合 critical PR merge 進 main branch</span></div></li>
-    <li><span class="icon">■</span><div><strong>Split-window spec</strong> — <span>Follow up May 的新互斥邏輯設計</span></div></li>
-    <li><span class="icon">■</span><div><strong>MAC-11487</strong> — <span>跟進 chat 雙擊頂部視窗切換不順暢問題</span></div></li>
-    <li><span class="icon">■</span><div><strong>Phase 3 持續推進</strong> — <span>1:1 輔導 setup 問題同學，目標全員 connector 覆蓋</span></div></li>
-    <li><span class="icon">■</span><div><strong>CMC Bug Skill</strong> — <span>根據團隊 feedback 持續迭代</span></div></li>
-  </ul>
-  <div class="stripe anim a3"></div>
-  <div class="stripe2 anim a4"></div>
-  <div class="deco"></div>
-  <div class="deco2"></div>
+  <div class="s5-left">
+    <div data-a="1">
+      <div class="big">NEXT<br><span class="yl">WEEK</span></div>
+    </div>
+  </div>
+  <div class="s5-right">
+    <div data-a="2">
+      <div class="s5-item"><strong>Chromium Dogfood</strong><span>持續 design quality review，配合 critical PR merge 進 main branch</span></div>
+      <div class="s5-item"><strong>Split-window spec</strong><span>Follow up May 的新互斥邏輯設計</span></div>
+      <div class="s5-item"><strong>MAC-11487</strong><span>跟進 chat 雙擊頂部視窗切換不順暢問題</span></div>
+      <div class="s5-item"><strong>Phase 3 持續推進</strong><span>1:1 輔導 setup 問題同學，目標全員 connector 覆蓋</span></div>
+      <div class="s5-item"><strong>CMC Bug Skill</strong><span>根據團隊 feedback 持續迭代</span></div>
+    </div>
+  </div>
+  <div class="s5-deco" data-a="3"></div>
 </div>
-
-<div class="kbd">← → NAVIGATE</div>
 
 <script>
 (function() {
   var current = 0, slides = document.querySelectorAll('.slide'), total = slides.length,
       counter = document.getElementById('counter'), lock = false;
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function update() { counter.textContent = pad(current + 1) + ' — ' + pad(total); }
   function goTo(i) {
     if (i < 0 || i >= total || i === current || lock) return;
     lock = true;
-    slides[current].classList.remove('active');
-    // reset anims
-    slides[current].querySelectorAll('.anim').forEach(function(el) {
-      el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
+    var old = slides[current];
+    old.classList.remove('active');
+    old.querySelectorAll('[data-a],[data-f]').forEach(function(el) {
+      el.style.animation = 'none'; void el.offsetHeight; el.style.animation = '';
     });
     current = i;
     slides[current].classList.add('active');
-    counter.textContent = pad(current + 1) + '/' + pad(total);
-    setTimeout(function() { lock = false; }, 350);
+    update();
+    setTimeout(function() { lock = false; }, 400);
   }
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
   });
   var tx = 0;
   document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
@@ -382,6 +523,12 @@ html, body {
     var dx = e.changedTouches[0].clientX - tx;
     if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
   });
+  // Click left/right halves
+  document.addEventListener('click', function(e) {
+    if (e.clientX > window.innerWidth * 0.6) goTo(current + 1);
+    else if (e.clientX < window.innerWidth * 0.4) goTo(current - 1);
+  });
+  update();
 })();
 </script>
 </body>
