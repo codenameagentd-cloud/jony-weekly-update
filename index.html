@@ -5,396 +5,384 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Weekly Update — David Chen</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-:root {
-  --bg: #0a0a0a;
-  --bg-card: #141414;
-  --bg-elevated: #1a1a1a;
-  --text: #f0f0f0;
-  --text-secondary: #888;
-  --text-muted: #555;
-  --accent: #9B59B6;
-  --accent-dim: rgba(155, 89, 182, 0.15);
-  --accent-glow: rgba(155, 89, 182, 0.3);
-  --border: rgba(255,255,255,0.06);
-  --green: #4CD964;
-  --yellow: #FFD60A;
-  --red: #FF453A;
-  --cyan: #64D2FF;
+html, body {
+  width: 100%; height: 100%; overflow: hidden;
+  background: #FFFFFF; color: #000000;
+  -webkit-font-smoothing: antialiased;
 }
 
-html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, sans-serif; overflow: hidden; }
+/* ── Tokens ── */
+:root {
+  --yellow: #FFD600;
+  --black: #000000;
+  --white: #FFFFFF;
+  --gray: rgba(0,0,0,0.45);
+  --border: 3px solid #000000;
+}
 
-/* Slide container */
-.deck { width: 100vw; height: 100vh; position: relative; }
+/* ── Slides ── */
 .slide {
   position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: center;
-  padding: 80px 120px;
+  display: flex; flex-direction: column; justify-content: flex-start;
+  padding: 100px 80px 80px;
   opacity: 0; pointer-events: none;
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  transform: translateY(20px);
+  overflow: hidden;
 }
-.slide.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.slide.active { opacity: 1; pointer-events: auto; }
 
-/* Navigation */
-.nav {
-  position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 8px; z-index: 100;
-}
-.nav-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--text-muted); cursor: pointer;
-  transition: all 0.3s;
-}
-.nav-dot.active { background: var(--accent); width: 24px; border-radius: 4px; }
-
-.slide-counter {
-  position: fixed; bottom: 42px; right: 60px;
-  font-size: 13px; color: var(--text-muted); z-index: 100;
-  font-variant-numeric: tabular-nums;
+/* ── Counter ── */
+#counter {
+  position: fixed; top: 32px; left: 40px;
+  font-family: 'Space Mono', monospace; font-size: 28px; font-weight: 700;
+  letter-spacing: 2px; z-index: 1000; color: #000;
 }
 
-/* Typography */
-h1 { font-size: 56px; font-weight: 700; letter-spacing: -1.5px; line-height: 1.1; }
-h2 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 40px; }
-h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.2px; margin-bottom: 16px; }
-.subtitle { font-size: 20px; color: var(--text-secondary); font-weight: 400; margin-top: 16px; }
-.date { font-size: 15px; color: var(--text-muted); margin-top: 12px; font-weight: 400; }
-.accent { color: var(--accent); }
-.label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-
-/* Callout */
-.callout {
-  background: var(--accent-dim);
-  border-left: 3px solid var(--accent);
-  padding: 20px 24px;
-  border-radius: 0 8px 8px 0;
-  margin-bottom: 32px;
+/* ── Shared ── */
+.label {
+  font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 3px;
+  border: var(--border); padding: 10px 24px; display: inline-block; margin-bottom: 40px;
 }
-.callout li { font-size: 14px; line-height: 1.8; list-style: none; }
-.callout li::before { content: "✦ "; color: var(--accent); }
+.yellow { background: var(--yellow); display: inline; padding: 0 10px; }
+.tag {
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px; padding: 6px 14px;
+  display: inline-block; border: 2px solid #000;
+}
+.tag-yellow { background: var(--yellow); }
+.tag-black { background: #000; color: #fff; }
+
+/* ── Animations ── */
+@keyframes slam { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes blink { 0%{opacity:0}25%{opacity:1}50%{opacity:0}75%{opacity:1}100%{opacity:1} }
+.slide.active .anim { animation: slam 0.28s cubic-bezier(0.2,0,0.8,0.2) both; }
+.slide.active .a1 { animation-delay: 0s; }
+.slide.active .a2 { animation-delay: 0.05s; }
+.slide.active .a3 { animation-delay: 0.10s; }
+.slide.active .a4 { animation-delay: 0.15s; }
+.slide.active .a5 { animation-delay: 0.20s; }
+.slide.active .a6 { animation-delay: 0.25s; }
+.slide.active .a7 { animation-delay: 0.30s; }
+
+/* ===================== SLIDE 1: TITLE ===================== */
+.s1 { padding: 0; justify-content: center; align-items: flex-start; }
+.s1 .title-block { padding-left: 80px; }
+.s1 .big {
+  font-family: 'Inter', sans-serif; font-weight: 900;
+  font-size: clamp(90px, 11vw, 150px); line-height: 0.9;
+  text-transform: uppercase; letter-spacing: -5px;
+}
+.s1 .sub {
+  font-family: 'Inter', sans-serif; font-weight: 700;
+  font-size: 20px; margin-top: 24px; letter-spacing: -0.3px;
+}
+.s1 .date-box {
+  position: absolute; bottom: 80px; right: 80px;
+  border: 4px solid #000; padding: 18px 28px;
+  font-family: 'Space Mono', monospace; font-size: 16px; font-weight: 700; letter-spacing: 3px;
+}
+.s1 .corner {
+  position: absolute; bottom: 80px; left: 80px;
+  font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 2px;
+  text-transform: uppercase; opacity: 0.3;
+}
+.s1 .vr { position: absolute; top: 0; right: 33%; height: 100%; border-left: 3px solid #000; opacity: 0.05; }
+.s1 .hr { position: absolute; left: 0; bottom: 40%; width: 100%; border-top: 3px solid #000; opacity: 0.05; }
+
+/* ===================== SLIDE 2: CHROMIUM ===================== */
+.s2 { padding: 100px 60px 60px; }
+.s2 .callout {
+  background: var(--yellow); border: var(--border); padding: 16px 24px; margin-bottom: 28px;
+}
+.s2 .callout li {
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700; line-height: 1.7; list-style: none;
+}
+.s2 .callout li::before { content: "■ "; }
 
 /* Data table */
-.data-table { width: 100%; border-collapse: collapse; margin-bottom: 32px; }
-.data-table th {
-  font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-  color: var(--text-muted); text-align: left; padding: 0 0 12px; border-bottom: 1px solid var(--border);
+.dtable { width: 100%; max-width: 1000px; border-collapse: collapse; margin-bottom: 24px; }
+.dtable th {
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; text-align: left;
+  padding: 0 0 10px; border-bottom: var(--border);
 }
-.data-table td {
-  padding: 12px 0; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: top;
+.dtable td {
+  font-family: 'Inter', sans-serif; font-size: 14px; padding: 10px 16px 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1); vertical-align: top;
 }
-.data-table td:nth-child(2) { font-weight: 600; font-variant-numeric: tabular-nums; width: 80px; }
-.data-table td:nth-child(3) { color: var(--text-secondary); font-size: 13px; }
+.dtable td:nth-child(2) { font-weight: 900; font-size: 18px; font-variant-numeric: tabular-nums; width: 70px; }
+.dtable td:nth-child(3) { color: var(--gray); font-size: 13px; }
 
-/* Discussion list */
-.discussion-list { list-style: none; }
-.discussion-list li {
-  font-size: 13.5px; line-height: 1.7; padding: 8px 0;
-  border-bottom: 1px solid var(--border);
+/* Discussion */
+.dlist { list-style: none; max-width: 1000px; }
+.dlist li {
+  font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6;
+  padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.08);
 }
-.discussion-list li:last-child { border-bottom: none; }
-.discussion-list strong { color: var(--text); font-weight: 600; }
-.discussion-list .num { color: var(--accent); font-weight: 700; margin-right: 8px; font-variant-numeric: tabular-nums; }
+.dlist li:last-child { border: none; }
+.dlist .n { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 12px; margin-right: 6px; }
+.dlist strong { font-weight: 700; }
+.dlist .issue { font-family: 'Space Mono', monospace; font-size: 11px; opacity: 0.4; }
 
-/* Phase roadmap */
-.phase-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 40px; }
-.phase-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 24px;
+/* ===================== SLIDE 3: PHASE 3 ===================== */
+.s3 { padding: 100px 60px 60px; }
+.phase-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 32px; max-width: 1100px; }
+.phase-card { border: var(--border); padding: 20px 24px; }
+.phase-card.now { background: var(--yellow); }
+.phase-card .ph {
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.5;
 }
-.phase-card.now {
-  border-color: var(--accent);
-  box-shadow: 0 0 30px var(--accent-dim);
-  background: linear-gradient(135deg, var(--accent-dim), transparent);
-}
-.phase-card .phase-label { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-.phase-card.now .phase-label { color: var(--accent); }
-.phase-card h3 { font-size: 16px; margin-bottom: 12px; }
-.phase-card ul { list-style: none; }
-.phase-card li { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+.phase-card.now .ph { opacity: 1; }
+.phase-card h3 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 16px; margin-bottom: 10px; letter-spacing: -0.3px; }
+.phase-card li { font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6; list-style: none; opacity: 0.55; }
+.phase-card.now li { opacity: 0.75; }
 
-/* Two column */
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-.col h3 { font-size: 14px; font-weight: 600; letter-spacing: 0.5px; }
-.col ul { list-style: none; }
-.col li { font-size: 13.5px; line-height: 1.8; color: var(--text-secondary); padding-left: 16px; position: relative; }
-.col li::before { content: ""; position: absolute; left: 0; top: 10px; width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1100px; }
+.col-title {
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
+  padding-bottom: 10px; border-bottom: var(--border);
+}
+.col li {
+  font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; list-style: none;
+  padding: 4px 0;
+}
+.col strong { font-weight: 700; }
 
-/* Before/After comparison */
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 40px; }
-.compare-card {
-  background: var(--bg-card); border-radius: 12px; padding: 28px;
-  border: 1px solid var(--border);
+/* ===================== SLIDE 4: BUG SKILL ===================== */
+.s4 { padding: 100px 60px 60px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; max-width: 1100px; }
+.ccard { border: var(--border); padding: 24px 28px; }
+.ccard.after { background: var(--yellow); }
+.ccard .clabel {
+  font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
 }
-.compare-card.after {
-  border-color: rgba(155,89,182,0.3);
-  background: linear-gradient(135deg, var(--accent-dim), var(--bg-card));
+.ccard.before { opacity: 0.5; }
+.ccard li {
+  font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; list-style: none;
+  padding: 3px 0;
 }
-.compare-card .card-label {
-  font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
-  text-transform: uppercase; margin-bottom: 16px;
-}
-.compare-card.before .card-label { color: var(--text-muted); }
-.compare-card.after .card-label { color: var(--accent); }
-.compare-card li {
-  font-size: 13.5px; line-height: 1.8; color: var(--text-secondary);
-  list-style: none; padding-left: 16px; position: relative;
-}
-.compare-card li::before { content: ""; position: absolute; left: 0; top: 10px; width: 4px; height: 4px; border-radius: 50%; }
-.compare-card.before li::before { background: var(--text-muted); }
-.compare-card.after li::before { background: var(--accent); }
-.compare-card.before li { color: var(--text-muted); }
+.ccard li::before { content: "— "; font-weight: 700; }
 
-/* Metrics bar */
-.metrics { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.metric {
-  background: var(--bg-card); border-radius: 12px; padding: 24px; text-align: center;
-  border: 1px solid var(--border);
+.metrics { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; max-width: 1100px; }
+.metric { border: var(--border); padding: 24px; text-align: center; }
+.metric .val {
+  font-family: 'Inter', sans-serif; font-weight: 900;
+  font-size: clamp(36px, 5vw, 52px); letter-spacing: -2px; line-height: 1;
 }
-.metric .value { font-size: 28px; font-weight: 700; color: var(--accent); }
-.metric .desc { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+.metric .val .yellow { padding: 0 8px; }
+.metric .desc { font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 6px; opacity: 0.5; }
 
-/* Next week list */
-.next-list { list-style: none; }
-.next-list li {
-  font-size: 16px; line-height: 1.6; padding: 16px 0;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: baseline; gap: 12px;
+/* ===================== SLIDE 5: NEXT WEEK ===================== */
+.s5 { padding: 0; justify-content: center; }
+.s5 .mind-title {
+  font-family: 'Inter', sans-serif; font-weight: 900;
+  font-size: clamp(60px, 9vw, 120px); line-height: 0.92;
+  text-transform: uppercase; letter-spacing: -4px;
+  padding-left: 80px; margin-bottom: 48px;
 }
-.next-list li:last-child { border-bottom: none; }
-.next-list .icon { font-size: 18px; flex-shrink: 0; }
-.next-list strong { color: var(--text); }
-.next-list span { color: var(--text-secondary); font-size: 15px; }
+.s5 .nlist { list-style: none; padding: 0 80px; max-width: 900px; }
+.s5 .nlist li {
+  font-family: 'Inter', sans-serif; font-size: 17px; line-height: 1.5;
+  padding: 14px 0; border-bottom: 1px solid rgba(0,0,0,0.1);
+  display: flex; gap: 12px; align-items: baseline;
+}
+.s5 .nlist li:last-child { border: none; }
+.s5 .nlist .icon { font-size: 14px; flex-shrink: 0; }
+.s5 .nlist strong { font-weight: 700; }
+.s5 .nlist span { opacity: 0.5; }
+.s5 .deco { position: absolute; right: 80px; bottom: 80px; width: 180px; height: 180px; border: 4px solid #000; }
+.s5 .deco2 { position: absolute; right: 100px; bottom: 100px; width: 100px; height: 100px; border: 3px solid #000; opacity: 0.12; }
+.s5 .stripe { width: 400px; height: 0; border-top: 4px solid #000; margin-left: 80px; margin-top: 32px; }
+.s5 .stripe2 { width: 240px; height: 0; border-top: 4px solid #000; margin-left: 80px; margin-top: 8px; }
 
-/* Scroll area for overflow */
-.scroll-area {
-  overflow-y: auto; flex: 1; padding-right: 8px;
-  scrollbar-width: thin; scrollbar-color: var(--text-muted) transparent;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .slide { padding: 60px 48px; }
-  h1 { font-size: 40px; }
-  h2 { font-size: 26px; margin-bottom: 28px; }
-  .phase-row { grid-template-columns: 1fr; }
-  .two-col, .compare { grid-template-columns: 1fr; }
-}
-
-/* Keyboard hint */
-.kbd-hint {
-  position: fixed; bottom: 40px; left: 60px;
-  font-size: 12px; color: var(--text-muted); z-index: 100;
-  opacity: 0.5;
-}
+/* Nav hint */
+.kbd { position: fixed; bottom: 32px; left: 40px; font-family: 'Space Mono', monospace; font-size: 11px; opacity: 0.25; letter-spacing: 1px; z-index: 100; }
 </style>
 </head>
 <body>
 
-<div class="deck">
+<div id="counter">01/05</div>
 
-  <!-- SLIDE 1: Title -->
-  <div class="slide active" data-slide="0">
-    <div class="label">Weekly Update</div>
-    <h1>Copilot Mac<br><span class="accent">Design & AI</span></h1>
-    <p class="subtitle">David Chen · Principal Designer</p>
-    <p class="date">Week of 3/28 – 4/3</p>
+<!-- SLIDE 1: TITLE -->
+<div class="slide s1 active" data-index="0">
+  <div class="vr"></div><div class="hr"></div>
+  <div class="title-block anim a1">
+    <div class="big">WEEKLY</div>
+    <div class="big"><span class="yellow">UPDATE</span></div>
+    <p class="sub">David Chen · Principal Designer</p>
   </div>
+  <div class="date-box anim a2">03.28 — 04.03</div>
+  <div class="corner">Weekly Report / Brutalist</div>
+</div>
 
-  <!-- SLIDE 2: Chromium -->
-  <div class="slide" data-slide="1">
-    <div class="label">Copilot Mac Chromium</div>
-    <h2>Dogfood Adoption &<br>Design Quality</h2>
-    <div class="scroll-area">
-      <div class="callout">
-        <ul>
-          <li>Dev Build 正式發布 workstream-wide internal dogfood on staging</li>
-          <li>被列入官方公告核心貢獻者（Designer / Tester / PM 代表）</li>
-        </ul>
-      </div>
+<!-- SLIDE 2: CHROMIUM -->
+<div class="slide s2" data-index="1">
+  <div class="label anim a1">Copilot Mac Chromium</div>
 
-      <table class="data-table">
-        <thead><tr><th>Status</th><th>Count</th><th>Breakdown</th></tr></thead>
-        <tbody>
-          <tr><td>In Progress</td><td style="color:var(--yellow)">171</td><td>Urgent 13 · High 85 · Medium 53 · Low 13</td></tr>
-          <tr><td>PR Review / Merged</td><td style="color:var(--green)">58</td><td>21 in review · 37 merged</td></tr>
-          <tr><td>Todo (Backlog)</td><td style="color:var(--text-secondary)">250+</td><td>Urgent 7 · High 100 · Medium 124 · Low 18</td></tr>
-          <tr><td>Closed / In Review (7d)</td><td style="color:var(--cyan)">179</td><td>其中 158 帶 Chromium label</td></tr>
-        </tbody>
-      </table>
-
-      <h3>本週 Discussion & Design Update</h3>
-      <ol class="discussion-list">
-        <li><span class="num">01</span><strong>Navigation & Panel Layout</strong> — 釐清 sidebar / IAB / browser panel 三者共存規則，提議統一採用 Pages 互斥邏輯，待 May 出新 spec</li>
-        <li><span class="num">02</span><strong>Win→Mac Leverage 品質落差</strong> — 從 Windows leverage 的還原度比 CMC 更差，建議優先對齊 CMC 而非 Windows</li>
-        <li><span class="num">03</span><strong>Browser 空條問題</strong> <span style="color:var(--text-muted)">MAC-11473</span> — 所有 browser window 頂部空白條，4/3 修復驗證通過</li>
-        <li><span class="num">04</span><strong>Sidebar Profile 滾動</strong> <span style="color:var(--text-muted)">MAC-11601</span> — profile section 應固定不隨列表滾動，已指派跟進</li>
-        <li><span class="num">05</span><strong>Browser 出現頻率</strong> — 建議降低 browser panel 出現頻率，配合 Sergey 整體 vision</li>
-      </ol>
-    </div>
-  </div>
-
-  <!-- SLIDE 3: AI Phase 3 -->
-  <div class="slide" data-slide="2">
-    <div class="label">AI Transformation</div>
-    <h2>Phase 3 — Change How We Work</h2>
-    <div class="scroll-area">
-      <div class="phase-row">
-        <div class="phase-card">
-          <div class="phase-label">Phase 1</div>
-          <h3>Get everyone started</h3>
-          <ul>
-            <li>AI curiosity across the team</li>
-            <li>Hands-on experimentation</li>
-            <li>Learning by doing</li>
-          </ul>
-        </div>
-        <div class="phase-card">
-          <div class="phase-label">Phase 2</div>
-          <h3>Change how we design</h3>
-          <ul>
-            <li>From static to dynamic systems</li>
-            <li>Designers becoming builders</li>
-            <li>AI-augmented craft</li>
-          </ul>
-        </div>
-        <div class="phase-card now">
-          <div class="phase-label">Phase 3 · Now</div>
-          <h3>Change how we work</h3>
-          <ul>
-            <li>AI as team memory & coordinator</li>
-            <li>Automated knowledge management</li>
-            <li>Intelligent workflows</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="two-col">
-        <div class="col">
-          <h3>本週推進：Data Connector 全面接入</h3>
-          <ul>
-            <li>組織並主持 4/1、4/3 兩場 hands-on session</li>
-            <li>帶領團隊完成 Claude Code + connector 配置</li>
-            <li>接入 <strong>Slack、M365、Linear</strong> 三大數據源</li>
-            <li>即時排除 MCP 配置、路徑、proxy 等環境故障</li>
-          </ul>
-        </div>
-        <div class="col">
-          <h3>為什麼是 Phase 3 的關鍵基礎</h3>
-          <ul>
-            <li>Connector = AI agent 具備 team memory</li>
-            <li>有了 data layer 才能建構 intelligent workflows</li>
-            <li>目標：全員 connector 覆蓋，可複製 onboarding 流程</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: Bug Skill -->
-  <div class="slide" data-slide="3">
-    <div class="label">CMC Bug Reporting Skill</div>
-    <h2>v1.2.0 — 5× Faster Filing</h2>
-    <div class="scroll-area">
-      <div class="compare">
-        <div class="compare-card before">
-          <div class="card-label">Before · ~5 min / bug</div>
-          <ul>
-            <li>到 Linear 手動選擇 Team → Project → Label → Priority</li>
-            <li>每次填入重複模板欄位（repro steps、版本號、截圖⋯）</li>
-            <li>中文內容需自己翻譯成英文</li>
-            <li>~5 分鐘 / 每個 bug</li>
-          </ul>
-        </div>
-        <div class="compare-card after">
-          <div class="card-label">After · ~1 min / bug</div>
-          <ul>
-            <li>分類和模板已預設 — 回答問題即可建立 issue</li>
-            <li>中文直接輸入，自動翻譯為英文填入 Linear</li>
-            <li>截圖貼入路徑或 URL，自動判斷類型</li>
-            <li>版本號記憶，下次自動帶入</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="metrics">
-        <div class="metric">
-          <div class="value">5×</div>
-          <div class="desc">faster · 5 min → 1 min</div>
-        </div>
-        <div class="metric">
-          <div class="value">3</div>
-          <div class="desc">issues created · E2E 驗證</div>
-        </div>
-        <div class="metric">
-          <div class="value">Team</div>
-          <div class="desc">CM Design Review 群推動採用</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 5: Next Week -->
-  <div class="slide" data-slide="4">
-    <div class="label">Next Week</div>
-    <h2>Priorities</h2>
-    <ul class="next-list">
-      <li><span class="icon">🔍</span><div><strong>Chromium Dogfood</strong><br><span>持續 design quality review，配合 critical PR merge 進 main branch</span></div></li>
-      <li><span class="icon">📐</span><div><strong>Split-window spec</strong><br><span>Follow up May 的新互斥邏輯設計</span></div></li>
-      <li><span class="icon">🐛</span><div><strong>MAC-11487</strong><br><span>跟進 chat 雙擊頂部視窗切換不順暢問題</span></div></li>
-      <li><span class="icon">⚡</span><div><strong>Phase 3 持續推進</strong><br><span>1:1 輔導 setup 問題同學，目標全員 connector 覆蓋</span></div></li>
-      <li><span class="icon">🛠</span><div><strong>CMC Bug Skill</strong><br><span>根據團隊 feedback 持續迭代</span></div></li>
+  <div class="callout anim a2">
+    <ul>
+      <li>Dev Build 正式發布 workstream-wide internal dogfood on staging</li>
+      <li>被列入官方公告核心貢獻者（Designer / Tester / PM 代表）</li>
     </ul>
   </div>
 
+  <table class="dtable anim a3">
+    <thead><tr><th>Status</th><th>Count</th><th>Breakdown</th></tr></thead>
+    <tbody>
+      <tr><td>In Progress</td><td>171</td><td>Urgent 13 · High 85 · Medium 53 · Low 13</td></tr>
+      <tr><td>PR Review / Merged</td><td>58</td><td>21 in review · 37 merged</td></tr>
+      <tr><td>Todo (Backlog)</td><td>250+</td><td>Urgent 7 · High 100 · Medium 124 · Low 18</td></tr>
+      <tr><td>Closed / In Review (7d)</td><td>179</td><td>其中 158 帶 Chromium label</td></tr>
+    </tbody>
+  </table>
+
+  <ol class="dlist anim a4">
+    <li><span class="n">01</span><strong>Navigation & Panel Layout</strong> — 釐清 sidebar / IAB / browser panel 共存規則，提議統一 Pages 互斥邏輯，待 May 出新 spec</li>
+    <li><span class="n">02</span><strong>Win→Mac Leverage 品質落差</strong> — 從 Windows leverage 的還原度比 CMC 更差，建議優先對齊 CMC</li>
+    <li><span class="n">03</span><strong>Browser 空條問題</strong> <span class="issue">MAC-11473</span> — 所有 browser window 頂部空白條，4/3 修復驗證通過</li>
+    <li><span class="n">04</span><strong>Sidebar Profile 滾動</strong> <span class="issue">MAC-11601</span> — profile section 應固定不隨列表滾動，已指派跟進</li>
+    <li><span class="n">05</span><strong>Browser 出現頻率</strong> — 建議降低 browser panel 出現頻率，配合 Sergey 整體 vision</li>
+  </ol>
 </div>
 
-<!-- Nav -->
-<div class="nav" id="nav"></div>
-<div class="slide-counter" id="counter"></div>
-<div class="kbd-hint">← → or click to navigate</div>
+<!-- SLIDE 3: AI PHASE 3 -->
+<div class="slide s3" data-index="2">
+  <div class="label anim a1">AI Transformation</div>
+
+  <div class="phase-row anim a2">
+    <div class="phase-card">
+      <div class="ph">Phase 1</div>
+      <h3>Get everyone started</h3>
+      <ul><li>AI curiosity across the team</li><li>Hands-on experimentation</li><li>Learning by doing</li></ul>
+    </div>
+    <div class="phase-card">
+      <div class="ph">Phase 2</div>
+      <h3>Change how we design</h3>
+      <ul><li>From static to dynamic systems</li><li>Designers becoming builders</li><li>AI-augmented craft</li></ul>
+    </div>
+    <div class="phase-card now">
+      <div class="ph">Phase 3 · Now</div>
+      <h3>Change how we work</h3>
+      <ul><li>AI as team memory & coordinator</li><li>Automated knowledge management</li><li>Intelligent workflows</li></ul>
+    </div>
+  </div>
+
+  <div class="two-col anim a3">
+    <div class="col">
+      <div class="col-title">本週推進：Data Connector 全面接入</div>
+      <ul>
+        <li>組織並主持 4/1、4/3 兩場 hands-on session</li>
+        <li>帶領團隊完成 Claude Code + connector 配置</li>
+        <li>接入 <strong>Slack、M365、Linear</strong> 三大數據源</li>
+        <li>即時排除 MCP 配置、路徑、proxy 等環境故障</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="col-title">為什麼是 Phase 3 的關鍵基礎</div>
+      <ul>
+        <li>Connector = AI agent 具備 team memory</li>
+        <li>有了 data layer 才能建構 intelligent workflows</li>
+        <li>目標：全員 connector 覆蓋，可複製 onboarding 流程</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: BUG SKILL -->
+<div class="slide s4" data-index="3">
+  <div class="label anim a1">CMC Bug Reporting Skill · v1.2.0</div>
+
+  <div class="compare anim a2">
+    <div class="ccard before">
+      <div class="clabel">Before · ~5 min / bug</div>
+      <ul>
+        <li>到 Linear 手動選擇 Team → Project → Label → Priority</li>
+        <li>每次填入重複模板欄位（repro steps、版本號、截圖⋯）</li>
+        <li>中文內容需自己翻譯成英文</li>
+        <li>~5 分鐘 / 每個 bug</li>
+      </ul>
+    </div>
+    <div class="ccard after">
+      <div class="clabel">After · ~1 min / bug</div>
+      <ul>
+        <li>分類和模板已預設 — 回答問題即可建立 issue</li>
+        <li>中文直接輸入，自動翻譯為英文填入 Linear</li>
+        <li>截圖貼入路徑或 URL，自動判斷類型</li>
+        <li>版本號記憶，下次自動帶入</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="metrics anim a3">
+    <div class="metric">
+      <div class="val"><span class="yellow">5×</span></div>
+      <div class="desc">faster · 5 min → 1 min</div>
+    </div>
+    <div class="metric">
+      <div class="val">3</div>
+      <div class="desc">issues created · E2E 驗證</div>
+    </div>
+    <div class="metric">
+      <div class="val"><span class="yellow">Team</span></div>
+      <div class="desc">CM Design Review 群推動採用</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: NEXT WEEK -->
+<div class="slide s5" data-index="4">
+  <div class="mind-title anim a1">NEXT<br><span class="yellow">WEEK</span></div>
+  <ul class="nlist anim a2">
+    <li><span class="icon">■</span><div><strong>Chromium Dogfood</strong> — <span>持續 design quality review，配合 critical PR merge 進 main branch</span></div></li>
+    <li><span class="icon">■</span><div><strong>Split-window spec</strong> — <span>Follow up May 的新互斥邏輯設計</span></div></li>
+    <li><span class="icon">■</span><div><strong>MAC-11487</strong> — <span>跟進 chat 雙擊頂部視窗切換不順暢問題</span></div></li>
+    <li><span class="icon">■</span><div><strong>Phase 3 持續推進</strong> — <span>1:1 輔導 setup 問題同學，目標全員 connector 覆蓋</span></div></li>
+    <li><span class="icon">■</span><div><strong>CMC Bug Skill</strong> — <span>根據團隊 feedback 持續迭代</span></div></li>
+  </ul>
+  <div class="stripe anim a3"></div>
+  <div class="stripe2 anim a4"></div>
+  <div class="deco"></div>
+  <div class="deco2"></div>
+</div>
+
+<div class="kbd">← → NAVIGATE</div>
 
 <script>
-const slides = document.querySelectorAll('.slide');
-const nav = document.getElementById('nav');
-const counter = document.getElementById('counter');
-let current = 0;
-
-// Build nav dots
-slides.forEach((_, i) => {
-  const dot = document.createElement('div');
-  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-  dot.onclick = () => goTo(i);
-  nav.appendChild(dot);
-});
-
-function goTo(n) {
-  slides[current].classList.remove('active');
-  nav.children[current].classList.remove('active');
-  current = Math.max(0, Math.min(n, slides.length - 1));
-  slides[current].classList.add('active');
-  nav.children[current].classList.add('active');
-  counter.textContent = (current + 1) + ' / ' + slides.length;
-}
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ') goTo(current + 1);
-  if (e.key === 'ArrowLeft') goTo(current - 1);
-});
-
-// Touch support
-let touchX = 0;
-document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
-document.addEventListener('touchend', e => {
-  const dx = e.changedTouches[0].clientX - touchX;
-  if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
-});
-
-counter.textContent = '1 / ' + slides.length;
+(function() {
+  var current = 0, slides = document.querySelectorAll('.slide'), total = slides.length,
+      counter = document.getElementById('counter'), lock = false;
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function goTo(i) {
+    if (i < 0 || i >= total || i === current || lock) return;
+    lock = true;
+    slides[current].classList.remove('active');
+    // reset anims
+    slides[current].querySelectorAll('.anim').forEach(function(el) {
+      el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
+    });
+    current = i;
+    slides[current].classList.add('active');
+    counter.textContent = pad(current + 1) + '/' + pad(total);
+    setTimeout(function() { lock = false; }, 350);
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(current - 1); }
+  });
+  var tx = 0;
+  document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
+  });
+})();
 </script>
 </body>
 </html>
