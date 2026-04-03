@@ -6,551 +6,413 @@
 <title>Weekly Update — David Chen</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
-
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
     width: 100%; height: 100%; overflow: hidden;
-    background: #FFFFFF; color: #000000; -webkit-font-smoothing: antialiased;
+    background: #fff; color: #000; -webkit-font-smoothing: antialiased;
   }
 
   .slide {
-    position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
-    opacity: 0; pointer-events: none; transition: none;
-    overflow: hidden;
+    position: absolute; inset: 0;
+    opacity: 0; pointer-events: none;
+    display: flex; flex-direction: column;
+    padding: 80px; overflow: hidden;
   }
   .slide.active { opacity: 1; pointer-events: auto; }
 
   #counter {
     position: fixed; top: 32px; left: 40px;
     font-family: 'Space Mono', monospace; font-size: 32px; font-weight: 700;
-    letter-spacing: 2px; z-index: 1000; color: #000; line-height: 1;
+    letter-spacing: 2px; z-index: 1000;
   }
 
   /* ── Tokens ── */
-  .yellow-highlight { background: #FFD600; display: inline; padding: 0 12px; line-height: 1.15; }
+  .yh { background: #FFD600; display: inline; padding: 0 12px; line-height: 1.15; }
   .label {
     font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 3px;
   }
-  .section-label { border: 3px solid #000; padding: 10px 24px; display: inline-block; }
+  .slabel { border: 3px solid #000; padding: 10px 24px; display: inline-block; }
   .tag {
     font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 2px; padding: 8px 16px;
     display: inline-block; line-height: 1;
   }
-  .tag-done { background: #FFD600; color: #000; border: 3px solid #000; }
-  .tag-black { background: #000; color: #fff; border: 3px solid #000; }
+  .ty { background: #FFD600; color: #000; border: 3px solid #000; }
+  .tb { background: #000; color: #fff; border: 3px solid #000; }
 
-  /* ── Animations ── */
-  @keyframes brutalistSlam {
-    from { transform: translateY(-60px); } to { transform: translateY(0); }
+  /* ── Deco ── */
+  .deco {
+    position: absolute; border: 4px solid #000;
   }
-  @keyframes brutalistBlink {
-    0%{opacity:0}25%{opacity:1}50%{opacity:0}75%{opacity:1}100%{opacity:1}
-  }
-  .slide.active .a0 { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; }
-  .slide.active .a1 { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.08s; }
-  .slide.active .a2 { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.16s; }
-  .slide.active .a3 { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.24s; }
 
-  /* ═══════════════════════════════════════
-     SLIDE 1 — TITLE (identical to template)
-     ═══════════════════════════════════════ */
-  .slide-1 .title-block { position: absolute; top: 120px; left: 80px; }
-  .slide-1 .title-line {
+  /* ── Anim ── */
+  @keyframes slam { from { transform: translateY(-60px); } to { transform: translateY(0); } }
+  @keyframes blink { 0%{opacity:0}25%{opacity:1}50%{opacity:0}75%{opacity:1}100%{opacity:1} }
+  .slide.active .a0 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; }
+  .slide.active .a1 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; animation-delay: .08s; }
+  .slide.active .a2 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; animation-delay: .16s; }
+
+  /* ═══════════════════════════════════
+     S1 — TITLE (identical to template)
+     ═══════════════════════════════════ */
+  .s1 .tb0 { position: absolute; top: 120px; left: 80px; }
+  .s1 .tl {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(100px, 12vw, 160px); line-height: 0.88;
+    font-size: clamp(100px, 12vw, 160px); line-height: .88;
     text-transform: uppercase; letter-spacing: -6px;
   }
-  .slide-1 .subtitle {
-    font-family: 'Inter', sans-serif; font-weight: 400; font-size: 18px;
-    margin-top: 32px; opacity: 0.4;
-  }
-  .slide-1 .date-box {
+  .s1 .sub { font-family: 'Inter'; font-weight: 400; font-size: 18px; margin-top: 32px; opacity: .4; }
+  .s1 .db {
     position: absolute; bottom: 80px; right: 80px;
     border: 4px solid #000; padding: 20px 32px;
     font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; letter-spacing: 4px;
   }
-  .slide-1 .corner-mark {
+  .s1 .cm {
     position: absolute; bottom: 80px; left: 80px;
-    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 400;
-    letter-spacing: 2px; text-transform: uppercase; opacity: 0.4;
+    font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 2px;
+    text-transform: uppercase; opacity: .4;
   }
-  .slide-1 .vr {
-    position: absolute; top: 0; right: 35%; height: 100%;
-    border-left: 3px solid #000; opacity: 0.06;
-  }
-  .slide-1 .hr {
-    position: absolute; left: 0; bottom: 45%; width: 100%;
-    border-top: 3px solid #000; opacity: 0.06;
-  }
+  .s1 .vr { position: absolute; top: 0; right: 35%; height: 100%; border-left: 3px solid #000; opacity: .06; }
+  .s1 .hr { position: absolute; left: 0; bottom: 45%; width: 100%; border-top: 3px solid #000; opacity: .06; }
 
-  /* ═══════════════════════════════════════
-     SLIDE 2 — CHROMIUM MILESTONE
-     Layout: label top-left, hero number center-left,
-     callout + stats anchored bottom
-     ═══════════════════════════════════════ */
-  .slide-2 {
-    display: flex; flex-direction: column;
-    padding: 80px;
+  /* ═══════════════════════════════════
+     S2 — CHROMIUM SUMMARY
+     Like template's Summary: bordered box
+     with big stat + text. Nothing else.
+     ═══════════════════════════════════ */
+  .s2 { padding: 120px 80px 80px; }
+  .s2 .content-box {
+    border: 3px solid #000; padding: 48px;
+    max-width: 800px; margin-top: 60px;
   }
-  .slide-2 .top { margin-bottom: auto; }
-  .slide-2 .middle {
-    display: flex; align-items: flex-end; gap: 40px;
-    margin-bottom: auto;
-  }
-  .slide-2 .big-num {
+  .s2 .big {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(100px, 14vw, 180px); line-height: 0.85; letter-spacing: -6px;
+    font-size: clamp(80px, 10vw, 120px); line-height: 1; letter-spacing: -4px;
+    margin-bottom: 24px;
   }
-  .slide-2 .big-context {
+  .s2 .text {
     font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: clamp(20px, 2.2vw, 28px); line-height: 1.25; letter-spacing: -0.5px;
-    padding-bottom: 16px; max-width: 400px;
+    font-size: clamp(24px, 3vw, 36px); line-height: 1.25; letter-spacing: -0.5px;
   }
-  .slide-2 .bottom {}
-  .slide-2 .callout {
-    background: #FFD600; border: 3px solid #000; padding: 14px 24px;
-    margin-bottom: 20px; max-width: 650px;
+  .s2 .deco1 { right: 80px; top: 120px; width: 180px; height: 180px; }
+  .s2 .deco2 { right: 0; bottom: 200px; width: 40%; height: 0; border-top: 3px solid #000; opacity: .1; border-left: 0; border-right: 0; border-bottom: 0; }
+
+  /* ═══════════════════════════════════
+     S3 — CHROMIUM MILESTONE
+     Yellow callout + 3 quiet stats below
+     ═══════════════════════════════════ */
+  .s3 { padding: 120px 80px 80px; justify-content: center; }
+  .s3 .callout {
+    background: #FFD600; border: 3px solid #000; padding: 28px 36px;
+    max-width: 700px;
   }
-  .slide-2 .callout li {
-    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+  .s3 .callout li {
+    font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700;
     line-height: 1.6; list-style: none;
   }
-  .slide-2 .callout li::before { content: "■ "; }
-  .slide-2 .stat-line { display: flex; gap: 28px; }
-  .slide-2 .stat-item {
-    font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 1px;
-    text-transform: uppercase; opacity: 0.3;
+  .s3 .callout li::before { content: "■ "; }
+  .s3 .stats {
+    display: flex; gap: 0; max-width: 700px; margin-top: 32px;
   }
-  .slide-2 .stat-item strong {
-    font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 900;
-    letter-spacing: -1px; opacity: 1; color: #000; display: block;
+  .s3 .st {
+    border: 3px solid #000; padding: 20px 28px; flex: 1; margin-left: -3px;
   }
-  .slide-2 .deco-box {
-    position: absolute; right: 80px; top: 80px;
-    width: 160px; height: 160px; border: 4px solid #000;
-  }
-
-  /* ═══════════════════════════════════════
-     SLIDE 3 — DESIGN DISCUSSIONS
-     Vertically centered, label top-left anchor
-     ═══════════════════════════════════════ */
-  .slide-3 {
-    display: flex; flex-direction: column;
-    padding: 80px;
-  }
-  .slide-3 .top { margin-bottom: auto; }
-  .slide-3 .center { margin-bottom: auto; }
-
-  .slide-3 .hero-text {
+  .s3 .st:first-child { margin-left: 0; }
+  .s3 .st-n {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(28px, 3.5vw, 44px); line-height: 1.15; letter-spacing: -1px;
-    margin-bottom: 36px; max-width: 600px;
+    font-size: 36px; letter-spacing: -1px; line-height: 1;
   }
-
-  .slide-3 .disc-list { max-width: 760px; }
-  .slide-3 .disc-item {
-    border: 3px solid #000; padding: 14px 20px; margin-top: -3px;
-    display: flex; gap: 14px; align-items: baseline;
-  }
-  .slide-3 .disc-item:first-child { margin-top: 0; }
-  .slide-3 .disc-num {
-    font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; flex-shrink: 0;
-  }
-  .slide-3 .disc-text {
-    font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5;
-  }
-  .slide-3 .disc-text strong { font-weight: 700; }
-  .slide-3 .disc-text .issue {
-    font-family: 'Space Mono', monospace; font-size: 10px;
-    background: rgba(0,0,0,0.06); padding: 2px 8px; margin-left: 4px;
-  }
-  .slide-3 .disc-item.resolved .disc-num { background: #FFD600; padding: 2px 8px; }
-
-  .slide-3 .deco-line {
-    position: absolute; right: 0; bottom: 160px; width: 30%;
-    border-top: 3px solid #000; opacity: 0.06;
-  }
-  .slide-3 .deco-box {
-    position: absolute; right: 80px; bottom: 80px;
-    width: 120px; height: 120px; border: 4px solid #000;
-  }
-
-  .slide.active .disc-item:nth-child(1) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.10s; }
-  .slide.active .disc-item:nth-child(2) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.16s; }
-  .slide.active .disc-item:nth-child(3) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.22s; }
-  .slide.active .disc-item:nth-child(4) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.28s; }
-  .slide.active .disc-item:nth-child(5) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.34s; }
-
-  /* ═══════════════════════════════════════
-     SLIDE 4 — PHASE 3
-     Big statement top, phase cards middle,
-     details bottom
-     ═══════════════════════════════════════ */
-  .slide-4 {
-    display: flex; flex-direction: column;
-    padding: 80px;
-  }
-  .slide-4 .top { margin-bottom: auto; }
-  .slide-4 .hero-text {
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(44px, 6vw, 80px); line-height: 0.92;
-    letter-spacing: -3px; margin-top: 24px; max-width: 700px;
-  }
-  .slide-4 .middle { margin-bottom: auto; }
-  .slide-4 .phase-row {
-    display: flex; gap: 0; max-width: 960px; width: 100%;
-  }
-  .slide-4 .phase-item {
-    border: 3px solid #000; padding: 16px 20px; flex: 1; margin-left: -3px;
-  }
-  .slide-4 .phase-item:first-child { margin-left: 0; }
-  .slide-4 .phase-item.now { background: #FFD600; }
-  .slide-4 .phase-num {
+  .s3 .st-l {
     font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; opacity: 0.3; margin-bottom: 4px;
+    letter-spacing: 2px; text-transform: uppercase; opacity: .35; margin-top: 4px;
   }
-  .slide-4 .phase-item.now .phase-num { opacity: 1; }
-  .slide-4 .phase-item h3 {
-    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 14px; letter-spacing: -0.2px;
-  }
-  .slide-4 .phase-item:not(.now) h3 { opacity: 0.25; }
-  .slide-4 .phase-item li {
-    font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.5; list-style: none;
-  }
-  .slide-4 .phase-item:not(.now) li { opacity: 0.15; }
-  .slide-4 .phase-item.now li { opacity: 0.65; }
+  .s3 .deco1 { right: 80px; bottom: 80px; width: 160px; height: 100px; }
 
-  .slide-4 .bottom {}
-  .slide-4 .details {
-    max-width: 960px; columns: 2; column-gap: 40px;
-  }
-  .slide-4 .details li {
-    font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6;
-    list-style: none; padding: 2px 0; opacity: 0.5; break-inside: avoid;
-  }
-  .slide-4 .details strong { font-weight: 700; opacity: 1; color: #000; }
-  .slide-4 .deco-line {
-    position: absolute; right: 0; bottom: 120px; width: 25%;
-    border-top: 3px solid #000; opacity: 0.06;
-  }
-
-  /* ═══════════════════════════════════════
-     SLIDE 5 — BUG SKILL
-     Hero 5× vertically centered with compare below
-     ═══════════════════════════════════════ */
-  .slide-5 {
-    display: flex; flex-direction: column;
-    padding: 80px;
-  }
-  .slide-5 .top { margin-bottom: auto; }
-  .slide-5 .middle { margin-bottom: auto; }
-  .slide-5 .hero-stat {
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(120px, 16vw, 200px); line-height: 0.82;
-    letter-spacing: -8px;
-  }
-  .slide-5 .hero-desc {
-    font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: clamp(18px, 2vw, 26px); letter-spacing: -0.5px;
-    opacity: 0.35; margin-top: 8px;
-  }
-
-  .slide-5 .bottom {}
-  .slide-5 .compare {
-    display: flex; gap: 0; max-width: 800px; width: 100%; margin-bottom: 20px;
-  }
-  .slide-5 .ccard {
-    border: 3px solid #000; padding: 16px 20px; flex: 1; margin-left: -3px;
-  }
-  .slide-5 .ccard:first-child { margin-left: 0; }
-  .slide-5 .ccard.after { background: #FFD600; }
-  .slide-5 .clabel {
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;
-  }
-  .slide-5 .ccard.before .clabel { opacity: 0.3; }
-  .slide-5 .ccard li {
-    font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.55;
-    list-style: none; padding: 1px 0;
-  }
-  .slide-5 .ccard li::before { content: "— "; font-weight: 700; }
-  .slide-5 .ccard.before li { opacity: 0.25; text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.08); }
-
-  .slide-5 .impact-line { display: flex; gap: 28px; }
-  .slide-5 .impact-item {
-    font-family: 'Space Mono', monospace; font-size: 11px;
-    letter-spacing: 1px; text-transform: uppercase; opacity: 0.3;
-  }
-  .slide-5 .impact-item strong {
-    font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 900;
-    letter-spacing: -1px; display: block; opacity: 1; color: #000;
-  }
-  .slide-5 .deco-rect {
-    position: absolute; right: 80px; top: 80px;
-    width: 200px; height: 120px; border: 4px solid #000;
-  }
-
-  /* ═══════════════════════════════════════
-     SLIDE 6 — NEXT WEEK
-     Big title + items vertically distributed
-     ═══════════════════════════════════════ */
-  .slide-6 {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 80px;
-  }
-  .slide-6 .mind-title {
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(60px, 9vw, 130px); line-height: 0.92;
-    text-transform: uppercase; letter-spacing: -5px; margin-bottom: 40px;
-  }
-  .slide-6 .next-list { max-width: 720px; width: 100%; }
-  .slide-6 .next-item {
-    border: 3px solid #000; padding: 16px 24px; margin-top: -3px;
+  /* ═══════════════════════════════════
+     S4 — DESIGN DISCUSSIONS
+     Like template's Progress: stacked items
+     ═══════════════════════════════════ */
+  .s4 { padding: 120px 80px 80px; }
+  .s4 .list { max-width: 800px; margin-top: 48px; }
+  .s4 .item {
+    border: 3px solid #000; padding: 22px 28px; margin-top: -3px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .slide-6 .next-item:first-child { margin-top: 0; }
-  .slide-6 .next-name {
+  .s4 .item:first-child { margin-top: 0; }
+  .s4 .item-left { flex: 1; }
+  .s4 .item-name {
     font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: clamp(15px, 1.8vw, 20px); letter-spacing: -0.3px;
+    font-size: clamp(17px, 2vw, 24px); letter-spacing: -.3px; margin-bottom: 4px;
   }
-  .slide-6 .next-desc {
+  .s4 .item-desc {
     font-family: 'Inter', sans-serif; font-weight: 400;
-    font-size: clamp(11px, 1.2vw, 14px); opacity: 0.35; margin-top: 2px;
+    font-size: clamp(13px, 1.4vw, 16px); opacity: .45;
   }
-  .slide-6 .next-tag { flex-shrink: 0; margin-left: 20px; }
-  .slide-6 .deco-stripe { max-width: 500px; border-top: 4px solid #000; margin-top: 36px; }
-  .slide-6 .deco-stripe-2 { max-width: 300px; border-top: 4px solid #000; margin-top: 12px; }
-  .slide-6 .deco-box-br {
-    position: absolute; right: 80px; bottom: 80px;
-    width: 200px; height: 200px; border: 4px solid #000;
-  }
-  .slide-6 .deco-box-inner {
-    position: absolute; right: 100px; bottom: 100px;
-    width: 120px; height: 120px; border: 3px solid #000; opacity: 0.15;
-  }
+  .s4 .item-right { flex-shrink: 0; margin-left: 24px; }
 
-  .slide.active .next-item:nth-child(1) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.08s; }
-  .slide.active .next-item:nth-child(2) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.14s; }
-  .slide.active .next-item:nth-child(3) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.20s; }
-  .slide.active .next-item:nth-child(4) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.26s; }
-  .slide.active .next-item:nth-child(5) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.32s; }
+  .slide.active .s4 .item:nth-child(1) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .06s; }
+  .slide.active .s4 .item:nth-child(2) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .12s; }
+  .slide.active .s4 .item:nth-child(3) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .18s; }
+  .slide.active .s4 .item:nth-child(4) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .24s; }
+  .slide.active .s4 .item:nth-child(5) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .30s; }
+
+  /* ═══════════════════════════════════
+     S5 — PHASE 3
+     Like template's Newsletter: big stat + text
+     ═══════════════════════════════════ */
+  .s5 { padding: 120px 80px 80px; }
+  .s5 .big {
+    font-family: 'Inter', sans-serif; font-weight: 900;
+    font-size: clamp(80px, 10vw, 120px); line-height: 1; letter-spacing: -4px;
+    margin-bottom: 32px; margin-top: 48px;
+  }
+  .s5 .text {
+    font-family: 'Inter', sans-serif; font-weight: 700;
+    font-size: clamp(22px, 2.8vw, 34px); line-height: 1.3; letter-spacing: -.5px;
+    max-width: 700px;
+  }
+  .s5 .thick-rule {
+    max-width: 1100px; border-top: 4px solid #000; margin-top: 48px;
+  }
+  .s5 .deco1 { right: 80px; bottom: 80px; width: 260px; height: 140px; }
+
+  /* ═══════════════════════════════════
+     S6 — PHASE 3 DETAILS
+     Phase cards (progress items style)
+     ═══════════════════════════════════ */
+  .s6 { padding: 120px 80px 80px; }
+  .s6 .phases {
+    display: flex; gap: 0; max-width: 1000px; width: 100%; margin-top: 48px;
+  }
+  .s6 .ph {
+    border: 3px solid #000; padding: 28px 32px; flex: 1; margin-left: -3px;
+  }
+  .s6 .ph:first-child { margin-left: 0; }
+  .s6 .ph.now { background: #FFD600; }
+  .s6 .ph-label {
+    font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; opacity: .3; margin-bottom: 8px;
+  }
+  .s6 .ph.now .ph-label { opacity: 1; }
+  .s6 .ph h3 {
+    font-family: 'Inter', sans-serif; font-weight: 900;
+    font-size: clamp(16px, 2vw, 22px); letter-spacing: -.3px; margin-bottom: 12px;
+  }
+  .s6 .ph:not(.now) h3 { opacity: .3; }
+  .s6 .ph li {
+    font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6; list-style: none;
+  }
+  .s6 .ph:not(.now) li { opacity: .2; }
+  .s6 .ph.now li { opacity: .7; }
+  .s6 .deco1 { right: 0; bottom: 140px; width: 30%; height: 0; border-top: 3px solid #000; opacity: .06; border-left: 0; border-right: 0; border-bottom: 0; }
+
+  /* ═══════════════════════════════════
+     S7 — BUG SKILL
+     Like template's Summary: big stat in box
+     ═══════════════════════════════════ */
+  .s7 { padding: 120px 80px 80px; }
+  .s7 .content-box {
+    border: 3px solid #000; padding: 48px;
+    max-width: 800px; margin-top: 60px;
+  }
+  .s7 .big {
+    font-family: 'Inter', sans-serif; font-weight: 900;
+    font-size: clamp(80px, 10vw, 120px); line-height: 1; letter-spacing: -4px;
+    margin-bottom: 24px;
+  }
+  .s7 .text {
+    font-family: 'Inter', sans-serif; font-weight: 700;
+    font-size: clamp(24px, 3vw, 36px); line-height: 1.25; letter-spacing: -.5px;
+  }
+  .s7 .deco1 { right: 80px; top: 120px; width: 140px; height: 140px; }
+  .s7 .deco2 { right: 0; bottom: 200px; width: 35%; height: 0; border-top: 3px solid #000; opacity: .08; border-left: 0; border-right: 0; border-bottom: 0; }
+
+  /* ═══════════════════════════════════
+     S8 — BUG SKILL COMPARE
+     Before/After as progress items
+     ═══════════════════════════════════ */
+  .s8 { padding: 120px 80px 80px; }
+  .s8 .pair {
+    display: flex; gap: 0; max-width: 900px; margin-top: 48px;
+  }
+  .s8 .card {
+    border: 3px solid #000; padding: 32px 36px; flex: 1; margin-left: -3px;
+  }
+  .s8 .card:first-child { margin-left: 0; }
+  .s8 .card.after { background: #FFD600; }
+  .s8 .card-label {
+    font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;
+  }
+  .s8 .card.before .card-label { opacity: .3; }
+  .s8 .card li {
+    font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7;
+    list-style: none; padding: 3px 0;
+  }
+  .s8 .card li::before { content: "— "; font-weight: 700; }
+  .s8 .card.before li { opacity: .3; text-decoration: line-through; text-decoration-color: rgba(0,0,0,.1); }
+  .s8 .deco1 { right: 80px; bottom: 80px; width: 200px; height: 120px; }
+
+  /* ═══════════════════════════════════
+     S9 — NEXT WEEK (Top of Mind style)
+     ═══════════════════════════════════ */
+  .s9 { padding: 120px 80px 80px; }
+  .s9 .mind {
+    font-family: 'Inter', sans-serif; font-weight: 900;
+    font-size: clamp(60px, 9vw, 130px); line-height: .92;
+    text-transform: uppercase; letter-spacing: -5px; margin-bottom: 40px;
+  }
+  .s9 .text {
+    font-family: 'Inter', sans-serif; font-weight: 700;
+    font-size: clamp(22px, 2.8vw, 34px); line-height: 1.3; letter-spacing: -.5px;
+    max-width: 700px;
+  }
+  .s9 .ds { max-width: 500px; border-top: 4px solid #000; margin-top: 48px; }
+  .s9 .ds2 { max-width: 300px; border-top: 4px solid #000; margin-top: 16px; }
+  .s9 .deco1 { right: 80px; bottom: 80px; width: 200px; height: 200px; }
+  .s9 .deco2 { right: 100px; bottom: 100px; width: 120px; height: 120px; opacity: .15; }
 </style>
 </head>
 <body>
 
-<div id="counter">01/06</div>
+<div id="counter">01/09</div>
 
-<!-- ═══ SLIDE 1: TITLE ═══ -->
-<div class="slide slide-1 active" data-index="0">
+<!-- S1: TITLE -->
+<div class="slide s1 active" data-i="0">
   <div class="vr"></div><div class="hr"></div>
-  <div class="title-block a0">
-    <div class="title-line">WEEKLY</div>
-    <div class="title-line"><span class="yellow-highlight">UPDATE</span></div>
-    <p class="subtitle">David Chen · Principal Designer</p>
-  </div>
-  <div class="date-box a1">03.28 — 04.03</div>
-  <div class="corner-mark">Weekly Update / Brutalist</div>
+  <div class="tb0 a0"><div class="tl">WEEKLY</div><div class="tl"><span class="yh">UPDATE</span></div><p class="sub">David Chen · Principal Designer</p></div>
+  <div class="db a1">03.28 — 04.03</div>
+  <div class="cm">Weekly Update / Brutalist</div>
 </div>
 
-<!-- ═══ SLIDE 2: CHROMIUM MILESTONE ═══ -->
-<div class="slide slide-2" data-index="1">
-  <div class="top">
-    <div class="section-label a0"><span class="label">Copilot Mac Chromium</span></div>
+<!-- S2: CHROMIUM — 179 HERO -->
+<div class="slide s2" data-i="1">
+  <div class="slabel a0"><span class="label">Copilot Mac Chromium</span></div>
+  <div class="content-box a1">
+    <div class="big"><span class="yh">179</span></div>
+    <div class="text">issues closed in one week — 其中 158 帶 Chromium label</div>
   </div>
-  <div class="middle a1">
-    <div class="big-num"><span class="yellow-highlight">179</span></div>
-    <div class="big-context">issues closed this week<br>其中 158 帶 Chromium label</div>
-  </div>
-  <div class="bottom">
-    <div class="callout a2">
-      <ul>
-        <li>Dev Build 正式發布 workstream-wide internal dogfood on staging</li>
-        <li>被列入官方公告核心貢獻者（Designer / Tester / PM 代表）</li>
-      </ul>
-    </div>
-    <div class="stat-line a3">
-      <div class="stat-item"><strong>171</strong>In Progress</div>
-      <div class="stat-item"><strong>58</strong>PR / Merged</div>
-      <div class="stat-item"><strong>250+</strong>Backlog</div>
-    </div>
-  </div>
-  <div class="deco-box"></div>
+  <div class="deco deco1"></div>
+  <div class="deco deco2"></div>
 </div>
 
-<!-- ═══ SLIDE 3: DESIGN DISCUSSIONS ═══ -->
-<div class="slide slide-3" data-index="2">
-  <div class="top">
-    <div class="section-label a0"><span class="label">Design Discussion</span></div>
-  </div>
-  <div class="center">
-    <div class="hero-text a1">本週 5 個設計議題<br>推動面板邏輯統一</div>
-    <div class="disc-list">
-      <div class="disc-item">
-        <span class="disc-num">01</span>
-        <div class="disc-text"><strong>Navigation & Panel Layout</strong> — 提議統一 Pages 互斥邏輯，待 May 出新 spec</div>
-      </div>
-      <div class="disc-item">
-        <span class="disc-num">02</span>
-        <div class="disc-text"><strong>Win→Mac Leverage 品質落差</strong> — 建議優先對齊 CMC</div>
-      </div>
-      <div class="disc-item resolved">
-        <span class="disc-num">03</span>
-        <div class="disc-text"><strong>Browser 空條問題</strong> <span class="issue">MAC-11473</span> — 4/3 修復驗證通過</div>
-      </div>
-      <div class="disc-item">
-        <span class="disc-num">04</span>
-        <div class="disc-text"><strong>Sidebar Profile 滾動</strong> <span class="issue">MAC-11601</span> — 已歸類 Design-Fit</div>
-      </div>
-      <div class="disc-item">
-        <span class="disc-num">05</span>
-        <div class="disc-text"><strong>Browser 出現頻率</strong> — 建議降低，配合 Sergey 整體 vision</div>
-      </div>
-    </div>
-  </div>
-  <div class="deco-line"></div>
-  <div class="deco-box"></div>
-</div>
-
-<!-- ═══ SLIDE 4: PHASE 3 ═══ -->
-<div class="slide slide-4" data-index="3">
-  <div class="top">
-    <div class="section-label a0"><span class="label">AI Transformation</span></div>
-    <div class="hero-text a1">Change How<br>We <span class="yellow-highlight">Work</span></div>
-  </div>
-  <div class="middle a2">
-    <div class="phase-row">
-      <div class="phase-item">
-        <div class="phase-num">Phase 1</div>
-        <h3>Get everyone started</h3>
-        <ul><li>AI curiosity</li><li>Experimentation</li><li>Learning by doing</li></ul>
-      </div>
-      <div class="phase-item">
-        <div class="phase-num">Phase 2</div>
-        <h3>Change how we design</h3>
-        <ul><li>Static → dynamic</li><li>Designers → builders</li><li>AI-augmented craft</li></ul>
-      </div>
-      <div class="phase-item now">
-        <div class="phase-num">Phase 3 · Now</div>
-        <h3>Change how we work</h3>
-        <ul><li>AI as team memory</li><li>Knowledge automation</li><li>Intelligent workflows</li></ul>
-      </div>
-    </div>
-  </div>
-  <div class="bottom a3">
-    <ul class="details">
-      <li>組織 4/1、4/3 兩場 hands-on session</li>
-      <li>帶領團隊完成 <strong>Claude Code + connector</strong> 配置</li>
-      <li>接入 <strong>Slack、M365、Linear</strong> 三大數據源</li>
-      <li>即時排除 MCP、路徑、proxy 等環境故障</li>
-      <li><strong>Connector = AI agent team memory</strong></li>
-      <li>目標：全員覆蓋，可複製 onboarding 流程</li>
+<!-- S3: CHROMIUM — MILESTONE -->
+<div class="slide s3" data-i="2">
+  <div class="slabel a0"><span class="label">Milestone</span></div>
+  <div class="callout a1">
+    <ul>
+      <li>Dev Build 正式發布 workstream-wide internal dogfood on staging</li>
+      <li>被列入官方公告核心貢獻者（Designer / Tester / PM 代表）</li>
     </ul>
   </div>
-  <div class="deco-line"></div>
+  <div class="stats a2">
+    <div class="st"><div class="st-n">171</div><div class="st-l">In Progress</div></div>
+    <div class="st"><div class="st-n">58</div><div class="st-l">PR / Merged</div></div>
+    <div class="st"><div class="st-n">250+</div><div class="st-l">Backlog</div></div>
+  </div>
+  <div class="deco deco1"></div>
 </div>
 
-<!-- ═══ SLIDE 5: BUG SKILL ═══ -->
-<div class="slide slide-5" data-index="4">
-  <div class="top">
-    <div class="section-label a0"><span class="label">CMC Bug Reporting Skill</span></div>
+<!-- S4: DESIGN DISCUSSIONS (Progress style) -->
+<div class="slide s4" data-i="3">
+  <div class="slabel a0"><span class="label">Design Discussion</span></div>
+  <div class="list">
+    <div class="item"><div class="item-left"><div class="item-name">Navigation & Panel Layout</div><div class="item-desc">提議統一 Pages 互斥邏輯，待 May 出新 spec</div></div><div class="item-right"><span class="tag tb">[SPEC]</span></div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Win→Mac Leverage 品質落差</div><div class="item-desc">建議優先對齊 CMC 而非 Windows</div></div><div class="item-right"><span class="tag tb">[REVIEW]</span></div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Browser 空條問題</div><div class="item-desc">MAC-11473 — 4/3 修復驗證通過</div></div><div class="item-right"><span class="tag ty">[FIXED]</span></div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Sidebar Profile 滾動</div><div class="item-desc">MAC-11601 — 已歸類 Design-Fit</div></div><div class="item-right"><span class="tag tb">[FILED]</span></div></div>
+    <div class="item"><div class="item-left"><div class="item-name">Browser 出現頻率</div><div class="item-desc">建議降低，配合 Sergey 整體 vision</div></div><div class="item-right"><span class="tag tb">[REVIEW]</span></div></div>
   </div>
-  <div class="middle a1">
-    <div class="hero-stat"><span class="yellow-highlight">5×</span></div>
-    <div class="hero-desc">faster bug filing — v1.2.0</div>
-  </div>
-  <div class="bottom">
-    <div class="compare a2">
-      <div class="ccard before">
-        <div class="clabel">Before · ~5 min</div>
-        <ul>
-          <li>Linear 手動選 Team → Project → Label</li>
-          <li>重複填模板欄位</li>
-          <li>中文自己翻譯成英文</li>
-        </ul>
-      </div>
-      <div class="ccard after">
-        <div class="clabel">After · ~1 min</div>
-        <ul>
-          <li>回答問題即可建立 issue</li>
-          <li>中文直接輸入，自動翻譯</li>
-          <li>截圖自動判斷類型</li>
-          <li>版本號記憶，自動帶入</li>
-        </ul>
-      </div>
-    </div>
-    <div class="impact-line a3">
-      <div class="impact-item"><strong>3</strong>Issues Created · E2E</div>
-      <div class="impact-item"><strong>Team</strong>CM Design Review 推動採用</div>
-    </div>
-  </div>
-  <div class="deco-rect"></div>
 </div>
 
-<!-- ═══ SLIDE 6: NEXT WEEK ═══ -->
-<div class="slide slide-6" data-index="5">
-  <div class="mind-title a0">NEXT<br>WEEK</div>
-  <div class="next-list">
-    <div class="next-item">
-      <div><div class="next-name">Chromium Dogfood</div><div class="next-desc">持續 design quality review，配合 critical PR merge</div></div>
-      <div class="next-tag"><span class="tag tag-black">[ONGOING]</span></div>
+<!-- S5: PHASE 3 — HEADLINE (Newsletter style) -->
+<div class="slide s5" data-i="4">
+  <div class="slabel a0"><span class="label">AI Transformation</span></div>
+  <div class="big a1"><span class="yh">Phase 3</span></div>
+  <div class="text a2">Change how we work — AI as team memory, automated knowledge management, intelligent workflows across design team</div>
+  <div class="thick-rule"></div>
+  <div class="deco deco1"></div>
+</div>
+
+<!-- S6: PHASE 3 — ROADMAP -->
+<div class="slide s6" data-i="5">
+  <div class="slabel a0"><span class="label">Phase Roadmap</span></div>
+  <div class="phases a1">
+    <div class="ph"><div class="ph-label">Phase 1</div><h3>Get everyone started</h3><ul><li>AI curiosity across the team</li><li>Hands-on experimentation</li><li>Learning by doing</li></ul></div>
+    <div class="ph"><div class="ph-label">Phase 2</div><h3>Change how we design</h3><ul><li>From static to dynamic systems</li><li>Designers becoming builders</li><li>AI-augmented craft</li></ul></div>
+    <div class="ph now"><div class="ph-label">Phase 3 · Now</div><h3>Change how we work</h3><ul><li>AI as team memory & coordinator</li><li>Automated knowledge mgmt</li><li>Intelligent workflows</li></ul></div>
+  </div>
+  <div class="deco deco1"></div>
+</div>
+
+<!-- S7: BUG SKILL — 5× HERO -->
+<div class="slide s7" data-i="6">
+  <div class="slabel a0"><span class="label">CMC Bug Reporting Skill</span></div>
+  <div class="content-box a1">
+    <div class="big"><span class="yh">5×</span></div>
+    <div class="text">faster bug filing — from ~5 min to ~1 min per issue (v1.2.0)</div>
+  </div>
+  <div class="deco deco1"></div>
+  <div class="deco deco2"></div>
+</div>
+
+<!-- S8: BUG SKILL — COMPARE -->
+<div class="slide s8" data-i="7">
+  <div class="slabel a0"><span class="label">Before → After</span></div>
+  <div class="pair a1">
+    <div class="card before">
+      <div class="card-label">Before · ~5 min</div>
+      <ul>
+        <li>Linear 手動選 Team → Project → Label</li>
+        <li>重複填模板欄位（repro、版本號、截圖）</li>
+        <li>中文自己翻譯成英文</li>
+      </ul>
     </div>
-    <div class="next-item">
-      <div><div class="next-name">Split-window spec</div><div class="next-desc">Follow up May 的新互斥邏輯設計</div></div>
-      <div class="next-tag"><span class="tag tag-done">[NEW]</span></div>
-    </div>
-    <div class="next-item">
-      <div><div class="next-name">MAC-11487</div><div class="next-desc">跟進 chat 雙擊頂部視窗切換問題</div></div>
-      <div class="next-tag"><span class="tag tag-black">[BUG]</span></div>
-    </div>
-    <div class="next-item">
-      <div><div class="next-name">Phase 3 推進</div><div class="next-desc">1:1 輔導，目標全員 connector 覆蓋</div></div>
-      <div class="next-tag"><span class="tag tag-black">[ONGOING]</span></div>
-    </div>
-    <div class="next-item">
-      <div><div class="next-name">CMC Bug Skill</div><div class="next-desc">根據團隊 feedback 迭代</div></div>
-      <div class="next-tag"><span class="tag tag-done">[ITERATE]</span></div>
+    <div class="card after">
+      <div class="card-label">After · ~1 min</div>
+      <ul>
+        <li>回答問題即可建立 issue</li>
+        <li>中文直接輸入，自動翻譯</li>
+        <li>截圖自動判斷類型</li>
+        <li>版本號記憶，自動帶入</li>
+      </ul>
     </div>
   </div>
-  <div class="deco-stripe"></div>
-  <div class="deco-stripe-2"></div>
-  <div class="deco-box-br"></div>
-  <div class="deco-box-inner"></div>
+  <div class="deco deco1"></div>
+</div>
+
+<!-- S9: NEXT WEEK (Top of Mind style) -->
+<div class="slide s9" data-i="8">
+  <div class="mind a0">NEXT<br>WEEK</div>
+  <div class="text a1">Chromium dogfood 持續推進 · Split-window 新 spec · MAC-11487 跟進 · Phase 3 全員 connector 覆蓋 · Bug Skill 迭代</div>
+  <div class="ds"></div>
+  <div class="ds2"></div>
+  <div class="deco deco1"></div>
+  <div class="deco deco2"></div>
 </div>
 
 <script>
-(function() {
-  var current = 0, slides = document.querySelectorAll('.slide'),
-      total = slides.length, counter = document.getElementById('counter'), lock = false;
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  function goTo(i) {
-    if (i < 0 || i >= total || i === current || lock) return;
-    lock = true;
-    var old = slides[current];
-    old.classList.remove('active');
-    old.querySelectorAll('.a0,.a1,.a2,.a3,.next-item,.disc-item,.tag').forEach(function(el) {
-      el.style.animation = 'none'; void el.offsetHeight; el.style.animation = '';
-    });
-    current = i;
-    slides[current].classList.add('active');
-    counter.textContent = pad(current + 1) + '/' + pad(total);
-    setTimeout(function() { lock = false; }, 400);
+(function(){
+  var c=0,s=document.querySelectorAll('.slide'),t=s.length,ct=document.getElementById('counter'),lk=false;
+  function p(n){return n<10?'0'+n:''+n}
+  function go(i){
+    if(i<0||i>=t||i===c||lk)return;lk=true;
+    var o=s[c];o.classList.remove('active');
+    o.querySelectorAll('.a0,.a1,.a2,.item,.tag').forEach(function(e){e.style.animation='none';void e.offsetHeight;e.style.animation=''});
+    c=i;s[c].classList.add('active');ct.textContent=p(c+1)+'/'+p(t);
+    setTimeout(function(){lk=false},400)
   }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current - 1); }
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(c+1)}
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(c-1)}
   });
-  var tx = 0;
-  document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
-  document.addEventListener('touchend', function(e) {
-    var dx = e.changedTouches[0].clientX - tx;
-    if (Math.abs(dx) > 50) goTo(current + (dx < 0 ? 1 : -1));
-  });
-  document.addEventListener('click', function(e) {
-    if (e.target.closest('.tag, a, button')) return;
-    if (e.clientX > window.innerWidth * 0.65) goTo(current + 1);
-    else if (e.clientX < window.innerWidth * 0.35) goTo(current - 1);
+  var tx=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX});
+  document.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(c+(d<0?1:-1))});
+  document.addEventListener('click',function(e){
+    if(e.target.closest('.tag,a,button'))return;
+    if(e.clientX>innerWidth*.65)go(c+1);else if(e.clientX<innerWidth*.35)go(c-1)
   });
 })();
 </script>
