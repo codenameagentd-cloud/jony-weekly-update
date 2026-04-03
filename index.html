@@ -15,6 +15,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* ── Slide base (identical to template) ── */
   .slide {
     position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
     opacity: 0; pointer-events: none; transition: none;
@@ -23,35 +24,31 @@
   }
   .slide.active { opacity: 1; pointer-events: auto; }
 
-  /* Counter — matches original 32px Space Mono */
+  /* ── Counter (32px Space Mono, top-left — same as template) ── */
   #counter {
     position: fixed; top: 32px; left: 40px;
     font-family: 'Space Mono', monospace; font-size: 32px; font-weight: 700;
     letter-spacing: 2px; z-index: 1000; color: #000; line-height: 1;
   }
 
-  /* ── Shared brutalist tokens ── */
-  .yellow-highlight { background: #FFD600; display: inline; padding: 0 12px; line-height: 1.15; }
-
+  /* ── Brutalist tokens (from template) ── */
+  .yellow-highlight {
+    background: #FFD600; display: inline; padding: 0 12px; line-height: 1.15;
+  }
   .label {
     font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 3px;
   }
-  .bordered-label { border: 3px solid #000; padding: 10px 24px; margin-bottom: 48px; display: inline-block; }
-
+  .bordered-box { border: 3px solid #000; padding: 16px 24px; }
   .tag {
     font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 2px; padding: 8px 16px;
     display: inline-block; line-height: 1;
   }
-  .tag-yellow { background: #FFD600; color: #000; border: 3px solid #000; }
+  .tag-done { background: #FFD600; color: #000; border: 3px solid #000; }
   .tag-black { background: #000; color: #fff; border: 3px solid #000; }
 
-  .deco-box {
-    position: absolute; border: 4px solid #000;
-  }
-
-  /* ── Animations — same as original ── */
+  /* ── Keyframes (from template) ── */
   @keyframes brutalistSlam {
     from { transform: translateY(-60px); } to { transform: translateY(0); }
   }
@@ -59,17 +56,24 @@
     0%{opacity:0}25%{opacity:1}50%{opacity:0}75%{opacity:1}100%{opacity:1}
   }
 
-  /* ════════════════ SLIDE 1: TITLE ════════════════ */
+  /* ════════════════════════════════════════════════
+     SLIDE 1 — TITLE (same layout as template)
+     ════════════════════════════════════════════════ */
   .slide-1 { padding: 0; }
   .slide-1 .title-block { position: absolute; top: 120px; left: 80px; }
-  .slide-1 .title-line {
+  .slide-1 .title-weekly {
+    font-family: 'Inter', sans-serif; font-weight: 900;
+    font-size: clamp(100px, 12vw, 160px); line-height: 0.88;
+    text-transform: uppercase; letter-spacing: -6px; color: #000;
+  }
+  .slide-1 .title-status {
     font-family: 'Inter', sans-serif; font-weight: 900;
     font-size: clamp(100px, 12vw, 160px); line-height: 0.88;
     text-transform: uppercase; letter-spacing: -6px;
   }
   .slide-1 .subtitle {
-    font-family: 'Inter', sans-serif; font-weight: 700; font-size: 20px;
-    margin-top: 28px; letter-spacing: -0.3px; opacity: 0.6;
+    font-family: 'Inter', sans-serif; font-weight: 400; font-size: 18px;
+    margin-top: 32px; opacity: 0.45; letter-spacing: 0.3px;
   }
   .slide-1 .date-box {
     position: absolute; bottom: 80px; right: 80px;
@@ -89,203 +93,246 @@
     position: absolute; left: 0; bottom: 45%; width: 100%;
     border-top: 3px solid #000; opacity: 0.06;
   }
-
   .slide.active .title-block { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; }
   .slide.active .date-box { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.08s; }
 
-  /* ════════════════ SLIDE 2: CHROMIUM ════════════════ */
-  .slide-2 { padding: 120px 80px 60px; overflow-y: auto; }
+  /* ════════════════════════════════════════════════
+     SLIDE 2 — CHROMIUM DOGFOOD
+     Content-heavy: milestone + 4 stats + 5 discussions
+     Layout: label → callout → stat strip → numbered list
+     ════════════════════════════════════════════════ */
+  .slide-2 { padding: 120px 80px 48px; }
 
+  .slide-2 .section-label {
+    border: 3px solid #000; padding: 10px 24px; margin-bottom: 32px;
+  }
+
+  /* Milestone callout — yellow highlight block */
   .slide-2 .callout {
-    background: #FFD600; border: 3px solid #000; padding: 20px 28px; margin-bottom: 36px;
+    background: #FFD600; border: 3px solid #000; padding: 16px 24px; margin-bottom: 28px;
+    max-width: 1000px;
   }
   .slide-2 .callout li {
-    font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700;
-    line-height: 1.7; list-style: none;
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 700;
+    line-height: 1.65; list-style: none;
   }
   .slide-2 .callout li::before { content: "■ "; }
 
-  .slide-2 .stats-row {
-    display: flex; gap: 0; margin-bottom: 36px; max-width: 900px;
+  /* 4 stat blocks — collapsed borders like progress items */
+  .slide-2 .stat-strip {
+    display: flex; max-width: 1000px; margin-bottom: 24px;
   }
   .slide-2 .stat-block {
-    border: 3px solid #000; padding: 20px 28px; flex: 1; margin-left: -3px;
+    border: 3px solid #000; padding: 14px 20px; flex: 1; margin-left: -3px;
+    display: flex; align-items: baseline; gap: 12px;
   }
   .slide-2 .stat-block:first-child { margin-left: 0; }
   .slide-2 .stat-num {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(36px, 5vw, 56px); letter-spacing: -2px; line-height: 1;
+    font-size: 32px; letter-spacing: -1px; line-height: 1;
   }
-  .slide-2 .stat-label {
+  .slide-2 .stat-meta {
+    font-family: 'Inter', sans-serif; font-size: 11px; opacity: 0.45; line-height: 1.3;
+  }
+  .slide-2 .stat-meta strong {
     font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; margin-top: 6px;
-  }
-  .slide-2 .stat-detail {
-    font-family: 'Inter', sans-serif; font-size: 11px; opacity: 0.4; margin-top: 4px;
+    letter-spacing: 1px; text-transform: uppercase; display: block; opacity: 1; color: #000;
   }
 
-  .slide-2 .disc-list { list-style: none; max-width: 900px; }
+  /* Discussion list — compact numbered items */
+  .slide-2 .disc-list { list-style: none; max-width: 1000px; }
   .slide-2 .disc-list li {
-    font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65;
-    padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.08);
-    display: grid; grid-template-columns: 28px 1fr; gap: 0;
+    font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.55;
+    padding: 7px 0; border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex; gap: 10px;
   }
   .slide-2 .disc-list li:last-child { border: none; }
   .slide-2 .disc-num {
-    font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; padding-top: 2px;
+    font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
+    flex-shrink: 0; padding-top: 1px;
   }
   .slide-2 .disc-list strong { font-weight: 700; }
   .slide-2 .disc-list .issue {
     font-family: 'Space Mono', monospace; font-size: 10px;
-    background: rgba(0,0,0,0.06); padding: 2px 8px; margin-left: 4px;
+    background: rgba(0,0,0,0.06); padding: 1px 6px; margin-left: 4px;
   }
 
-  .slide-2 .deco-box-2 { right: 60px; top: 120px; width: 140px; height: 140px; }
+  /* Deco — matching template's deco-box pattern */
+  .slide-2 .deco-box {
+    position: absolute; right: 80px; top: 120px;
+    width: 100px; height: 100px; border: 4px solid #000;
+  }
 
-  .slide.active .slide-2-label { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; }
+  .slide.active .section-label { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; }
   .slide.active .callout { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.05s; }
-  .slide.active .stats-row { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.1s; }
+  .slide.active .stat-strip { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.1s; }
   .slide.active .disc-list { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.15s; }
 
-  /* ════════════════ SLIDE 3: PHASE 3 ════════════════ */
-  .slide-3 { padding: 120px 80px 60px; }
+  /* ════════════════════════════════════════════════
+     SLIDE 3 — AI TRANSFORMATION PHASE 3
+     Layout: label → 3 phase cards (collapsed) → two-col content
+     ════════════════════════════════════════════════ */
+  .slide-3 { padding: 120px 80px 48px; }
 
-  .slide-3 .phase-row {
-    display: flex; gap: 0; margin-bottom: 40px; max-width: 1100px; width: 100%;
+  .slide-3 .phase-strip {
+    display: flex; max-width: 1100px; width: 100%; margin-bottom: 32px;
   }
   .slide-3 .phase-card {
-    border: 3px solid #000; padding: 24px 28px; flex: 1; margin-left: -3px;
+    border: 3px solid #000; padding: 20px 24px; flex: 1; margin-left: -3px;
   }
   .slide-3 .phase-card:first-child { margin-left: 0; }
   .slide-3 .phase-card.now { background: #FFD600; }
-  .slide-3 .phase-card .ph {
+  .slide-3 .phase-label {
     font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; opacity: 0.4; margin-bottom: 8px;
+    letter-spacing: 2px; text-transform: uppercase; opacity: 0.35; margin-bottom: 6px;
   }
-  .slide-3 .phase-card.now .ph { opacity: 1; }
+  .slide-3 .phase-card.now .phase-label { opacity: 1; }
   .slide-3 .phase-card h3 {
-    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 17px;
-    letter-spacing: -0.3px; margin-bottom: 10px; opacity: 0.5;
+    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 16px;
+    letter-spacing: -0.3px; margin-bottom: 8px;
   }
-  .slide-3 .phase-card.now h3 { opacity: 1; }
+  .slide-3 .phase-card:not(.now) h3 { opacity: 0.4; }
   .slide-3 .phase-card li {
-    font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6; list-style: none; opacity: 0.35;
+    font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.55; list-style: none;
   }
-  .slide-3 .phase-card.now li { opacity: 0.8; }
+  .slide-3 .phase-card:not(.now) li { opacity: 0.25; }
+  .slide-3 .phase-card.now li { opacity: 0.75; }
 
-  .slide-3 .two-col {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 1100px; width: 100%;
+  /* Two-col content — collapsed border pair */
+  .slide-3 .content-pair {
+    display: flex; max-width: 1100px; width: 100%;
   }
-  .slide-3 .col {
-    border: 3px solid #000; padding: 28px 32px;
+  .slide-3 .content-col {
+    border: 3px solid #000; padding: 24px 28px; flex: 1; margin-left: -3px;
   }
-  .slide-3 .col:last-child { margin-left: -3px; }
+  .slide-3 .content-col:first-child { margin-left: 0; }
   .slide-3 .col-title {
     font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
-    padding-bottom: 12px; border-bottom: 2px solid #000;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
+    padding-bottom: 10px; border-bottom: 2px solid #000;
   }
-  .slide-3 .col li {
-    font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7;
-    list-style: none; padding: 4px 0;
+  .slide-3 .content-col li {
+    font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65;
+    list-style: none; padding: 3px 0;
   }
-  .slide-3 .col strong { font-weight: 700; }
+  .slide-3 .content-col strong { font-weight: 700; }
 
-  .slide-3 .deco-line-3 {
-    position: absolute; right: 0; bottom: 100px; width: 30%; border-top: 3px solid #000; opacity: 0.06;
+  .slide-3 .deco-line {
+    position: absolute; right: 0; bottom: 120px; width: 25%;
+    border-top: 3px solid #000; opacity: 0.06;
   }
 
-  .slide.active .slide-3-label { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; }
-  .slide.active .phase-row { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.05s; }
-  .slide.active .two-col { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.12s; }
+  .slide.active .slide-3 .section-label { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; }
+  .slide.active .phase-strip { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.05s; }
+  .slide.active .content-pair { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.12s; }
 
-  /* ════════════════ SLIDE 4: BUG SKILL ════════════════ */
-  .slide-4 { padding: 120px 80px 60px; }
+  /* ════════════════════════════════════════════════
+     SLIDE 4 — BUG REPORTING SKILL
+     Layout: label → big stat hero → before/after pair → metric strip
+     ════════════════════════════════════════════════ */
+  .slide-4 { padding: 120px 80px 48px; }
 
-  .slide-4 .big-stat {
+  .slide-4 .hero-stat {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(80px, 10vw, 120px); line-height: 1; letter-spacing: -4px;
-    margin-bottom: 36px;
+    font-size: clamp(72px, 9vw, 110px); line-height: 1; letter-spacing: -4px;
+    margin-bottom: 28px;
+  }
+  .slide-4 .hero-stat .sub {
+    font-family: 'Inter', sans-serif; font-weight: 700;
+    font-size: clamp(24px, 3vw, 36px); letter-spacing: -0.5px;
+    opacity: 0.5;
   }
 
-  .slide-4 .compare {
-    display: flex; gap: 0; margin-bottom: 36px; max-width: 1000px; width: 100%;
+  /* Before / After — collapsed border pair */
+  .slide-4 .compare-pair {
+    display: flex; max-width: 1000px; width: 100%; margin-bottom: 24px;
   }
-  .slide-4 .ccard {
-    border: 3px solid #000; padding: 28px 32px; flex: 1;
+  .slide-4 .compare-card {
+    border: 3px solid #000; padding: 22px 28px; flex: 1; margin-left: -3px;
   }
-  .slide-4 .ccard:last-child { margin-left: -3px; }
-  .slide-4 .ccard.after { background: #FFD600; }
-  .slide-4 .clabel {
+  .slide-4 .compare-card:first-child { margin-left: 0; }
+  .slide-4 .compare-card.after { background: #FFD600; }
+  .slide-4 .compare-label {
     font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
   }
-  .slide-4 .ccard.before .clabel { opacity: 0.4; }
-  .slide-4 .ccard li {
-    font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.7; list-style: none; padding: 3px 0;
+  .slide-4 .compare-card.before .compare-label { opacity: 0.35; }
+  .slide-4 .compare-card li {
+    font-family: 'Inter', sans-serif; font-size: 13.5px; line-height: 1.65;
+    list-style: none; padding: 2px 0;
   }
-  .slide-4 .ccard li::before { content: "— "; font-weight: 700; }
-  .slide-4 .ccard.before li { opacity: 0.4; text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.15); }
+  .slide-4 .compare-card li::before { content: "— "; font-weight: 700; }
+  .slide-4 .compare-card.before li { opacity: 0.35; text-decoration: line-through; text-decoration-color: rgba(0,0,0,0.12); }
 
-  .slide-4 .metrics-row {
-    display: flex; gap: 0; max-width: 1000px; width: 100%;
+  /* Metrics — collapsed border strip */
+  .slide-4 .metric-strip {
+    display: flex; max-width: 1000px; width: 100%;
   }
-  .slide-4 .metric {
-    border: 3px solid #000; padding: 20px 28px; flex: 1; margin-left: -3px;
+  .slide-4 .metric-block {
+    border: 3px solid #000; padding: 16px 24px; flex: 1; margin-left: -3px;
     text-align: center;
   }
-  .slide-4 .metric:first-child { margin-left: 0; }
-  .slide-4 .metric .val {
-    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 32px; letter-spacing: -1px;
+  .slide-4 .metric-block:first-child { margin-left: 0; }
+  .slide-4 .metric-val {
+    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 28px; letter-spacing: -1px;
   }
-  .slide-4 .metric .desc {
-    font-family: 'Inter', sans-serif; font-size: 12px; opacity: 0.4; margin-top: 4px;
+  .slide-4 .metric-desc {
+    font-family: 'Inter', sans-serif; font-size: 11px; opacity: 0.4; margin-top: 2px;
   }
 
-  .slide-4 .deco-box-4 { right: 80px; bottom: 80px; width: 200px; height: 120px; }
+  .slide-4 .deco-rect {
+    position: absolute; right: 80px; bottom: 80px;
+    width: 200px; height: 120px; border: 4px solid #000;
+  }
 
-  .slide.active .slide-4-label { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; }
-  .slide.active .big-stat { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.04s; }
-  .slide.active .compare { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.08s; }
-  .slide.active .metrics-row { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.14s; }
+  .slide.active .slide-4 .section-label { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; }
+  .slide.active .hero-stat { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.04s; }
+  .slide.active .compare-pair { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.08s; }
+  .slide.active .metric-strip { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.14s; }
 
-  /* ════════════════ SLIDE 5: NEXT WEEK ════════════════ */
+  /* ════════════════════════════════════════════════
+     SLIDE 5 — NEXT WEEK (like template's Top of Mind)
+     Layout: big title → bordered stacked items → deco
+     ════════════════════════════════════════════════ */
   .slide-5 { padding: 120px 80px 80px; }
 
   .slide-5 .mind-title {
     font-family: 'Inter', sans-serif; font-weight: 900;
     font-size: clamp(60px, 9vw, 130px); line-height: 0.92;
-    text-transform: uppercase; letter-spacing: -5px; margin-bottom: 48px;
+    text-transform: uppercase; letter-spacing: -5px; margin-bottom: 40px;
   }
 
-  .slide-5 .next-list { list-style: none; max-width: 800px; }
+  /* Stacked bordered items — like progress items in template */
+  .slide-5 .next-list { max-width: 800px; width: 100%; }
   .slide-5 .next-item {
-    border: 3px solid #000; padding: 20px 28px;
+    border: 3px solid #000; padding: 16px 24px; margin-top: -3px;
     display: flex; align-items: baseline; gap: 16px;
-    margin-top: -3px;
   }
   .slide-5 .next-item:first-child { margin-top: 0; }
   .slide-5 .next-item strong {
-    font-family: 'Inter', sans-serif; font-weight: 700; font-size: 16px;
-    letter-spacing: -0.3px; white-space: nowrap;
+    font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px;
+    letter-spacing: -0.2px; white-space: nowrap; flex-shrink: 0;
   }
   .slide-5 .next-item span {
-    font-family: 'Inter', sans-serif; font-size: 14px; opacity: 0.5;
+    font-family: 'Inter', sans-serif; font-size: 14px; opacity: 0.45;
   }
 
   .slide-5 .deco-stripe {
-    width: 100%; max-width: 500px; border-top: 4px solid #000;
-    margin-top: 40px;
+    width: 100%; max-width: 500px; border-top: 4px solid #000; margin-top: 40px;
   }
   .slide-5 .deco-stripe-2 {
-    width: 100%; max-width: 300px; border-top: 4px solid #000;
-    margin-top: 16px;
+    width: 100%; max-width: 300px; border-top: 4px solid #000; margin-top: 16px;
   }
-  .slide-5 .deco-box-5 { right: 80px; bottom: 80px; width: 200px; height: 200px; }
-  .slide-5 .deco-box-5i { right: 100px; bottom: 100px; width: 120px; height: 120px; opacity: 0.15; }
+  .slide-5 .deco-box-br {
+    position: absolute; right: 80px; bottom: 80px;
+    width: 200px; height: 200px; border: 4px solid #000;
+  }
+  .slide-5 .deco-box-inner {
+    position: absolute; right: 100px; bottom: 100px;
+    width: 120px; height: 120px; border: 3px solid #000; opacity: 0.15;
+  }
 
   .slide.active .mind-title { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; }
-  .slide.active .next-list { animation: brutalistSlam 0.3s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.06s; }
   .slide.active .next-item:nth-child(1) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.06s; }
   .slide.active .next-item:nth-child(2) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.12s; }
   .slide.active .next-item:nth-child(3) { animation: brutalistSlam 0.25s cubic-bezier(0.2,0,0.8,0.2) both; animation-delay: 0.18s; }
@@ -302,8 +349,8 @@
   <div class="vertical-rule"></div>
   <div class="horizontal-rule"></div>
   <div class="title-block">
-    <div class="title-line">WEEKLY</div>
-    <div class="title-line"><span class="yellow-highlight">UPDATE</span></div>
+    <div class="title-weekly">WEEKLY</div>
+    <div class="title-status"><span class="yellow-highlight">UPDATE</span></div>
     <p class="subtitle">David Chen · Principal Designer</p>
   </div>
   <div class="date-box">03.28 — 04.03</div>
@@ -312,7 +359,7 @@
 
 <!-- ════════ SLIDE 2: CHROMIUM ════════ -->
 <div class="slide slide-2" data-index="1">
-  <div class="bordered-label slide-2-label"><span class="label">Copilot Mac Chromium</span></div>
+  <div class="section-label bordered-box"><span class="label">Copilot Mac Chromium</span></div>
 
   <div class="callout">
     <ul>
@@ -321,26 +368,22 @@
     </ul>
   </div>
 
-  <div class="stats-row">
+  <div class="stat-strip">
     <div class="stat-block">
       <div class="stat-num"><span class="yellow-highlight">171</span></div>
-      <div class="stat-label">In Progress</div>
-      <div class="stat-detail">Urgent 13 · High 85 · Med 53 · Low 13</div>
+      <div class="stat-meta"><strong>In Progress</strong>Urg 13 · Hi 85 · Med 53 · Lo 13</div>
     </div>
     <div class="stat-block">
       <div class="stat-num">58</div>
-      <div class="stat-label">PR / Merged</div>
-      <div class="stat-detail">21 in review · 37 merged</div>
+      <div class="stat-meta"><strong>PR / Merged</strong>21 in review · 37 merged</div>
     </div>
     <div class="stat-block">
       <div class="stat-num">250+</div>
-      <div class="stat-label">Backlog</div>
-      <div class="stat-detail">Urgent 7 · High 100 · Med 124 · Low 18</div>
+      <div class="stat-meta"><strong>Backlog</strong>Urg 7 · Hi 100 · Med 124 · Lo 18</div>
     </div>
     <div class="stat-block">
       <div class="stat-num"><span class="yellow-highlight">179</span></div>
-      <div class="stat-label">Closed (7d)</div>
-      <div class="stat-detail">其中 158 帶 Chromium label</div>
+      <div class="stat-meta"><strong>Closed 7d</strong>其中 158 帶 Chromium label</div>
     </div>
   </div>
 
@@ -352,33 +395,33 @@
     <li><span class="disc-num">05</span><div><strong>Browser 出現頻率</strong> — 建議降低 browser panel 出現頻率，配合 Sergey 整體 vision</div></li>
   </ol>
 
-  <div class="deco-box deco-box-2"></div>
+  <div class="deco-box"></div>
 </div>
 
 <!-- ════════ SLIDE 3: PHASE 3 ════════ -->
 <div class="slide slide-3" data-index="2">
-  <div class="bordered-label slide-3-label"><span class="label">AI Transformation · Phase 3</span></div>
+  <div class="section-label bordered-box"><span class="label">AI Transformation · Phase 3</span></div>
 
-  <div class="phase-row">
+  <div class="phase-strip">
     <div class="phase-card">
-      <div class="ph">Phase 1</div>
+      <div class="phase-label">Phase 1</div>
       <h3>Get everyone started</h3>
       <ul><li>AI curiosity across the team</li><li>Hands-on experimentation</li><li>Learning by doing</li></ul>
     </div>
     <div class="phase-card">
-      <div class="ph">Phase 2</div>
+      <div class="phase-label">Phase 2</div>
       <h3>Change how we design</h3>
       <ul><li>From static to dynamic systems</li><li>Designers becoming builders</li><li>AI-augmented craft</li></ul>
     </div>
     <div class="phase-card now">
-      <div class="ph">Phase 3 · Now</div>
+      <div class="phase-label">Phase 3 · Now</div>
       <h3>Change how we work</h3>
       <ul><li>AI as team memory & coordinator</li><li>Automated knowledge management</li><li>Intelligent workflows</li></ul>
     </div>
   </div>
 
-  <div class="two-col">
-    <div class="col">
+  <div class="content-pair">
+    <div class="content-col">
       <div class="col-title">本週推進：Data Connector 全面接入</div>
       <ul>
         <li>組織並主持 4/1、4/3 兩場 hands-on session</li>
@@ -387,7 +430,7 @@
         <li>即時排除 MCP 配置、路徑、proxy 等環境故障</li>
       </ul>
     </div>
-    <div class="col">
+    <div class="content-col">
       <div class="col-title">為什麼是 Phase 3 的關鍵基礎</div>
       <ul>
         <li>Connector = AI agent 具備 team memory — 直接查詢 issue、搜尋 Slack、讀取日曆</li>
@@ -397,26 +440,26 @@
     </div>
   </div>
 
-  <div class="deco-line-3"></div>
+  <div class="deco-line"></div>
 </div>
 
 <!-- ════════ SLIDE 4: BUG SKILL ════════ -->
 <div class="slide slide-4" data-index="3">
-  <div class="bordered-label slide-4-label"><span class="label">CMC Bug Reporting Skill</span></div>
+  <div class="section-label bordered-box"><span class="label">CMC Bug Reporting Skill · v1.2.0</span></div>
 
-  <div class="big-stat"><span class="yellow-highlight">5×</span> faster</div>
+  <div class="hero-stat"><span class="yellow-highlight">5×</span> <span class="sub">faster filing</span></div>
 
-  <div class="compare">
-    <div class="ccard before">
-      <div class="clabel">Before · ~5 min / bug</div>
+  <div class="compare-pair">
+    <div class="compare-card before">
+      <div class="compare-label">Before · ~5 min / bug</div>
       <ul>
         <li>到 Linear 手動選擇 Team → Project → Label → Priority</li>
         <li>每次填入重複模板欄位</li>
         <li>中文內容需自己翻譯成英文</li>
       </ul>
     </div>
-    <div class="ccard after">
-      <div class="clabel">After · v1.2.0 · ~1 min / bug</div>
+    <div class="compare-card after">
+      <div class="compare-label">After · ~1 min / bug</div>
       <ul>
         <li>分類和模板已預設，回答問題即可建立 issue</li>
         <li>中文直接輸入，自動翻譯為英文</li>
@@ -426,38 +469,38 @@
     </div>
   </div>
 
-  <div class="metrics-row">
-    <div class="metric">
-      <div class="val"><span class="yellow-highlight">5×</span></div>
-      <div class="desc">Filing speed</div>
+  <div class="metric-strip">
+    <div class="metric-block">
+      <div class="metric-val"><span class="yellow-highlight">5×</span></div>
+      <div class="metric-desc">Filing speed</div>
     </div>
-    <div class="metric">
-      <div class="val">3</div>
-      <div class="desc">Issues created · E2E verified</div>
+    <div class="metric-block">
+      <div class="metric-val">3</div>
+      <div class="metric-desc">Issues · E2E verified</div>
     </div>
-    <div class="metric">
-      <div class="val"><span class="yellow-highlight">Team</span></div>
-      <div class="desc">CM Design Review 推動採用</div>
+    <div class="metric-block">
+      <div class="metric-val"><span class="yellow-highlight">Team</span></div>
+      <div class="metric-desc">CM Design Review 推動採用</div>
     </div>
   </div>
 
-  <div class="deco-box deco-box-4"></div>
+  <div class="deco-rect"></div>
 </div>
 
 <!-- ════════ SLIDE 5: NEXT WEEK ════════ -->
 <div class="slide slide-5" data-index="4">
   <div class="mind-title">NEXT<br>WEEK</div>
   <div class="next-list">
-    <div class="next-item"><strong>Chromium Dogfood</strong><span>持續 design quality review，配合 critical PR merge 進 main branch</span></div>
+    <div class="next-item"><strong>Chromium Dogfood</strong><span>持續 design quality review，配合 critical PR merge</span></div>
     <div class="next-item"><strong>Split-window spec</strong><span>Follow up May 的新互斥邏輯設計</span></div>
     <div class="next-item"><strong>MAC-11487</strong><span>跟進 chat 雙擊頂部視窗切換不順暢問題</span></div>
-    <div class="next-item"><strong>Phase 3 持續推進</strong><span>1:1 輔導 setup 問題同學，目標全員 connector 覆蓋</span></div>
+    <div class="next-item"><strong>Phase 3 推進</strong><span>1:1 輔導 setup 問題同學，目標全員 connector 覆蓋</span></div>
     <div class="next-item"><strong>CMC Bug Skill</strong><span>根據團隊 feedback 持續迭代</span></div>
   </div>
   <div class="deco-stripe"></div>
   <div class="deco-stripe-2"></div>
-  <div class="deco-box deco-box-5"></div>
-  <div class="deco-box deco-box-5i"></div>
+  <div class="deco-box-br"></div>
+  <div class="deco-box-inner"></div>
 </div>
 
 <script>
@@ -471,10 +514,12 @@
     lock = true;
     var old = slides[current];
     old.classList.remove('active');
-    // Reset animations on all animated elements
-    old.querySelectorAll('.title-block,.date-box,.slide-2-label,.callout,.stats-row,.disc-list,.slide-3-label,.phase-row,.two-col,.slide-4-label,.big-stat,.compare,.metrics-row,.mind-title,.next-list,.next-item').forEach(function(el) {
-      el.style.animation = 'none'; void el.offsetHeight; el.style.animation = '';
-    });
+    var animated = old.querySelectorAll('.title-block,.date-box,.section-label,.callout,.stat-strip,.disc-list,.phase-strip,.content-pair,.hero-stat,.compare-pair,.metric-strip,.mind-title,.next-item');
+    for (var j = 0; j < animated.length; j++) {
+      animated[j].style.animation = 'none';
+      void animated[j].offsetHeight;
+      animated[j].style.animation = '';
+    }
     current = i;
     slides[current].classList.add('active');
     counter.textContent = pad(current + 1) + '/' + pad(total);
