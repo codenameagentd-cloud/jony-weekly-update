@@ -27,7 +27,7 @@
   }
 
   /* ── Tokens ── */
-  .yh { background: #FFD600; display: inline; padding: 0 12px; line-height: 1.15; }
+  .yh { background: #FFD600; display: inline; padding: 0 12px; line-height: 1.15; position: relative; z-index: -1; }
   .label { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; }
   .slabel { border: 3px solid #000; padding: 10px 24px; display: inline-block; }
   .tag { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; padding: 6px 14px; display: inline-block; line-height: 1; }
@@ -49,7 +49,7 @@
   .s1 .tb0 { position: absolute; top: 120px; left: 80px; }
   .s1 .tl {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(100px, 12vw, 160px); line-height: .88;
+    font-size: clamp(110px, 13vw, 180px); line-height: .88;
     text-transform: uppercase; letter-spacing: -6px;
   }
   .s1 .sub { font-family: 'Inter'; font-weight: 400; font-size: 18px; margin-top: 32px; opacity: .4; }
@@ -79,7 +79,7 @@
   }
   .s2 .big {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(80px, 10vw, 130px); line-height: .85; letter-spacing: -5px;
+    font-size: clamp(100px, 13vw, 160px); line-height: .85; letter-spacing: -6px;
   }
   .s2 .big-sub {
     font-family: 'Inter', sans-serif; font-weight: 700;
@@ -157,7 +157,7 @@
   .s4 .header { grid-column: 1 / -1; padding: 80px 80px 0; display: flex; align-items: baseline; gap: 32px; }
   .s4 .header .big {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(48px, 6vw, 80px); line-height: .9; letter-spacing: -3px;
+    font-size: clamp(80px, 10vw, 130px); line-height: .9; letter-spacing: -5px;
   }
   .s4 .phases {
     grid-column: 1 / -1; display: flex; gap: 0;
@@ -257,7 +257,7 @@
   }
   .s6 .mind {
     font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(60px, 9vw, 130px); line-height: .92;
+    font-size: clamp(80px, 10vw, 140px); line-height: .92;
     text-transform: uppercase; letter-spacing: -5px; margin-bottom: 36px;
   }
   .s6 .list { max-width: 720px; }
@@ -294,9 +294,9 @@
 <!-- S1: TITLE -->
 <div class="slide s1 active" data-i="0">
   <div class="vr"></div><div class="hr"></div>
-  <div class="tb0 a0"><div class="tl">WEEKLY</div><div class="tl"><span class="yh">UPDATE</span></div><p class="sub">David Chen · Principal Designer</p></div>
+  <div class="tb0 a0"><div class="tl">WEEKLY</div><div class="tl"><span class="yh">UPDATE</span></div><p class="sub">David Chen</p></div>
   <div class="db a1">03.28 — 04.03</div>
-  <div class="cm">Weekly Update / Brutalist</div>
+  <div class="cm"></div>
 </div>
 
 <!-- S2: CHROMIUM — full picture -->
@@ -326,7 +326,7 @@
 <!-- S3: DESIGN DISCUSSIONS -->
 <div class="slide s3" data-i="2">
   <div class="top"><div class="slabel a0"><span class="label">Design Discussion</span></div></div>
-  <div class="list">
+  <div class="list a1">
     <div class="item"><div class="item-left"><div class="item-name">Navigation & Panel Layout</div><div class="item-desc">提議統一 Pages 互斥邏輯，待 May 出新 spec</div></div><div class="item-right"><span class="tag tb">[SPEC]</span></div></div>
     <div class="item"><div class="item-left"><div class="item-name">Win→Mac Leverage 品質落差</div><div class="item-desc">建議優先對齊 CMC 而非 Windows</div></div><div class="item-right"><span class="tag tb">[REVIEW]</span></div></div>
     <div class="item"><div class="item-left"><div class="item-name">Browser 空條問題</div><div class="item-desc">MAC-11473 — 4/3 修復驗證通過</div></div><div class="item-right"><span class="tag ty">[FIXED]</span></div></div>
