@@ -1,431 +1,325 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Weekly Update — David Chen</title>
+<title>Weekly Update — David Chen · W16 Preview</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    width: 100%; height: 100%; overflow: hidden;
-    background: #fff; color: #000; -webkit-font-smoothing: antialiased;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Space+Mono:wght@400;700&display=swap');
 
-  .slide {
-    position: absolute; inset: 0;
-    opacity: 0; pointer-events: none;
-    display: flex; flex-direction: column;
-    overflow: hidden;
-  }
-  .slide.active { opacity: 1; pointer-events: auto; }
+:root{
+  --bg:#F7F4EE;
+  --paper:#FFFCF6;
+  --ink:#111111;
+  --muted:#6E6A66;
+  --line:rgba(17,17,17,.12);
+  --red:#E44332;
+  --blue:#1D5FD1;
+  --yellow:#FFD62E;
+  --green:#2E8B57;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;overflow:hidden;background:var(--paper)}
+.slide.active{opacity:1;pointer-events:auto}
+#counter{position:fixed;top:28px;left:40px;z-index:1000;font:700 12px 'Space Mono',monospace;letter-spacing:3px;color:var(--ink);opacity:.45}
+.frame{position:absolute;inset:28px;border:1px solid var(--line);pointer-events:none}
+.grid-v,.grid-h{position:absolute;pointer-events:none;opacity:.06}
+.grid-v{top:0;bottom:0;width:1px;background:var(--ink)}
+.grid-h{left:0;right:0;height:1px;background:var(--ink)}
+.label{font:700 10px 'Space Mono',monospace;letter-spacing:4px;text-transform:uppercase}
+.tag{display:inline-flex;align-items:center;justify-content:center;padding:4px 8px;font:700 9px 'Space Mono',monospace;letter-spacing:2px;text-transform:uppercase;line-height:1}
+.tb{background:var(--ink);color:#fff}
+.tr{background:var(--red);color:#fff}
+.ty{background:var(--yellow);color:var(--ink);border:2px solid var(--ink)}
+.tbl{background:var(--blue);color:#fff}
+.tg{background:var(--green);color:#fff}
 
-  #counter {
-    position: fixed; top: 32px; left: 40px;
-    font-family: 'Space Mono', monospace; font-size: 32px; font-weight: 700;
-    letter-spacing: 2px; z-index: 1000;
-  }
+.kicker{position:absolute;top:56px;left:72px;z-index:4}
+.kicker .label{display:inline-block;padding-bottom:6px;border-bottom:2px solid var(--red)}
 
-  /* ── Tokens ── */
-  .yh { background: #FFD600; display: inline; padding: 0 12px; line-height: 1.15; position: relative; z-index: -1; }
-  .label { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; }
-  .slabel { border: 3px solid #000; padding: 10px 24px; display: inline-block; }
-  .tag { font-family: 'Space Mono', monospace; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; padding: 6px 14px; display: inline-block; line-height: 1; }
-  .ty { background: #FFD600; color: #000; border: 3px solid #000; }
-  .tb { background: #000; color: #fff; border: 3px solid #000; }
-  .deco { position: absolute; border: 4px solid #000; }
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideLeft{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.slide.active .a0{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.slide.active .a1{animation:rise .55s cubic-bezier(.2,.8,.2,1) .10s both}
+.slide.active .a2{animation:rise .55s cubic-bezier(.2,.8,.2,1) .20s both}
+.slide.active .a3{animation:rise .55s cubic-bezier(.2,.8,.2,1) .30s both}
+.slide.active .a4{animation:rise .55s cubic-bezier(.2,.8,.2,1) .40s both}
+.slide.active .a5{animation:rise .55s cubic-bezier(.2,.8,.2,1) .50s both}
+.slide.active .sx{animation:slideLeft .65s cubic-bezier(.2,.8,.2,1) both}
+.slide.active .shape{animation:scaleIn .8s cubic-bezier(.16,1,.3,1) both}
+.slide.active .line{animation:draw .9s cubic-bezier(.25,.1,.25,1) .15s both;transform-origin:left center}
 
-  .xbold { -webkit-text-stroke: 3px #000; paint-order: stroke fill; }
+/* S1 */
+.s1 .diag{position:absolute;top:0;left:-10vw;width:140vw;height:2px;background:var(--red);transform:rotate(24deg)}
+.s1 .circle{position:absolute;right:-9vw;bottom:-12vh;width:54vh;height:54vh;background:var(--yellow);border-radius:50%}
+.s1 .square{position:absolute;right:16vw;top:108px;width:84px;height:84px;background:var(--blue)}
+.s1 .tri{position:absolute;left:64px;bottom:92px;width:0;height:0;border-left:34px solid transparent;border-right:34px solid transparent;border-bottom:58px solid var(--red)}
+.s1 .content{position:absolute;left:80px;top:50%;transform:translateY(-50%);z-index:3}
+.s1 .title{font-weight:900;font-size:clamp(98px,12vw,176px);line-height:.82;letter-spacing:-.06em;text-transform:uppercase;max-width:860px}
+.s1 .meta{margin-top:22px;font:700 13px 'Space Mono',monospace;letter-spacing:4px;text-transform:uppercase;color:rgba(17,17,17,.52)}
+.s1 .date{display:inline-block;margin-top:34px;padding:12px 18px;background:var(--ink);color:#fff;font:700 14px 'Space Mono',monospace;letter-spacing:3px}
+.s1 .aside{position:absolute;right:84px;top:110px;z-index:3;text-align:right}
+.s1 .aside .small{font:700 10px 'Space Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:rgba(17,17,17,.4)}
+.s1 .aside .big{margin-top:10px;font-weight:900;font-size:28px;letter-spacing:-.05em;line-height:.95}
 
-  /* ── Anim ── */
-  @keyframes slam { from { transform: translateY(-60px); } to { transform: translateY(0); } }
-  .slide.active .a0 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; }
-  .slide.active .a1 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; animation-delay: .08s; }
-  .slide.active .a2 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; animation-delay: .16s; }
-  .slide.active .a3 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; animation-delay: .24s; }
-  .slide.active .a4 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; animation-delay: .32s; }
-  .slide.active .a5 { animation: slam .3s cubic-bezier(.2,0,.8,.2) both; animation-delay: .40s; }
+/* S2 */
+.s2 .hero-band{position:absolute;top:148px;left:0;right:0;height:210px;background:var(--blue);display:flex;align-items:center;padding:0 72px}
+.s2 .hero-text{font-weight:900;font-size:clamp(28px,3.5vw,48px);line-height:1.03;letter-spacing:-.04em;color:#fff;max-width:1030px}
+.s2 .summary-grid{position:absolute;left:72px;right:72px;top:392px;display:grid;grid-template-columns:1.15fr .95fr .95fr;gap:22px}
+.s2 .sum-card{background:rgba(255,255,255,.72);border-top:3px solid var(--ink);padding:18px 18px 16px;min-height:164px}
+.s2 .sum-card.red{border-top-color:var(--red)}
+.s2 .sum-card.yellow{border-top-color:var(--yellow)}
+.s2 .sum-card.blue{border-top-color:var(--blue)}
+.s2 .sum-label{font:700 9px 'Space Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:rgba(17,17,17,.38);margin-bottom:10px}
+.s2 .sum-title{font-weight:900;font-size:18px;line-height:1.08;letter-spacing:-.03em;margin-bottom:8px}
+.s2 .sum-body{font-size:12px;line-height:1.62;color:var(--muted)}
+.s2 .sum-body strong{color:var(--ink);font-weight:800}
+.s2 .dots{position:absolute;left:72px;bottom:48px;display:flex;gap:14px}
+.s2 .dot{border-radius:50%}.s2 .d1{width:20px;height:20px;background:var(--yellow)}.s2 .d2{width:12px;height:12px;background:var(--red)}.s2 .d3{width:16px;height:16px;background:var(--blue)}
 
-  /* ═══════════════════════════════════
-     S1 — TITLE
-     ═══════════════════════════════════ */
-  .s1 { padding: 80px; }
-  .s1 .tb0 { position: absolute; top: 120px; left: 80px; }
-  .s1 .tl {
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(110px, 13vw, 180px); line-height: .88;
-    text-transform: uppercase; letter-spacing: -6px;
-  }
-  .s1 .sub { font-family: 'Inter'; font-weight: 400; font-size: 18px; margin-top: 32px; opacity: .4; }
-  .s1 .db {
-    position: absolute; bottom: 80px; right: 80px;
-    border: 4px solid #000; padding: 20px 32px;
-    font-family: 'Space Mono', monospace; font-size: 18px; font-weight: 700; letter-spacing: 4px;
-  }
-  .s1 .cm { position: absolute; bottom: 80px; left: 80px; font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; opacity: .4; }
-  .s1 .vr { position: absolute; top: 0; right: 35%; height: 100%; border-left: 3px solid #000; opacity: .06; }
-  .s1 .hr { position: absolute; left: 0; bottom: 45%; width: 100%; border-top: 3px solid #000; opacity: .06; }
+/* generic content */
+.content-head{position:absolute;left:72px;right:72px;top:104px}
+.content-title{font-weight:900;font-size:clamp(28px,3vw,44px);line-height:1.06;letter-spacing:-.04em;max-width:1080px}
+.content-title span{color:var(--red)}
+.content-desc{margin-top:14px;max-width:980px;font-size:13px;line-height:1.7;color:var(--muted)}
+.content-desc strong{color:var(--ink)}
 
-  /* ═══════════════════════════════════
-     S2 — CHROMIUM: hero + milestone + stats
-     One page, full Chromium picture
-     ═══════════════════════════════════ */
-  .s2 {
-    display: grid; grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr auto; padding: 0; height: 100vh;
-  }
-  .s2 .header {
-    grid-column: 1 / -1; padding: 80px 80px 0;
-  }
-  .s2 .left {
-    padding: 32px 48px 48px 80px;
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .s2 .big { -webkit-text-stroke: 3px #000; paint-order: stroke fill;
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(100px, 13vw, 160px); line-height: .85; letter-spacing: -6px;
-  }
-  .s2 .big-sub {
-    font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: 18px; opacity: .45; margin-top: 12px; letter-spacing: -.3px;
-  }
-  .s2 .right {
-    padding: 32px 80px 48px 0;
-    display: flex; flex-direction: column; justify-content: center; gap: 20px;
-  }
-  .s2 .callout {
-    background: #FFD600; border: 3px solid #000; padding: 16px 20px;
-  }
-  .s2 .callout li {
-    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
-    line-height: 1.6; list-style: none;
-  }
-  .s2 .callout li::before { content: "■ "; }
-  .s2 .stat-row { display: flex; gap: 0; }
-  .s2 .st {
-    border: 3px solid #000; padding: 14px 18px; flex: 1; margin-left: -3px;
-  }
-  .s2 .st:first-child { margin-left: 0; }
-  .s2 .st-n {
-    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 24px; letter-spacing: -1px;
-  }
-  .s2 .st-l {
-    font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700;
-    letter-spacing: 1.5px; text-transform: uppercase; opacity: .35; margin-top: 2px;
-  }
-  .s2 .footer-rule {
-    grid-column: 1 / -1; border-top: 3px solid #000; opacity: .06;
-  }
-  .s2 .deco1 { right: 80px; top: 80px; width: 100px; height: 100px; }
+/* S3 */
+.s3 .diag-shape{position:absolute;right:-8vw;top:50%;transform:translateY(-50%);width:0;height:0;border-top:34vh solid transparent;border-bottom:34vh solid transparent;border-left:44vw solid var(--red);opacity:.08}
+.s3 .items{position:absolute;left:72px;right:72px;top:286px;bottom:54px;display:flex;flex-direction:column;justify-content:flex-start}
+.s3 .row{display:flex;align-items:flex-start;gap:16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.s3 .row:nth-child(1){margin-left:0}.s3 .row:nth-child(2){margin-left:40px}.s3 .row:nth-child(3){margin-left:80px}.s3 .row:nth-child(4){margin-left:120px}.s3 .row:nth-child(5){margin-left:160px}
+.s3 .num{width:34px;flex:0 0 34px;font-weight:900;font-size:22px;letter-spacing:-.05em;color:var(--red);opacity:.72}
+.s3 .row-main{flex:1;display:flex;gap:16px;justify-content:space-between;align-items:flex-start}
+.s3 .name{font-weight:800;font-size:15px;line-height:1.32;margin-bottom:4px}
+.s3 .desc{font-size:12px;line-height:1.62;color:var(--muted);max-width:820px}
 
-  /* ═══════════════════════════════════
-     S3 — DESIGN DISCUSSIONS
-     ═══════════════════════════════════ */
-  .s3 {
-    padding: 80px; display: flex; flex-direction: column;
-    justify-content: center;
-  }
-  .s3 .top { margin-bottom: 36px; }
-  .s3 .list { max-width: 860px; }
-  .s3 .item {
-    border: 3px solid #000; padding: 20px 28px; margin-top: -3px;
-    display: flex; align-items: flex-start; gap: 20px;
-  }
-  .s3 .item:first-child { margin-top: 0; }
-  .s3 .item-num {
-    font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700;
-    opacity: .25; flex-shrink: 0; padding-top: 3px;
-  }
-  .s3 .item-left { flex: 1; }
-  .s3 .item-name {
-    font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: clamp(16px, 1.8vw, 21px); letter-spacing: -.3px; margin-bottom: 4px;
-  }
-  .s3 .item-desc {
-    font-family: 'Inter', sans-serif; font-weight: 400;
-    font-size: clamp(12px, 1.3vw, 15px); opacity: .45; line-height: 1.45;
-  }
-  .s3 .item-right { flex-shrink: 0; margin-left: 12px; align-self: center; }
+/* S4 */
+.s4 .panel-wrap{position:absolute;left:72px;right:72px;top:300px;bottom:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.s4 .panel{position:relative;padding:26px 22px 20px;background:rgba(255,255,255,.72);overflow:hidden}
+.s4 .panel.red{border-left:6px solid var(--red)}
+.s4 .panel.yellow{border-left:6px solid var(--yellow)}
+.s4 .panel.blue{border-left:6px solid var(--blue)}
+.s4 .panel .geo{position:absolute;right:-28px;bottom:-28px;opacity:.09;pointer-events:none}
+.s4 .panel.red .geo{width:138px;height:138px;background:var(--red);clip-path:polygon(50% 0,0 100%,100% 100%)}
+.s4 .panel.yellow .geo{width:152px;height:152px;background:var(--yellow);border-radius:50%}
+.s4 .panel.blue .geo{width:124px;height:124px;background:var(--blue)}
+.s4 .panel-k{font:700 9px 'Space Mono',monospace;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;color:rgba(17,17,17,.45)}
+.s4 .panel-title{font-weight:900;font-size:16px;line-height:1.12;letter-spacing:-.02em;margin-bottom:10px}
+.s4 .panel-body{font-size:12px;line-height:1.68;color:var(--muted)}
+.s4 .panel-body strong{color:var(--ink)}
 
-  .slide.active .s3 .item:nth-child(1) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .06s; }
-  .slide.active .s3 .item:nth-child(2) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .12s; }
-  .slide.active .s3 .item:nth-child(3) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .18s; }
-  .slide.active .s3 .item:nth-child(4) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .24s; }
-  .slide.active .s3 .item:nth-child(5) { animation: slam .25s cubic-bezier(.2,0,.8,.2) both; animation-delay: .30s; }
+/* S5 */
+.s5 .phase{position:absolute;right:72px;top:54px;font-weight:900;font-size:clamp(44px,5vw,76px);letter-spacing:-.05em}
+.s5 .metric-grid{position:absolute;left:72px;right:72px;top:286px;bottom:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.s5 .metric{position:relative;padding:26px 22px 20px;background:#fff;overflow:hidden}
+.s5 .metric.yellow{border-top:7px solid var(--yellow)}
+.s5 .metric.red{border-top:7px solid var(--red)}
+.s5 .metric.blue{border-top:7px solid var(--blue)}
+.s5 .metric .geo{position:absolute;right:-34px;bottom:-34px;opacity:.08;pointer-events:none}
+.s5 .metric.yellow .geo{width:160px;height:160px;border-radius:50%;background:var(--yellow)}
+.s5 .metric.red .geo{width:0;height:0;border-left:90px solid transparent;border-right:90px solid transparent;border-bottom:156px solid var(--red)}
+.s5 .metric.blue .geo{width:130px;height:130px;background:var(--blue)}
+.s5 .metric-value{position:relative;z-index:2;font-weight:900;font-size:clamp(54px,6vw,84px);line-height:.92;letter-spacing:-.06em;margin-bottom:6px}
+.s5 .metric.yellow .metric-value{color:#C8A100}
+.s5 .metric.red .metric-value{color:var(--red)}
+.s5 .metric.blue .metric-value{color:var(--blue)}
+.s5 .metric-label{position:relative;z-index:2;font:700 9px 'Space Mono',monospace;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+.s5 .metric-title{position:relative;z-index:2;font-weight:900;font-size:16px;letter-spacing:-.02em;margin-bottom:12px}
+.s5 .metric-list{position:relative;z-index:2;list-style:none}
+.s5 .metric-list li{font-size:12px;line-height:1.7;color:#5A5753;padding:2px 0}
+.s5 .metric-list li::before{content:'— ';opacity:.28;font-weight:700}
+.s5 .metric-list strong{color:var(--ink)}
 
-  .s3 .deco1 { right: 80px; bottom: 80px; width: 120px; height: 120px; }
+/* S6 */
+.s6 .news-grid{position:absolute;left:72px;right:72px;top:132px;bottom:56px;display:grid;grid-template-columns:1.25fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:18px}
+.s6 .news-item{position:relative;padding:22px;background:rgba(255,255,255,.76);display:flex;flex-direction:column}
+.s6 .news-item.big{grid-row:1/3;border-left:7px solid var(--red);padding:28px 28px 26px}
+.s6 .news-item.blue{border-left:5px solid var(--blue)}
+.s6 .news-item.yellow{border-left:5px solid var(--yellow)}
+.s6 .news-item.black{border-left:5px solid var(--ink)}
+.s6 .news-tag{position:absolute;right:20px;top:20px}
+.s6 .news-title{font-weight:900;font-size:15px;line-height:1.15;letter-spacing:-.02em;margin-bottom:8px;padding-right:62px}
+.s6 .news-item.big .news-title{font-size:22px;margin-bottom:10px;padding-right:78px}
+.s6 .news-desc{font-size:12px;line-height:1.65;color:var(--muted)}
+.s6 .news-desc strong{color:var(--ink)}
 
-  /* ═══════════════════════════════════
-     S4 — PHASE 3: headline + roadmap + details
-     ═══════════════════════════════════ */
-  .s4 {
-    display: grid; grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto 1fr; padding: 0; height: 100vh;
-  }
-  .s4 .header { grid-column: 1 / -1; padding: 80px 80px 0; display: flex; align-items: baseline; gap: 32px; }
-  .s4 .header .big { -webkit-text-stroke: 3px #000; paint-order: stroke fill;
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(80px, 10vw, 130px); line-height: .9; letter-spacing: -5px;
-  }
-  .s4 .phases {
-    grid-column: 1 / -1; display: flex; gap: 0;
-    padding: 24px 80px 0; max-width: calc(100% - 0px);
-  }
-  .s4 .ph {
-    border: 3px solid #000; padding: 16px 20px; flex: 1; margin-left: -3px;
-  }
-  .s4 .ph:first-child { margin-left: 0; }
-  .s4 .ph.now { background: #FFD600; }
-  .s4 .ph-l {
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; opacity: .3; margin-bottom: 4px;
-  }
-  .s4 .ph.now .ph-l { opacity: 1; }
-  .s4 .ph h3 {
-    font-family: 'Inter', sans-serif; font-weight: 900; font-size: 14px; letter-spacing: -.2px;
-  }
-  .s4 .ph:not(.now) h3 { opacity: .25; }
-  .s4 .ph li {
-    font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.5; list-style: none;
-  }
-  .s4 .ph:not(.now) li { opacity: .15; }
-  .s4 .ph.now li { opacity: .65; }
+/* S7 */
+.s7 .texture{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.s7 .sq{position:absolute;width:18px;height:18px;transform:rotate(45deg);opacity:.055}
+.s7 .title{position:absolute;left:72px;top:84px;font-weight:900;font-size:clamp(72px,9vw,138px);line-height:.84;letter-spacing:-.06em;text-transform:uppercase}
+.s7 .bar{position:absolute;left:72px;top:calc(84px + clamp(72px,9vw,138px)*1.92);width:56px;height:4px;background:var(--red)}
+.s7 .priority{position:absolute;right:72px;top:102px;width:360px;padding:18px 18px 16px;background:#fff;border-top:6px solid var(--red)}
+.s7 .priority .k{font:700 9px 'Space Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:rgba(17,17,17,.42);margin-bottom:9px}
+.s7 .priority .t{font-weight:900;font-size:20px;line-height:1.08;letter-spacing:-.03em;margin-bottom:6px}
+.s7 .priority .d{font-size:12px;line-height:1.65;color:var(--muted)}
+.s7 .items{position:absolute;left:72px;right:72px;top:330px;display:grid;grid-template-columns:1fr;gap:0;max-width:980px}
+.s7 .item{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.s7 .item:last-child{border-bottom:1px solid var(--line)}
+.s7 .bullet{width:10px;height:10px;background:var(--red);margin-top:6px;flex:0 0 10px}
+.s7 .text{flex:1}
+.s7 .name{font-weight:900;font-size:17px;letter-spacing:-.02em}
+.s7 .desc{margin-top:4px;font-size:12px;color:rgba(17,17,17,.5)}
+.s7 .marks{position:absolute;right:72px;bottom:48px;display:flex;gap:14px}
+.s7 .m1{width:26px;height:26px;background:var(--red);border-radius:50%}.s7 .m2{width:42px;height:12px;background:var(--yellow)}
 
-  .s4 .detail-left {
-    padding: 24px 24px 48px 80px;
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .s4 .detail-right {
-    padding: 24px 80px 48px 24px;
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .s4 .detail-title {
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
-    padding-bottom: 8px; border-bottom: 2px solid #000;
-  }
-  .s4 .detail-list { list-style: none; }
-  .s4 .detail-list li {
-    font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.65;
-    padding: 3px 0;
-  }
-  .s4 .detail-list li::before { content: "■ "; opacity: .25; }
-  .s4 .detail-list strong { font-weight: 700; }
-  .s4 .deco1 { right: 0; bottom: 100px; width: 25%; height: 0; border-top: 3px solid #000; opacity: .06; border-left: 0; border-right: 0; border-bottom: 0; }
-
-  /* ═══════════════════════════════════
-     S5 — BUG SKILL: hero + compare side by side
-     ═══════════════════════════════════ */
-  .s5 {
-    display: grid; grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr auto; padding: 0; height: 100vh;
-  }
-  .s5 .header { grid-column: 1 / -1; padding: 80px 80px 0; }
-  .s5 .left {
-    padding: 24px 24px 48px 80px;
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .s5 .big { -webkit-text-stroke: 3px #000; paint-order: stroke fill;
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(100px, 14vw, 180px); line-height: .82; letter-spacing: -6px;
-  }
-  .s5 .big-sub {
-    font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: 18px; opacity: .4; margin-top: 12px; letter-spacing: -.3px;
-  }
-  .s5 .right {
-    padding: 24px 80px 48px 0;
-    display: flex; flex-direction: column; justify-content: center; gap: 0;
-  }
-  .s5 .card {
-    border: 3px solid #000; padding: 20px 24px; margin-top: -3px;
-  }
-  .s5 .card:first-child { margin-top: 0; }
-  .s5 .card.after { background: #FFD600; }
-  .s5 .card-label {
-    font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
-  }
-  .s5 .card.before .card-label { opacity: .3; }
-  .s5 .card li {
-    font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.6;
-    list-style: none; padding: 2px 0;
-  }
-  .s5 .card li::before { content: "— "; font-weight: 700; }
-  .s5 .card.before li { opacity: .25; text-decoration: line-through; text-decoration-color: rgba(0,0,0,.08); }
-  .s5 .footer-rule { grid-column: 1 / -1; border-top: 3px solid #000; opacity: .06; }
-  .s5 .deco1 { right: 80px; top: 80px; width: 100px; height: 100px; }
-
-  /* ═══════════════════════════════════
-     S6 — NEXT WEEK
-     ═══════════════════════════════════ */
-  .s6 {
-    padding: 80px; display: flex; flex-direction: column;
-    justify-content: center;
-  }
-  .s6 .mind { -webkit-text-stroke: 3px #000; paint-order: stroke fill;
-    font-family: 'Inter', sans-serif; font-weight: 900;
-    font-size: clamp(80px, 10vw, 140px); line-height: .92;
-    text-transform: uppercase; letter-spacing: -5px; margin-bottom: 36px;
-  }
-  .s6 .list { max-width: 720px; }
-  .s6 .item {
-    border: 3px solid #000; padding: 16px 24px; margin-top: -3px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .s6 .item:first-child { margin-top: 0; }
-  .s6 .item-name {
-    font-family: 'Inter', sans-serif; font-weight: 700;
-    font-size: clamp(14px, 1.6vw, 18px); letter-spacing: -.2px;
-  }
-  .s6 .item-desc {
-    font-family: 'Inter', sans-serif; font-weight: 400;
-    font-size: clamp(11px, 1.1vw, 13px); opacity: .35; margin-top: 2px;
-  }
-  .s6 .item-right { flex-shrink: 0; margin-left: 20px; }
-  .s6 .ds { max-width: 500px; border-top: 4px solid #000; margin-top: 36px; }
-  .s6 .ds2 { max-width: 300px; border-top: 4px solid #000; margin-top: 12px; }
-  .s6 .deco1 { right: 80px; bottom: 80px; width: 200px; height: 200px; }
-  .s6 .deco2 { right: 100px; bottom: 100px; width: 120px; height: 120px; opacity: .15; }
-
-
+@media (max-width:1200px){
+  .s2 .summary-grid,.s4 .panel-wrap,.s5 .metric-grid{grid-template-columns:1fr}
+  .s6 .news-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto}
+  .s6 .news-item.big{grid-row:auto;grid-column:1/3}
+  .s7 .priority{position:absolute;width:320px}
+}
 </style>
 </head>
 <body>
+<div id="counter">01/07</div>
 
-<div id="counter">01/06</div>
-
-<!-- S1: TITLE -->
-<div class="slide s1 active" data-i="0">
-  <div class="vr"></div><div class="hr"></div>
-  <div class="tb0 a0"><div class="tl xbold">WEEKLY</div><div class="tl xbold"><span class="yh">UPDATE</span></div><p class="sub">David Chen</p></div>
-  <div class="db a1">03.28 — 04.03</div>
-  <div class="cm"></div>
+<div class="slide active s1">
+  <div class="frame"></div>
+  <div class="grid-v" style="left:33.333%"></div><div class="grid-v" style="left:66.666%"></div>
+  <div class="grid-h" style="top:24%"></div><div class="grid-h" style="top:76%"></div>
+  <div class="diag line"></div>
+  <div class="circle shape"></div>
+  <div class="square shape" style="animation-delay:.12s"></div>
+  <div class="tri shape" style="animation-delay:.2s"></div>
+  <div class="content">
+    <div class="title a0">Weekly<br>Update</div>
+    <div class="meta a1">David Chen · Copilot Mac Design</div>
+    <div class="date a2">04.13 — 04.17</div>
+  </div>
+  <div class="aside a3">
+    <div class="small">Bauhaus Edition</div>
+    <div class="big">Structure,<br>rhythm,<br>clarity.</div>
+  </div>
 </div>
 
-<!-- S2: CHROMIUM — full picture -->
-<div class="slide s2" data-i="1">
-  <div class="header"><div class="slabel a0"><span class="label">Copilot Mac Chromium</span></div></div>
-  <div class="left a1">
-    <div class="big"><span class="yh">179</span></div>
-    <div class="big-sub">issues closed this week · 158 Chromium-labeled</div>
-  </div>
-  <div class="right">
-    <div class="callout a2">
-      <ul>
-        <li>Dev Build 正式發布 workstream-wide internal dogfood on staging</li>
-        <li>被列入官方公告核心貢獻者（Designer / Tester / PM 代表）on Slack</li>
-      </ul>
+<div class="slide s2">
+  <div class="frame"></div>
+  <div class="kicker a0"><span class="label">Overview</span></div>
+  <div class="hero-band"><div class="hero-text a1">Composer drag-expand moved into cross-team escalation, Phase 3 workflow became a shareable methodology deck, and Lebun v2.3 tightened speed and reliability.</div></div>
+  <div class="summary-grid">
+    <div class="sum-card red a2">
+      <div class="sum-label">Core movement</div>
+      <div class="sum-title">Composer issue shifted from debugging into alignment work</div>
+      <div class="sum-body"><strong>MAC-11472</strong> root cause was isolated, <strong>3 Slack precedents</strong> were mapped, and the path is now moving through <strong>wChromium PM Lia + Jen</strong>.</div>
     </div>
-    <div class="stat-row a3">
-      <div class="st"><div class="st-n">171</div><div class="st-l">In Progress</div></div>
-      <div class="st"><div class="st-n">58</div><div class="st-l">PR / Merged</div></div>
-      <div class="st"><div class="st-n">250+</div><div class="st-l">Backlog</div></div>
+    <div class="sum-card yellow a3">
+      <div class="sum-label">Method</div>
+      <div class="sum-title">Data-based workflow was formalized</div>
+      <div class="sum-body">A <strong>9-slide deck + TTS script</strong> turned daily tooling practice into a reusable framework aligned with <strong>Shanying's AI Transformation</strong>.</div>
     </div>
-  </div>
-  <div class="footer-rule"></div>
-  <div class="deco deco1"></div>
-</div>
-
-<!-- S3: DESIGN DISCUSSIONS -->
-<div class="slide s3" data-i="2">
-  <div class="top"><div class="slabel a0"><span class="label">Design Discussion</span></div></div>
-  <div class="list">
-    <div class="item a1"><div class="item-num">01</div><div class="item-left"><div class="item-name">Navigation & Panel Layout</div><div class="item-desc">釐清 sidebar / IAB / browser panel 三者共存規則，提議統一 Pages 互斥邏輯，待 May 出新 spec</div></div><div class="item-right"><span class="tag tb">[SPEC]</span></div></div>
-    <div class="item a2"><div class="item-num">02</div><div class="item-left"><div class="item-name">Win→Mac Leverage 品質落差</div><div class="item-desc">從 Windows leverage 的還原度比 CMC 更差，建議優先對齊 CMC</div></div><div class="item-right"><span class="tag tb">[REVIEW]</span></div></div>
-    <div class="item a3"><div class="item-num">03</div><div class="item-left"><div class="item-name">Browser 空條問題</div><div class="item-desc">MAC-11473 — 所有 browser window 頂部空白條，4/3 修復驗證通過</div></div><div class="item-right"><span class="tag ty">[FIXED]</span></div></div>
-    <div class="item a4"><div class="item-num">04</div><div class="item-left"><div class="item-name">Sidebar Profile 滾動</div><div class="item-desc">MAC-11601 — profile section 應固定不隨列表滾動，已歸類 Design-Fit</div></div><div class="item-right"><span class="tag tb">[FILED]</span></div></div>
-    <div class="item a5"><div class="item-num">05</div><div class="item-left"><div class="item-name">Browser 出現頻率</div><div class="item-desc">建議降低 browser panel 出現頻率，配合 Sergey 整體 vision</div></div><div class="item-right"><span class="tag tb">[REVIEW]</span></div></div>
-  </div>
-  <div class="deco deco1"></div>
-</div>
-
-<!-- S4: PHASE 3 — all-in-one -->
-<div class="slide s4" data-i="3">
-  <div class="header">
-    <div class="slabel a0"><span class="label">AI Transformation</span></div>
-    <div class="big a1">Phase <span class="yh">3</span></div>
-  </div>
-  <div class="phases a2">
-    <div class="ph"><div class="ph-l">Phase 1</div><h3>Get everyone started</h3><ul><li>AI curiosity</li><li>Experimentation</li><li>Learning by doing</li></ul></div>
-    <div class="ph"><div class="ph-l">Phase 2</div><h3>Change how we design</h3><ul><li>Static → dynamic</li><li>Designers → builders</li><li>AI-augmented craft</li></ul></div>
-    <div class="ph now"><div class="ph-l">Phase 3 · Now</div><h3>Change how we work</h3><ul><li>AI as team memory</li><li>Knowledge automation</li><li>Intelligent workflows</li></ul></div>
-  </div>
-  <div class="detail-left a3">
-    <div class="detail-title">本週推進</div>
-    <ul class="detail-list">
-      <li>組織 4/1、4/3 兩場 hands-on session</li>
-      <li>帶領團隊完成 <strong>Claude Code + connector</strong> 配置</li>
-      <li>接入 <strong>Slack、M365、Linear</strong> 三大數據源</li>
-    </ul>
-  </div>
-  <div class="detail-right a3">
-    <div class="detail-title">Why It Matters</div>
-    <ul class="detail-list">
-      <li><strong>Connector = AI agent team memory</strong></li>
-      <li>即時排除 MCP、路徑、proxy 等環境故障</li>
-      <li>目標：全員覆蓋，可複製 onboarding 流程</li>
-    </ul>
-  </div>
-  <div class="deco deco1"></div>
-</div>
-
-<!-- S5: BUG SKILL — hero + compare -->
-<div class="slide s5" data-i="4">
-  <div class="header"><div class="slabel a0"><span class="label">CMC Bug Reporting Skill · v1.2.0</span></div></div>
-  <div class="left a1">
-    <div class="big"><span class="yh">2×</span></div>
-    <div class="big-sub">faster bug filing — from ~5 min to ~2.5 min per issue</div>
-  </div>
-  <div class="right">
-    <div class="card before a2">
-      <div class="card-label">Before · ~5 min</div>
-      <ul>
-        <li>Linear 手動選 Team → Project → Label</li>
-        <li>重複填模板欄位</li>
-        <li>中文自己翻譯成英文</li>
-      </ul>
-    </div>
-    <div class="card after a3">
-      <div class="card-label">After · ~2.5 min</div>
-      <ul>
-        <li>回答問題即可建立 issue</li>
-        <li>中文直接輸入，自動翻譯</li>
-        <li>截圖自動判斷類型</li>
-        <li>版本號記憶，自動帶入</li>
-      </ul>
+    <div class="sum-card blue a4">
+      <div class="sum-label">Ops</div>
+      <div class="sum-title">Lebun got faster and broader</div>
+      <div class="sum-body">Infra refresh, <strong>new reaction/GIF/outbox abilities</strong>, and reply latency brought down to roughly <strong>~15s</strong>, with <strong>5 reliability fixes</strong>.</div>
     </div>
   </div>
-  <div class="footer-rule"></div>
-  <div class="deco deco1"></div>
+  <div class="dots"><div class="dot d1 shape"></div><div class="dot d2 shape" style="animation-delay:.1s"></div><div class="dot d3 shape" style="animation-delay:.18s"></div></div>
 </div>
 
-<!-- S6: NEXT WEEK -->
-<div class="slide s6" data-i="5">
-  <div class="mind a0">NEXT<br>WEEK</div>
-  <div class="list">
-    <div class="item a1"><div><div class="item-name">Chromium Dogfood</div><div class="item-desc">持續 design quality review，配合 critical PR merge</div></div><div class="item-right"><span class="tag tb">[ONGOING]</span></div></div>
-    <div class="item a2"><div><div class="item-name">Split-window spec</div><div class="item-desc">Follow up May 的新互斥邏輯設計</div></div><div class="item-right"><span class="tag ty">[NEW]</span></div></div>
-    <div class="item a3"><div><div class="item-name">MAC-11487</div><div class="item-desc">跟進 chat 雙擊頂部視窗切換問題</div></div><div class="item-right"><span class="tag tb">[BUG]</span></div></div>
-    <div class="item a4"><div><div class="item-name">Phase 3 推進</div><div class="item-desc">1:1 輔導，目標全員 connector 覆蓋</div></div><div class="item-right"><span class="tag tb">[ONGOING]</span></div></div>
-    <div class="item a5"><div><div class="item-name">CMC Bug Skill</div><div class="item-desc">根據團隊 feedback 迭代</div></div><div class="item-right"><span class="tag ty">[ITERATE]</span></div></div>
+<div class="slide s3">
+  <div class="frame"></div>
+  <div class="diag-shape shape"></div>
+  <div class="kicker a0"><span class="label">01 · Copilot Mac Design</span></div>
+  <div class="content-head">
+    <div class="content-title a1">Composer drag-expand: from <span>bug investigation to cross-team escalation</span></div>
+    <div class="content-desc a2">Independently investigated <strong>MAC-11472</strong>, identified <strong>multi-tabs stopPropagation</strong> as the blocker, traced <strong>3 prior fixes</strong> in Slack, and confirmed <strong>SurfaceConfig</strong> as the standard direction. Pengfei agreed to decouple, and Jie Liu is bringing in <strong>Lia + Jen</strong>.</div>
   </div>
-  <div class="ds"></div>
-  <div class="ds2"></div>
-  <div class="deco deco1"></div>
-  <div class="deco deco2"></div>
+  <div class="items">
+    <div class="row"><div class="num">01</div><div class="row-main"><div><div class="name">Composer Drag-Expand → Cross-Team Escalation</div><div class="desc"><strong>MAC-11472</strong> root cause found, <strong>3 Slack precedents</strong> confirmed, SurfaceConfig path aligned, and the thread is now moving with <strong>Lia + Jen</strong>.</div></div><span class="tag tr">Lead</span></div></div>
+    <div class="row"><div class="num">02</div><div class="row-main"><div><div class="name">Sidebar Interaction — Collapse Memory + Design Review</div><div class="desc">Replied to Yang Shen on the upcoming <strong>collapse memory</strong> behavior. <strong>MAC-11745</strong> Lu Yang comment pending; also joined CM review on <strong>sticky/divider logic</strong>.</div></div><span class="tag ty">Active</span></div></div>
+    <div class="row"><div class="num">03</div><div class="row-main"><div><div class="name">FRE Copy — “Including Windows” Removed</div><div class="desc">Pengfei confirmed the fix shipped; status synchronized with <strong>May Yu + Liya Yong</strong>.</div></div><span class="tag tg">Fixed</span></div></div>
+    <div class="row"><div class="num">04</div><div class="row-main"><div><div class="name">Code Tracking — 4 PRs + IS_MAC Guard Issue</div><div class="desc">Tracked <strong>#1388 #1406 #1408 #1410</strong>. Chengzhi Li flagged that CMC code needs <strong>copilot::IsCopilotProcess()</strong>, not only IS_MAC.</div></div><span class="tag tb">Track</span></div></div>
+    <div class="row"><div class="num">05</div><div class="row-main"><div><div class="name">Dogfood Build — New Package with Multi-Person Bug Fix</div><div class="desc">Lu Yang delivered the updated dogfood package containing the <strong>multi-person bug fix CP</strong>.</div></div><span class="tag tb">Track</span></div></div>
+  </div>
+</div>
+
+<div class="slide s4">
+  <div class="frame"></div>
+  <div class="kicker a0"><span class="label">02 · Data-Based Workflow Video</span></div>
+  <div class="content-head">
+    <div class="content-title a1">Built Phase 3 workflow deck — <span>4 real scenarios anchored by Chromium adoption</span></div>
+    <div class="content-desc a2">The work captured how <strong>Kusto, Titan, OCV, and Slack semantic search</strong> changed design decision-making. The result was <strong>“Phase 3 in Action”</strong>, a <strong>9-slide deck</strong> with a narrated script, aligned to <strong>Shanying's three-phase framework</strong> and shared with the CM team.</div>
+  </div>
+  <div class="panel-wrap">
+    <div class="panel red a3"><div class="geo"></div><div class="panel-k">Context</div><div class="panel-title">1:1 with Saber surfaced a repeatable workflow shift</div><div class="panel-body">What started as a conversation about better decision-making became a clearer idea: the <strong>data layer had changed the design process itself</strong>, not just accelerated research.</div></div>
+    <div class="panel yellow a4"><div class="geo"></div><div class="panel-k">How</div><div class="panel-title">9 slides, 4 scenarios, 1 concrete Chromium case</div><div class="panel-body">The deck framed value across <strong>Speed / Accuracy / Perspective</strong>, using <strong>Chromium multi-tabs adoption</strong> as the core case study to make the method feel grounded rather than abstract.</div></div>
+    <div class="panel blue a5"><div class="geo"></div><div class="panel-k">Result</div><div class="panel-title">Delivered, deployed, and shared inside the team</div><div class="panel-body">Published on <strong>GitHub Pages</strong>, delivered to Saber, then shared with the internal <strong>design CM team</strong> as a reference model for broader adoption.</div></div>
+  </div>
+</div>
+
+<div class="slide s5">
+  <div class="frame"></div>
+  <div class="kicker a0"><span class="label">03 · Lebun Agent</span></div>
+  <div class="phase a1">v2.3</div>
+  <div class="content-head">
+    <div class="content-title a2">Upgraded local environment — <span>faster replies, broader abilities, tighter stability</span></div>
+    <div class="content-desc a3">Hive moved from <strong>v2.2 → v2.3</strong>. Scripts and MCP configs were refreshed, Teams interaction capabilities expanded, and the reply path shifted to HTTP for noticeably faster turnaround.</div>
+  </div>
+  <div class="metric-grid">
+    <div class="metric yellow a3"><div class="geo"></div><div class="metric-value">7+</div><div class="metric-label">Infrastructure</div><div class="metric-title">Platform refreshed</div><ul class="metric-list"><li><strong>7 scripts + 4 MCP</strong> updated</li><li>Added <strong>2 new MCP + Codex</strong> plugin</li><li><strong>7 launchd</strong> services auto-start</li></ul></div>
+    <div class="metric red a4"><div class="geo"></div><div class="metric-value">3</div><div class="metric-label">New abilities</div><div class="metric-title">React, GIF, outbox</div><ul class="metric-list"><li><strong>Emoji reaction</strong> with LLM selection</li><li><strong>GIF send</strong> via Tenor + hostedContents</li><li><strong>Outbox pipeline</strong> from Big Agent → Lebun</li></ul></div>
+    <div class="metric blue a5"><div class="geo"></div><div class="metric-value">~15s</div><div class="metric-label">Reliability</div><div class="metric-title">Faster + more stable</div><ul class="metric-list"><li>Reply path moved <strong>CLI → HTTP</strong></li><li>Token + Slack cache <strong>auto-refresh</strong></li><li><strong>5 bugs</strong> fixed, brief shifted to <strong>9→10 AM</strong></li></ul></div>
+  </div>
+</div>
+
+<div class="slide s6">
+  <div class="frame"></div>
+  <div class="kicker a0"><span class="label">04 · News Update</span></div>
+  <div class="news-grid">
+    <div class="news-item big a1"><span class="tag tr news-tag">Ship</span><div class="news-title">Copilot Mac — production dogfood ready</div><div class="news-desc"><strong>DMG + aka.ms/maccopilot</strong> are ready. <strong>26 PRs</strong> merged and around <strong>50 bugs</strong> were resolved, setting up a broader rollout for <strong>next week</strong>.</div></div>
+    <div class="news-item blue a2"><span class="tag tg news-tag">Live</span><div class="news-title">Vision GA shipped on 4/17</div><div class="news-desc">Studio Vision GA and <strong>On-Demand Tool Call</strong> both went live this week.</div></div>
+    <div class="news-item blue a3"><span class="tag tbl news-tag">Flight</span><div class="news-title">Journeys reached 50% Stable flight</div><div class="news-desc">External Stable <strong>50% flight</strong> launched, with <strong>voice chat</strong> demoed along the way.</div></div>
+    <div class="news-item yellow a4"><span class="tag ty news-tag">Watch</span><div class="news-title">New brand direction is worth watching</div><div class="news-desc"><strong>Bebop explores</strong> landed in Figma and may influence <strong>Mac visual direction</strong> later.</div></div>
+    <div class="news-item black a5"><span class="tag tb news-tag">Comp</span><div class="news-title">Google Gemini Mac launched</div><div class="news-desc">Native macOS app, <strong>menu bar presence</strong>, and <strong>system-wide text generation</strong> make it a direct competitor signal.</div></div>
+  </div>
+</div>
+
+<div class="slide s7">
+  <div class="frame"></div>
+  <div class="texture" id="texture"></div>
+  <div class="title a0">Next<br>Week</div>
+  <div class="bar line"></div>
+  <div class="priority a1"><div class="k">Top of mind</div><div class="t">Close the composer cross-team thread</div><div class="d">The most important move is to get alignment with <strong>wChromium PM</strong>, then convert that alignment into a scoped fix path.</div></div>
+  <div class="items">
+    <div class="item a2"><div class="bullet"></div><div class="text"><div class="name">Composer Cross-Team</div><div class="desc">Join the wChromium thread with Lia + Jen and scope the decouple fix.</div></div><span class="tag tr">Priority</span></div>
+    <div class="item a3"><div class="bullet"></div><div class="text"><div class="name">MAC-11745 Sidebar</div><div class="desc">Respond to Lu Yang’s comment and finalize sidebar behavior spec.</div></div><span class="tag ty">Design</span></div>
+    <div class="item a4"><div class="bullet"></div><div class="text"><div class="name">Production Dogfood</div><div class="desc">Review design quality on the production build once the pending PRs merge.</div></div><span class="tag tb">Ongoing</span></div>
+  </div>
+  <div class="marks"><div class="m1 shape"></div><div class="m2 shape" style="animation-delay:.12s"></div></div>
 </div>
 
 <script>
 (function(){
+  var g=document.getElementById('texture');
+  if(g){
+    var colors=['#E44332','#1D5FD1','#FFD62E'];
+    var step=82;
+    for(var y=-20;y<window.innerHeight+40;y+=step){
+      for(var x=-20;x<window.innerWidth+40;x+=step){
+        var sq=document.createElement('div');
+        sq.className='sq';
+        sq.style.left=(x+((y/step)%2)*step/2)+'px';
+        sq.style.top=y+'px';
+        sq.style.background=colors[Math.floor(Math.random()*3)];
+        g.appendChild(sq);
+      }
+    }
+  }
+})();
+(function(){
   var c=0,s=document.querySelectorAll('.slide'),t=s.length,ct=document.getElementById('counter'),lk=false;
   function p(n){return n<10?'0'+n:''+n}
+  function reset(slide){
+    slide.querySelectorAll('[class*="a"],.shape,.line').forEach(function(e){e.style.animation='none';void e.offsetHeight;e.style.animation='';});
+  }
   function go(i){
     if(i<0||i>=t||i===c||lk)return;lk=true;
-    var o=s[c];o.classList.remove('active');
-    o.querySelectorAll('.a0,.a1,.a2,.a3,.a4,.a5,.item,.tag').forEach(function(e){e.style.animation='none';void e.offsetHeight;e.style.animation=''});
-    c=i;s[c].classList.add('active');ct.textContent=p(c+1)+'/'+p(t);
-    setTimeout(function(){lk=false},400)
+    s[c].classList.remove('active');reset(s[c]);c=i;s[c].classList.add('active');ct.textContent=p(c+1)+'/'+p(t);setTimeout(function(){lk=false},520);
   }
   document.addEventListener('keydown',function(e){
     if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(c+1)}
@@ -434,10 +328,7 @@
   var tx=0;
   document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX});
   document.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(c+(d<0?1:-1))});
-  document.addEventListener('click',function(e){
-    if(e.target.closest('.tag,a,button'))return;
-    if(e.clientX>innerWidth*.65)go(c+1);else if(e.clientX<innerWidth*.35)go(c-1)
-  });
+  document.addEventListener('click',function(e){if(e.target.closest('.tag,a,button'))return;if(e.clientX>innerWidth*.65)go(c+1);else if(e.clientX<innerWidth*.35)go(c-1)});
 })();
 </script>
 </body>
