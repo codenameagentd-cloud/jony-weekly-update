@@ -36,6 +36,10 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
 .section{margin-top:22px;border-top:1px dashed var(--line);padding-top:18px}
 .section-lead{background:rgba(255,255,255,.02);border:1px solid var(--line);padding:22px 22px 20px}.section-lead.blue{border-top:3px solid var(--blue)}.section-lead.green{border-top:3px solid var(--green)}.section-lead.red{border-top:3px solid var(--red)}.section-lead.yellow{border-top:3px solid var(--yellow)}
 .lead-title{font-size:40px;line-height:1;letter-spacing:-.045em;font-weight:900;color:#f5fffa;max-width:980px}.lead-title.sm{font-size:34px}.lead-copy{margin-top:14px;max-width:980px;font-size:15px;line-height:1.8;color:var(--muted)}.lead-copy strong{color:#f5fffa}
+.next-hero{font-size:88px;line-height:.86;letter-spacing:-.06em;font-weight:900;color:#f5fffa;max-width:760px;margin-top:18px}
+.next-sub{margin-top:14px;font:500 14px 'IBM Plex Mono',monospace;line-height:1.7;color:var(--muted);max-width:760px}
+.next-list{margin-top:20px;border-top:1px dashed var(--line)}
+.next-item{display:grid;grid-template-columns:18px 1fr auto;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px dashed rgba(52,211,153,.14)}.next-item:last-child{border-bottom:none}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .card{background:rgba(255,255,255,.02);border:1px solid var(--line);padding:20px;min-width:0}.accent-blue{border-top:3px solid var(--blue)}.accent-green{border-top:3px solid var(--green)}.accent-red{border-top:3px solid var(--red)}.accent-yellow{border-top:3px solid var(--yellow)}
 .label{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--soft);margin-bottom:12px}
@@ -55,8 +59,8 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--green);margin-top:7px}.item-title{font-size:24px;line-height:1.05;letter-spacing:-.03em;font-weight:900;color:#f5fffa}.item-detail{margin-top:6px;font-size:15px;line-height:1.72;color:var(--muted)}
 .slide.enter-next,.slide.enter-prev{animation:fadeIn .24s cubic-bezier(.22,1,.36,1) both}.slide.exit-next,.slide.exit-prev{animation:fadeOut .16s ease both}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeOut{from{opacity:1}to{opacity:0}}@keyframes sweep{from{opacity:0;transform:rotate(-18deg) scaleX(.86)}to{opacity:.85;transform:rotate(-18deg) scaleX(1)}}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.slide.active .ribbon{animation:sweep .34s cubic-bezier(.16,1,.3,1) .08s both}.slide.active .kicker,.slide.active .hero,.slide.active .sub,.slide.active .section-lead,.slide.active .card,.slide.active .summary-item,.slide.active .next-item{opacity:0;animation:rise .26s cubic-bezier(.22,1,.36,1) both}.slide.active .hero{animation-delay:.03s}.slide.active .sub{animation-delay:.07s}.slide.active .section-lead{animation-delay:.12s}.slide.active .card:nth-child(1),.slide.active .summary-item:nth-child(1),.slide.active .next-item:nth-child(1){animation-delay:.16s}.slide.active .card:nth-child(2),.slide.active .summary-item:nth-child(2),.slide.active .next-item:nth-child(2){animation-delay:.2s}.slide.active .card:nth-child(3),.slide.active .summary-item:nth-child(3),.slide.active .next-item:nth-child(3){animation-delay:.24s}.slide.active .summary-item:nth-child(4){animation-delay:.28s}
-@media (max-width:1280px){.grid-3,.grid-2,.news-stack{grid-template-columns:1fr}.news-stack .wide{grid-column:auto}.hero{font-size:82px}.hero.small{font-size:62px}.kpi{font-size:58px}}
+.slide.active .ribbon{animation:sweep .34s cubic-bezier(.16,1,.3,1) .08s both}.slide.active .kicker,.slide.active .hero,.slide.active .sub,.slide.active .next-hero,.slide.active .next-sub,.slide.active .section-lead,.slide.active .card,.slide.active .summary-item,.slide.active .next-item{opacity:0;animation:rise .26s cubic-bezier(.22,1,.36,1) both}.slide.active .hero,.slide.active .next-hero{animation-delay:.03s}.slide.active .sub,.slide.active .next-sub{animation-delay:.07s}.slide.active .section-lead{animation-delay:.12s}.slide.active .card:nth-child(1),.slide.active .summary-item:nth-child(1),.slide.active .next-item:nth-child(1){animation-delay:.16s}.slide.active .card:nth-child(2),.slide.active .summary-item:nth-child(2),.slide.active .next-item:nth-child(2){animation-delay:.2s}.slide.active .card:nth-child(3),.slide.active .summary-item:nth-child(3),.slide.active .next-item:nth-child(3){animation-delay:.24s}.slide.active .summary-item:nth-child(4){animation-delay:.28s}
+@media (max-width:1280px){.grid-3,.grid-2,.news-stack{grid-template-columns:1fr}.news-stack .wide{grid-column:auto}.hero{font-size:82px}.hero.small{font-size:62px}.next-hero{font-size:62px}.kpi{font-size:58px}}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
 </style>
 </head>
@@ -169,12 +173,9 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
 <div class="slide">
   <div class="shell">
     <div class="ribbon r1"></div>
-    <div class="kicker">Next Week</div>
-    <div class="section">
-      <div class="section-lead green">
-        <div class="lead-title sm">Priority: close the composer cross-team thread, resume production design review</div>
-      </div>
-    </div>
+    <div class="kicker">$ next-week --priority</div>
+    <div class="next-hero">Next,<br>keep the stream moving.</div>
+    <div class="next-sub">Priority: close the composer cross-team thread, resume production design review.</div>
     <div class="next-list">
       <div class="next-item"><div class="dot"></div><div><div class="item-title">Composer Cross-Team</div><div class="item-detail">follow up with Lia + Jenny on expand alignment across surfaces</div></div><div class="tag t-red">Priority</div></div>
       <div class="next-item"><div class="dot"></div><div><div class="item-title">Production Dogfood</div><div class="item-detail">design quality review on Chromium build</div></div><div class="tag t-yellow">Design</div></div>
