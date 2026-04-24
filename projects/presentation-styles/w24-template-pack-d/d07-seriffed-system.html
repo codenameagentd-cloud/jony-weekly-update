@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D07. Seriffed System</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--bg:#FAF7F0;--ink:#161616;--accent:#7C3AED;--line:rgba(17,17,17,.10)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:'Inter',sans-serif}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;overflow:hidden;padding:72px}
+.slide.active{opacity:1;pointer-events:auto}
+#counter{position:fixed;right:34px;bottom:28px;font:500 11px 'Inter',sans-serif;letter-spacing:2px;opacity:.45;z-index:10}
+.frame{position:absolute;inset:24px;border:1px solid var(--line);pointer-events:none}
+.line-v,.line-h{position:absolute;background:var(--line);pointer-events:none}
+.line-v{top:0;bottom:0;left:26%;width:1px}.line-h{left:0;right:0;top:74%;height:1px}
+.label{font:700 11px 'Inter',sans-serif;letter-spacing:3px;text-transform:uppercase;color:#7C3AED}.kicker{display:inline-flex;align-items:center;gap:10px}.kicker::before{content:'';width:30px;height:2px;background:#7C3AED}
+.hero{max-width:980px;position:relative;z-index:2}.title{font-family:'DM Serif Display',sans-serif;font-weight:800;font-size:clamp(78px,9vw,146px);line-height:.88;letter-spacing:-.05em;margin-top:18px;max-width:900px}.meta{margin-top:20px;font:500 13px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;opacity:.68}.chip{display:inline-block;margin-top:24px;padding:10px 14px;border:1.5px solid #7C3AED;color:#7C3AED;font:700 12px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase}
+.accent-circle{position:absolute;right:-8vw;bottom:-12vh;width:44vw;height:44vw;border-radius:50%;background:#7C3AED;opacity:0.10;transform:rotate(0deg);pointer-events:none}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+.slide.active .a0{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}.slide.active .a1{animation:rise .55s cubic-bezier(.2,.8,.2,1) .10s both}.slide.active .a2{animation:rise .55s cubic-bezier(.2,.8,.2,1) .20s both}.slide.active .a3{animation:rise .55s cubic-bezier(.2,.8,.2,1) .30s both}.slide.active .a4{animation:rise .55s cubic-bezier(.2,.8,.2,1) .40s both}.slide.active .sx{animation:slide .65s cubic-bezier(.2,.8,.2,1) both}
+.s2 .headline{font-family:'DM Serif Display',sans-serif;font-size:clamp(30px,3.9vw,58px);line-height:1.0;letter-spacing:-.04em;max-width:1020px;margin:20px 0 30px}
+.s2 .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.s2 .card{background:transparent;border:1.5px solid var(--line);;padding:18px;min-height:228px;position:relative;overflow:hidden}
+.s2 .num{font-family:'DM Serif Display',sans-serif;font-size:34px;line-height:1;color:#7C3AED;margin-bottom:14px}
+.s2 .card h3{font-family:'DM Serif Display',sans-serif;font-size:24px;line-height:1.02;letter-spacing:-.03em;margin-bottom:10px}
+.s2 .card p{font-size:13px;line-height:1.7;color:rgba(17,17,17,.72)}
+.s3{display:flex;align-items:flex-end}.s3 .wrap{max-width:960px;position:relative;z-index:2}.s3 .end{font-family:'DM Serif Display',sans-serif;font-size:clamp(58px,7vw,112px);line-height:.88;letter-spacing:-.05em}.small{margin-top:16px;font:500 13px 'Inter',sans-serif;letter-spacing:2px;text-transform:uppercase;opacity:.58}
+
+</style>
+</head>
+<body>
+<div id="counter">01 / 03</div>
+<div class="slide s1 active"><div class="frame"></div><div class="line-v"></div><div class="line-h"></div><div class="accent-circle"></div><div class="hero"><div class="kicker label a0">高級文字系統</div><div class="title a1">Weekly Report<br>Direction</div><div class="meta a2">D07. Seriffed System · David Chen</div><div class="chip a3">Design-forward option</div></div></div>
+<div class="slide s2"><div class="frame"></div><div class="kicker label a0">Progress story</div><div class="headline a1">Designed for scanning first, remembering second.</div><div class="grid"><div class="card a2"><div class="num">01</div><h3>Composer drag-expand → cross-team escalation</h3><p>MAC-11472 root cause found, 3 Slack precedents traced, Pengfei agreed to decouple.</p></div><div class="card a3"><div class="num">02</div><h3>Phase 3 workflow turned into a shareable deck</h3><p>9-slide narrated story using Kusto, Titan, OCV, and Slack semantic search.</p></div><div class="card a4"><div class="num">03</div><h3>Lebun v2.3 shipped with stronger performance</h3><p>Speed, breadth, and stability improved across the release.</p></div></div></div>
+<div class="slide s3"><div class="frame"></div><div class="accent-circle"></div><div class="wrap"><div class="kicker label a0">Closing</div><div class="end a1">Pick the one<br>with the right attitude.</div><div class="small a2">Arrow keys / click to navigate</div></div></div>
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');let cur=0;function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+</script>
+</body>
+</html>
