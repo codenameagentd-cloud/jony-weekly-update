@@ -8,14 +8,47 @@
 .slide.exit-next{animation:slideOutNext .34s cubic-bezier(.4,0,.2,1) both}
 .slide.exit-prev{animation:slideOutPrev .34s cubic-bezier(.4,0,.2,1) both}
 
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+@keyframes fadeUpSoft{from{opacity:0;transform:translate3d(0,18px,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@keyframes fadeRightSoft{from{opacity:0;transform:translate3d(-24px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes fadeLeftSoft{from{opacity:0;transform:translate3d(24px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes lineGrow{from{transform:scaleX(0);opacity:.2}to{transform:scaleX(1);opacity:1}}
+.slide.active .hero,
+.slide.active .headline,
+.slide.active .big{animation:fadeRightSoft .68s cubic-bezier(.16,1,.3,1) both}
+.slide.active .band,
+.slide.active .pull,
+.slide.active .deck,
+.slide.active .prompt{animation:fadeUpSoft .62s cubic-bezier(.16,1,.3,1) .08s both}
+.slide.active .subgrid > *,
+.slide.active .grid > *,
+.slide.active .row,
+.slide.active .story,
+.slide.active .panelrow > *,
+.slide.active .mini > *,
+.slide.active .col,
+.slide.active .panel{opacity:0;animation:fadeUpSoft .56s cubic-bezier(.22,1,.36,1) both}
+.slide.active .subgrid > *:nth-child(1),.slide.active .grid > *:nth-child(1),.slide.active .panelrow > *:nth-child(1),.slide.active .mini > *:nth-child(1),.slide.active .row:nth-child(1),.slide.active .story:nth-child(1),.slide.active .col:nth-child(1),.slide.active .panel:nth-child(1){animation-delay:.14s}
+.slide.active .subgrid > *:nth-child(2),.slide.active .grid > *:nth-child(2),.slide.active .panelrow > *:nth-child(2),.slide.active .mini > *:nth-child(2),.slide.active .row:nth-child(2),.slide.active .story:nth-child(2),.slide.active .col:nth-child(2),.slide.active .panel:nth-child(2){animation-delay:.22s}
+.slide.active .subgrid > *:nth-child(3),.slide.active .grid > *:nth-child(3),.slide.active .panelrow > *:nth-child(3),.slide.active .mini > *:nth-child(3),.slide.active .row:nth-child(3),.slide.active .story:nth-child(3),.slide.active .col:nth-child(3),.slide.active .panel:nth-child(3){animation-delay:.30s}
+.stamp,.k,.eyebrow,.label,.prompt{transition:transform .28s cubic-bezier(.22,1,.36,1),opacity .28s ease}
+.slide.active .stamp,.slide.active .k,.slide.active .eyebrow,.slide.active .label{animation:fadeUpSoft .5s cubic-bezier(.22,1,.36,1) both}
+.diag,.shell:after,.railB,.dot,.plinth{transform-origin:left center}
+.slide.active .diag,.slide.active .shell:after,.slide.active .railB{animation:lineGrow .72s cubic-bezier(.16,1,.3,1) .06s both}
+.slide.active .dot{animation:fadeUpSoft .7s cubic-bezier(.16,1,.3,1) .18s both}
+.slide.active .plinth{animation:fadeUpSoft .72s cubic-bezier(.16,1,.3,1) .1s both}
+
 </style></head><body><div id="counter">01 / 04</div><div class="slide active"><div class="paper"><div class="mast"><div>Weekly Ledger</div><div>Friday Edition · W16 · Apr 14–18</div></div><div class="headline">This Week,<br>Clearly Told.</div><div class="deck">A more mature editorial direction: less “slide,” more “document with judgment.”</div><div class="pull">For founders and design leaders who want thought, not decoration.</div><div class="grid"><div class="story"><div class="k">Tone</div><h3>Measured</h3><p>Quiet authority instead of visual noise.</p></div><div class="story"><div class="k">Fit</div><h3>Reflective</h3><p>Great for narrative updates and critique-heavy reviews.</p></div><div class="story"><div class="k">Owner</div><h3>David Chen</h3><p>Presented as an authored memo.</p></div></div></div></div><div class="slide"><div class="paper"><div class="mast"><div>Lead Story</div><div>Page 2</div></div><div class="headline" style="font-size:78px">Three stories<br>worth keeping.</div><div class="grid"><div class="story"><div class="k">01</div><h3>Composer drag-expand</h3><p>MAC-11472 root cause found, three Slack precedents traced, Pengfei agreed to decouple.</p></div><div class="story"><div class="k">02</div><h3>Phase 3 workflow deck</h3><p>9-slide story using Kusto, Titan, OCV, and Slack semantic search.</p></div><div class="story"><div class="k">03</div><h3>Lebun v2.3 shipped</h3><p>Speed, breadth, and stability improved across the release.</p></div></div></div></div><div class="slide"><div class="paper"><div class="mast"><div>Page Design</div><div>System</div></div><div class="headline" style="font-size:80px">How content<br>should sit.</div><div class="grid"><div class="story"><div class="k">Rule</div><h3>Headline first</h3><p>Every page opens with a conclusion, not a category name.</p></div><div class="story"><div class="k">Rule</div><h3>Then body</h3><p>Let prose carry nuance; use layout for hierarchy.</p></div><div class="story"><div class="k">Rule</div><h3>Then pull quote</h3><p>Use one sentence to anchor memory.</p></div></div></div></div><div class="slide"><div class="paper"><div class="mast"><div>Assessment</div><div>R04</div></div><div class="headline" style="font-size:76px">Most authored.<br>Most literary.</div><div class="deck">This is the one to keep if the deck should read like considered editorial writing.</div></div></div><script>
 const slides=[...document.querySelectorAll('.slide')];
 const counter=document.getElementById('counter');
-let cur=0, busy=false;
+let cur=0,busy=false;
 function paint(){counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
-function clearState(el){el.classList.remove('active','enter-next','enter-prev','exit-next','exit-prev');}
+function resetClasses(el){el.classList.remove('active','enter-next','enter-prev','exit-next','exit-prev');}
 function go(n,dir=1){
-  if(busy || n===cur) return;
+  if(busy||n===cur)return;
   busy=true;
   const prev=slides[cur];
   const nextIndex=(n+slides.length)%slides.length;
@@ -23,9 +56,14 @@ function go(n,dir=1){
   prev.classList.remove('enter-next','enter-prev');
   next.classList.remove('exit-next','exit-prev');
   prev.classList.add(dir>0?'exit-next':'exit-prev');
-  next.classList.add('active', dir>0?'enter-next':'enter-prev');
+  next.classList.add('active',dir>0?'enter-next':'enter-prev');
   cur=nextIndex; paint();
-  setTimeout(()=>{clearState(prev); next.classList.remove('enter-next','enter-prev'); next.classList.add('active'); busy=false;}, 430);
+  setTimeout(()=>{
+    resetClasses(prev);
+    next.classList.remove('enter-next','enter-prev');
+    next.classList.add('active');
+    busy=false;
+  },430);
 }
 paint();
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1,1);if(e.key==='ArrowLeft')go(cur-1,-1);});
