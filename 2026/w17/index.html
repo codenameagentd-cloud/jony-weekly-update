@@ -5,17 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>W17 Weekly Update · 04.20 — 04.24</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Inter:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Inter:wght@400;500;700;800;900&display=swap');
 :root{
-  --bg:#06100d;
-  --panel:#0a1512;
-  --panel-soft:rgba(255,255,255,.02);
-  --line:rgba(16,185,129,.18);
-  --line-strong:rgba(16,185,129,.3);
-  --text:#d1fae5;
-  --muted:#a7f3d0;
-  --soft:#6ee7b7;
-  --white:#ecfdf5;
+  --bg:#07120f;
+  --panel:#0c1915;
+  --panel-2:#10211b;
+  --line:rgba(52,211,153,.14);
+  --line-strong:rgba(52,211,153,.28);
+  --text:#e9fff4;
+  --muted:#b8e8d2;
+  --soft:#71d9ad;
   --green:#34d399;
   --blue:#60a5fa;
   --red:#fb7185;
@@ -23,42 +22,46 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;-webkit-font-smoothing:antialiased}
-a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(96,165,250,.45);word-break:break-word}
+a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(96,165,250,.42)}
 a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
-.slide{position:absolute;inset:0;opacity:0;pointer-events:none;padding:32px}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;padding:30px}
 .slide.active{opacity:1;pointer-events:auto}
-#counter{position:fixed;right:18px;bottom:16px;font-size:11px;letter-spacing:2px;opacity:.45;z-index:30}
-.shell{position:relative;height:100%;border:1px solid var(--line-strong);background:radial-gradient(circle at 85% 15%,rgba(16,185,129,.08),transparent 32%),linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));padding:22px 24px;overflow:hidden}
-.ribbon{position:absolute;height:38px;background:linear-gradient(90deg,rgba(16,185,129,.16),rgba(52,211,153,.04));transform:rotate(-18deg);transform-origin:left center}
-.r1{right:-80px;top:108px;width:460px}.r2{right:-140px;top:188px;width:520px;opacity:.55}
+#counter{position:fixed;right:18px;bottom:16px;z-index:50;font-size:11px;letter-spacing:2px;opacity:.46}
+.shell{position:relative;height:100%;border:1px solid var(--line-strong);background:
+ radial-gradient(circle at 84% 14%, rgba(52,211,153,.08), transparent 30%),
+ linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+ padding:22px 24px;overflow:hidden}
+.ribbon{position:absolute;height:40px;background:linear-gradient(90deg,rgba(52,211,153,.16),rgba(52,211,153,.04));transform:rotate(-18deg);transform-origin:left center}
+.r1{right:-90px;top:110px;width:460px}.r2{right:-150px;top:190px;width:540px;opacity:.52}
 .prompt{font-size:14px;color:var(--green)}
 .prompt::after{content:' ▌';animation:blink 1.2s step-end infinite}
-.hero{font-family:Inter,sans-serif;font-size:112px;line-height:.82;letter-spacing:-.06em;font-weight:900;margin-top:18px;max-width:820px;color:var(--white)}
-.lede{margin-top:14px;font-size:16px;line-height:1.72;color:var(--muted);max-width:760px}
-.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.tag{display:inline-flex;align-items:center;justify-content:center;padding:7px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;font-size:10px;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.03)}
-.t-green{color:#032116;background:var(--green);border-color:transparent;font-weight:700}.t-red{color:#2c0910;background:var(--red);border-color:transparent;font-weight:700}.t-blue{color:#031425;background:var(--blue);border-color:transparent;font-weight:700}.t-yellow{color:#231600;background:var(--yellow);border-color:transparent;font-weight:700}.t-dark{color:var(--white);background:#111827;border-color:#1f2937;font-weight:700}
-.section{margin-top:22px;border-top:1px dashed var(--line);padding-top:16px}
-.grid-2{display:grid;grid-template-columns:1.08fr .92fr;gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid-news{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
-.card{border:1px solid var(--line);padding:16px;background:var(--panel-soft);min-width:0}.card.accent-red{border-top:3px solid var(--red)}.card.accent-blue{border-top:3px solid var(--blue)}.card.accent-yellow{border-top:3px solid var(--yellow)}.card.accent-green{border-top:3px solid var(--green)}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.tag{display:inline-flex;align-items:center;justify-content:center;padding:7px 10px;border:1px solid rgba(255,255,255,.1);border-radius:999px;font-size:10px;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.03)}
+.t-green{background:var(--green);color:#042217;border-color:transparent;font-weight:700}.t-dark{background:#111827;color:#f8fafc;border-color:#1f2937;font-weight:700}.t-blue{background:var(--blue);color:#08192e;border-color:transparent;font-weight:700}.t-yellow{background:var(--yellow);color:#231600;border-color:transparent;font-weight:700}.t-red{background:var(--red);color:#2a0b12;border-color:transparent;font-weight:700}
+.hero{font-family:'Inter',sans-serif;font-size:120px;line-height:.8;letter-spacing:-.07em;font-weight:900;color:#f5fffa;max-width:840px;margin-top:22px}.hero.small{font-size:76px;max-width:900px}
+.sub{margin-top:18px;font-size:17px;line-height:1.65;color:var(--muted);max-width:820px}
+.section{margin-top:22px;border-top:1px dashed var(--line);padding-top:18px}
+.grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid-news{display:grid;grid-template-columns:1.18fr .82fr;gap:16px}
+.card{background:rgba(255,255,255,.02);border:1px solid var(--line);padding:18px;min-width:0}.accent-blue{border-top:3px solid var(--blue)}.accent-green{border-top:3px solid var(--green)}.accent-red{border-top:3px solid var(--red)}.accent-yellow{border-top:3px solid var(--yellow)}
 .k{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--soft);margin-bottom:10px}
-.h{font-family:Inter,sans-serif;font-size:34px;line-height:1.02;letter-spacing:-.04em;font-weight:900;color:var(--white)}
-.h.sm{font-size:24px}.h.xs{font-size:20px}
-.body{margin-top:10px;font-size:13px;line-height:1.72;color:var(--muted)}
-.body strong{color:var(--white);font-weight:700}
-.log{margin-top:18px;border-top:1px dashed var(--line)}
-.row{display:grid;grid-template-columns:124px 1fr;gap:14px;padding:12px 0;border-bottom:1px dashed rgba(16,185,129,.16)}
-.row .label{color:var(--soft);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}.row .copy{color:var(--muted);font-size:13px;line-height:1.72}.row .copy strong{color:var(--white)}
-.list{display:flex;flex-direction:column;gap:10px}.bullet{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:10px 0;border-bottom:1px dashed rgba(16,185,129,.14)}.bullet:last-child{border-bottom:none}.slash{color:var(--green);font-weight:700}.copy{font-size:12.8px;line-height:1.72;color:var(--muted)}.copy strong{color:var(--white)}
-.big-kpi{font-family:Inter,sans-serif;font-weight:900;font-size:78px;line-height:.9;letter-spacing:-.06em;color:var(--white)}
-.news-stack{display:grid;grid-template-columns:1fr 1fr;gap:14px}.news-stack .card:first-child{grid-column:1 / 3}
-.next-list{margin-top:20px;border-top:1px dashed var(--line)}
-.next-item{display:grid;grid-template-columns:18px 1fr auto;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px dashed rgba(16,185,129,.16)}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--green);margin-top:5px}.item-title{font-family:Inter,sans-serif;font-size:20px;line-height:1.05;letter-spacing:-.03em;font-weight:900;color:var(--white)}.item-detail{margin-top:6px;font-size:13px;line-height:1.72;color:var(--muted)}
-.slide.enter-next,.slide.enter-prev{animation:shellFadeIn .24s cubic-bezier(.22,1,.36,1) both}.slide.exit-next,.slide.exit-prev{animation:shellFadeOut .16s ease both}
-@keyframes shellFadeIn{from{opacity:0}to{opacity:1}}@keyframes shellFadeOut{from{opacity:1}to{opacity:0}}@keyframes blink{50%{opacity:0}}@keyframes signalSweep{from{opacity:0;transform:rotate(-18deg) scaleX(.86)}to{opacity:.85;transform:rotate(-18deg) scaleX(1)}}@keyframes feedIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.slide.active .prompt,.slide.active .hero,.slide.active .lede,.slide.active .tag,.slide.active .card,.slide.active .row,.slide.active .bullet,.slide.active .next-item{opacity:0;animation:feedIn .25s cubic-bezier(.22,1,.36,1) both}.slide.active .hero{animation-delay:.03s}.slide.active .lede{animation-delay:.07s}.slide.active .ribbon{animation:signalSweep .32s cubic-bezier(.16,1,.3,1) .08s both}.slide.active .tag:nth-child(1),.slide.active .card:nth-child(1),.slide.active .row:nth-child(1),.slide.active .bullet:nth-child(1),.slide.active .next-item:nth-child(1){animation-delay:.12s}.slide.active .tag:nth-child(2),.slide.active .card:nth-child(2),.slide.active .row:nth-child(2),.slide.active .bullet:nth-child(2),.slide.active .next-item:nth-child(2){animation-delay:.16s}.slide.active .tag:nth-child(3),.slide.active .card:nth-child(3),.slide.active .row:nth-child(3),.slide.active .bullet:nth-child(3),.slide.active .next-item:nth-child(3){animation-delay:.2s}.slide.active .card:nth-child(4),.slide.active .bullet:nth-child(4){animation-delay:.24s}.slide.active .bullet:nth-child(5){animation-delay:.28s}
-@media (max-width:1280px){.grid-2,.grid-3,.grid-news,.news-stack{grid-template-columns:1fr}.news-stack .card:first-child{grid-column:auto}.hero{font-size:72px}.big-kpi{font-size:58px}}
+.h{font-family:'Inter',sans-serif;font-size:38px;line-height:1;letter-spacing:-.045em;font-weight:900;color:#f5fffa}.h.sm{font-size:28px}.h.xs{font-size:22px}
+.body{margin-top:10px;font-size:14px;line-height:1.76;color:var(--muted)}.body strong{color:#f5fffa}
+.overview-list{display:flex;flex-direction:column;gap:12px}
+.overview-row{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-bottom:1px dashed rgba(52,211,153,.16)}
+.overview-row:last-child{border-bottom:none}.mark{font-family:'Inter',sans-serif;font-size:28px;line-height:1;font-weight:900;color:var(--green)}
+.overview-copy{font-size:14px;line-height:1.76;color:var(--muted)}.overview-copy strong{color:#f5fffa}
+.kpi{font-family:'Inter',sans-serif;font-size:82px;line-height:.88;font-weight:900;letter-spacing:-.06em;color:#f5fffa}
+.log{margin-top:14px;border-top:1px dashed rgba(52,211,153,.16)}
+.row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px dashed rgba(52,211,153,.13)}
+.row:last-child{border-bottom:none}.label{font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:var(--soft)}.copy{font-size:13px;line-height:1.72;color:var(--muted)}.copy strong{color:#f5fffa}
+.news-stack{display:grid;grid-template-columns:1fr 1fr;gap:16px}.news-stack .wide{grid-column:1 / 3}
+.next-list{margin-top:18px;border-top:1px dashed var(--line)}
+.next-item{display:grid;grid-template-columns:18px 1fr auto;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px dashed rgba(52,211,153,.14)}.next-item:last-child{border-bottom:none}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--green);margin-top:6px}.item-title{font-family:'Inter',sans-serif;font-size:22px;line-height:1.05;letter-spacing:-.03em;font-weight:900;color:#f5fffa}.item-detail{margin-top:6px;font-size:14px;line-height:1.72;color:var(--muted)}
+.slide.enter-next,.slide.enter-prev{animation:fadeIn .24s cubic-bezier(.22,1,.36,1) both}.slide.exit-next,.slide.exit-prev{animation:fadeOut .16s ease both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeOut{from{opacity:1}to{opacity:0}}@keyframes blink{50%{opacity:0}}@keyframes sweep{from{opacity:0;transform:rotate(-18deg) scaleX(.86)}to{opacity:.85;transform:rotate(-18deg) scaleX(1)}}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .ribbon{animation:sweep .34s cubic-bezier(.16,1,.3,1) .08s both}.slide.active .prompt,.slide.active .hero,.slide.active .sub,.slide.active .tag,.slide.active .card,.slide.active .overview-row,.slide.active .next-item{opacity:0;animation:rise .26s cubic-bezier(.22,1,.36,1) both}.slide.active .hero{animation-delay:.03s}.slide.active .sub{animation-delay:.07s}.slide.active .tag:nth-child(1),.slide.active .card:nth-child(1),.slide.active .overview-row:nth-child(1),.slide.active .next-item:nth-child(1){animation-delay:.12s}.slide.active .tag:nth-child(2),.slide.active .card:nth-child(2),.slide.active .overview-row:nth-child(2),.slide.active .next-item:nth-child(2){animation-delay:.16s}.slide.active .tag:nth-child(3),.slide.active .card:nth-child(3),.slide.active .overview-row:nth-child(3),.slide.active .next-item:nth-child(3){animation-delay:.2s}.slide.active .card:nth-child(4),.slide.active .overview-row:nth-child(4){animation-delay:.24s}
+@media (max-width:1280px){.grid-2,.grid-3,.grid-news,.news-stack{grid-template-columns:1fr}.news-stack .wide{grid-column:auto}.hero{font-size:78px}.hero.small{font-size:60px}.kpi{font-size:58px}}
 @media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}.prompt::after{animation:none;content:''}}
 </style>
 </head>
@@ -70,16 +73,11 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
     <div class="ribbon r1"></div><div class="ribbon r2"></div>
     <div class="prompt">$ weekly-report --week W17 --theme terminal-ribbons-stream</div>
     <div class="hero">Weekly<br>Update</div>
-    <div class="lede">David Chen · Copilot Mac Design · 04.20 — 04.24</div>
+    <div class="sub">David Chen · Copilot Mac Design · 04.20 — 04.24</div>
     <div class="meta">
       <div class="tag t-green">Terminal Ribbons Stream</div>
       <div class="tag t-dark">Work 70%</div>
       <div class="tag t-dark">Lebun 30%</div>
-    </div>
-    <div class="log">
-      <div class="row"><div class="label">mode</div><div class="copy">Use the <strong>Terminal Ribbons Stream</strong> visual language, but structure the deck around the W17 production guide.</div></div>
-      <div class="row"><div class="label">week</div><div class="copy">Connect review, Copilot design alignment, Lebun v2.3 upgrade, and next-week priorities.</div></div>
-      <div class="row"><div class="label">ratio</div><div class="copy"><strong>Work 70%</strong> · <strong>Lebun 30%</strong></div></div>
     </div>
   </div>
 </div>
@@ -88,21 +86,21 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
   <div class="shell">
     <div class="ribbon r1"></div><div class="ribbon r2"></div>
     <div class="prompt">$ cat overview.log</div>
-    <div class="grid-2 section">
+    <div class="section grid-2">
       <div class="card accent-blue">
         <div class="k">Overview</div>
         <div class="h">Vision intel gathered for cross-team alignment, composer expand escalated to wChromium PM, Hive v2.3 fully upgraded</div>
       </div>
       <div class="card accent-green">
-        <div class="k">Scan</div>
-        <div class="body">A terminal-style summary board: one strong signal up top, then four structured lines underneath for fast reading.</div>
+        <div class="k">Signal</div>
+        <div class="body">This week focused on cross-team alignment, platform terminology, and getting the Lebun upgrade fully verified and professionally tuned.</div>
       </div>
     </div>
-    <div class="section list">
-      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Copilot Vision intel</strong> — pulled <a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">#sq-convergence-vision</a> updates: Highlights paused, <strong>LRV near GA</strong>, Collaborator <strong>60K token risk</strong></div></div>
-      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Composer expand</strong> — drafted <a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">cross-team reply</a> to wChromium PM Lia on drag-expand alignment, recommend <strong>align back to CMC</strong> standard</div></div>
-      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Terminology codified</strong> — clarified CMC / Copilot Mac / wChromium / Mobile definitions, written into CLAUDE.md as team standard</div></div>
-      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Hive v2.3 upgrade</strong> — 4 bug fixes, full script refresh, <strong>18 self-tests passed</strong>. Lebun tone quality tuned: professional mode, higher reply threshold</div></div>
+    <div class="section overview-list">
+      <div class="overview-row"><div class="mark">01</div><div class="overview-copy"><strong>Copilot Vision intel</strong> — pulled <a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">#sq-convergence-vision</a> updates: Highlights paused, <strong>LRV near GA</strong>, Collaborator <strong>60K token risk</strong></div></div>
+      <div class="overview-row"><div class="mark">02</div><div class="overview-copy"><strong>Composer expand</strong> — drafted <a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">cross-team reply</a> to wChromium PM Lia on drag-expand alignment, recommend <strong>align back to CMC</strong> standard</div></div>
+      <div class="overview-row"><div class="mark">03</div><div class="overview-copy"><strong>Terminology codified</strong> — clarified CMC / Copilot Mac / wChromium / Mobile definitions, written into CLAUDE.md as team standard</div></div>
+      <div class="overview-row"><div class="mark">04</div><div class="overview-copy"><strong>Hive v2.3 upgrade</strong> — 4 bug fixes, full script refresh, <strong>18 self-tests passed</strong>. Lebun tone quality tuned: professional mode, higher reply threshold</div></div>
     </div>
   </div>
 </div>
@@ -111,17 +109,17 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
   <div class="shell">
     <div class="ribbon r1"></div><div class="ribbon r2"></div>
     <div class="prompt">$ section 01 --copilot-design</div>
-    <div class="grid-2 section">
+    <div class="section grid-2">
       <div class="card accent-green">
         <div class="k">01 · Copilot Design</div>
         <div class="h">Vision intel gathered + composer expand cross-team reply drafted</div>
       </div>
       <div class="card accent-red">
-        <div class="k">Structure</div>
-        <div class="body">Three terminal blocks: <strong>Intel</strong>, <strong>Action</strong>, and <strong>Standard</strong>.</div>
+        <div class="k">Focus</div>
+        <div class="body">Three parts: the incoming intel, the action taken, and the terminology standard that locks the team language.</div>
       </div>
     </div>
-    <div class="grid-3 section">
+    <div class="section grid-3">
       <div class="card accent-green">
         <div class="k">Intel</div>
         <div class="h sm">Vision Squad Status</div>
@@ -145,21 +143,20 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
   <div class="shell">
     <div class="ribbon r1"></div><div class="ribbon r2"></div>
     <div class="prompt">$ section 02 --lebun-agent-v2.3</div>
-    <div class="grid-2 section">
+    <div class="section grid-2">
       <div class="card accent-yellow">
         <div class="k">02 · Lebun Agent v2.3</div>
         <div class="h">Full upgrade — 4 bug fixes, 18 self-tests, professional tone</div>
       </div>
       <div class="card accent-green">
-        <div class="k">Mode</div>
-        <div class="body">Terminal Ribbons version of the Bauhaus card slide: three dense blocks, same facts, calmer technical framing.</div>
+        <div class="k">Outcome</div>
+        <div class="body">The important read here is simple: the upgrade landed, it passed verification, and the tone behavior is now more professional.</div>
       </div>
     </div>
-    <div class="grid-3 section">
+    <div class="section grid-3">
       <div class="card accent-yellow">
-        <div class="big-kpi">4</div>
+        <div class="kpi">4</div>
         <div class="h xs">Bug Fixes</div>
-        <div class="body"><strong>Critical fixes landed</strong></div>
         <div class="log">
           <div class="row"><div class="label">fix</div><div class="copy">send-brief.sh <strong>stdin pipe</strong> fix</div></div>
           <div class="row"><div class="label">fix</div><div class="copy">symlink <strong>readlink -f</strong> resolution</div></div>
@@ -168,9 +165,8 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
         </div>
       </div>
       <div class="card accent-red">
-        <div class="big-kpi">18</div>
+        <div class="kpi">18</div>
         <div class="h xs">Self-Tests</div>
-        <div class="body"><strong>Full upgrade verified</strong></div>
         <div class="log">
           <div class="row"><div class="label">verify</div><div class="copy"><strong>graph.js</strong> — 19 security fixes + 429 retry</div></div>
           <div class="row"><div class="label">verify</div><div class="copy">Customized <strong>STAR_PEOPLE</strong> (9), <strong>STAR_GROUPS</strong> (7)</div></div>
@@ -178,9 +174,8 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
         </div>
       </div>
       <div class="card accent-blue">
-        <div class="big-kpi">PRO</div>
+        <div class="kpi">PRO</div>
         <div class="h xs">Tone Quality</div>
-        <div class="body"><strong>Professional mode</strong></div>
         <div class="log">
           <div class="row"><div class="label">tone</div><div class="copy">Banned self-deprecation, <strong>raised REPLY threshold</strong></div></div>
           <div class="row"><div class="label">tone</div><div class="copy"><strong>PRIORITY 0</strong>: no parroting rule</div></div>
@@ -195,21 +190,21 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
   <div class="shell">
     <div class="ribbon r1"></div><div class="ribbon r2"></div>
     <div class="prompt">$ section 03 --news-update</div>
-    <div class="news-stack section">
-      <div class="card accent-blue">
+    <div class="section news-stack">
+      <div class="card accent-blue wide">
         <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">03 · News Update</div><div class="h sm"><a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">Vision Squad Updates</a></div></div><div class="tag t-blue">Watch</div></div>
         <div class="body"><strong>Highlights paused</strong> for TDR hill climbing. <strong>LRV near GA</strong> — RAI signed off. Collaborator <strong>60K token</strong> risk.</div>
       </div>
       <div class="card accent-blue">
-        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Signal</div><div class="h xs"><a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">Composer Expand Alignment</a></div></div><div class="tag t-yellow">Active</div></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Active Thread</div><div class="h xs"><a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">Composer Expand Alignment</a></div></div><div class="tag t-yellow">Active</div></div>
         <div class="body">Cross-team thread active. wChromium PM <strong>Lia + Jenny</strong> looped in.</div>
       </div>
       <div class="card accent-yellow">
-        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Direction</div><div class="h xs">Convergence Direction</div></div><div class="tag t-yellow">Watch</div></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Watch</div><div class="h xs">Convergence Direction</div></div><div class="tag t-yellow">Watch</div></div>
         <div class="body"><strong>Bebop</strong> brand explores, <strong>side panel unification</strong>, <strong>commerce</strong> signals emerging.</div>
       </div>
-      <div class="card accent-green">
-        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Deadline</div><div class="h xs">Connect H2 — Window Closing</div></div><div class="tag t-dark">Due</div></div>
+      <div class="card accent-red">
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Due</div><div class="h xs">Connect H2 — Window Closing</div></div><div class="tag t-red">Due</div></div>
         <div class="body">H2 Reflect + Next H Goals <strong>due for submission</strong>. David's draft finalized.</div>
       </div>
     </div>
@@ -220,8 +215,8 @@ a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
   <div class="shell">
     <div class="ribbon r1"></div>
     <div class="prompt">$ next-week --priority</div>
-    <div class="hero" style="font-size:90px;max-width:760px">Next,<br>keep the stream moving.</div>
-    <div class="lede">Priority: composer cross-team alignment, production dogfood quality review.</div>
+    <div class="hero small">Next,<br>keep the stream moving.</div>
+    <div class="sub">Priority: composer cross-team alignment, production dogfood quality review.</div>
     <div class="next-list">
       <div class="next-item"><div class="dot"></div><div><div class="item-title">Composer Cross-Team</div><div class="item-detail">Follow up with Lia + Jenny on expand alignment across surfaces</div></div><div class="tag t-red">Priority</div></div>
       <div class="next-item"><div class="dot"></div><div><div class="item-title">Production Dogfood</div><div class="item-detail">Design quality review on Chromium build</div></div><div class="tag t-yellow">Design</div></div>
