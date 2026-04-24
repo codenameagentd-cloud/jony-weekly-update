@@ -12,6 +12,8 @@
 
 | ✅ 已完成 | Weekly Report W16 — Bauhaus style design optimization (bold readable iteration) | David (Discord DM) | 2026-04-20 | 第二版 preview 已上線：更大膽但保留閱讀性 |
 
+| 🔵 進行中 | Weekly Report — 4 selected template systems (2/4/6/8) third-pass refinement | David (Discord DM) | 2026-04-24 | 強化動效語言、排版精緻度、各方向特色化 |
+
 ### Completed (最近 7 天)
 <!-- 完成的任務從上面移到這裡，超過 7 天的刪除 -->
 
