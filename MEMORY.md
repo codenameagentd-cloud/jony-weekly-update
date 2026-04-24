@@ -8,6 +8,7 @@
 | 🔵 進行中 | Voice Clone Generator — UI mock 版本 | Jarvis (Discord #voice-clone) | 2026-03-18 | Next.js+React, mock data 先行 |
 | 🔵 進行中 | Weekly Report Editor — 模版設計 + 前後端開發 | David (Discord #general) | 2026-03-09 | 網頁表單輸入、HTML slides 輸出、每週隨機簡約模版 |
 
+| 🔵 進行中 | Weekly Report W17 — Terminal Ribbons Stream 週報生成 | David (Discord DM) | 2026-04-24 | 使用 Terminal Ribbons Stream 方向產出本週週報 |
 | 🔵 進行中 | Weekly Report — 10 個新 PPT 模板設計選項 | David (Discord DM) | 2026-04-24 | presentation-styles 產出 10 個可選方向 |
 
 | ✅ 已完成 | Weekly Report W16 — Bauhaus style design optimization (bold readable iteration) | David (Discord DM) | 2026-04-20 | 第二版 preview 已上線：更大膽但保留閱讀性 |
