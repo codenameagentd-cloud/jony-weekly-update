@@ -8,14 +8,47 @@
 .slide.exit-next{animation:slideOutNext .34s cubic-bezier(.4,0,.2,1) both}
 .slide.exit-prev{animation:slideOutPrev .34s cubic-bezier(.4,0,.2,1) both}
 
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
+}
+@keyframes fadeUpSoft{from{opacity:0;transform:translate3d(0,18px,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@keyframes fadeRightSoft{from{opacity:0;transform:translate3d(-24px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes fadeLeftSoft{from{opacity:0;transform:translate3d(24px,0,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes lineGrow{from{transform:scaleX(0);opacity:.2}to{transform:scaleX(1);opacity:1}}
+.slide.active .hero,
+.slide.active .headline,
+.slide.active .big{animation:fadeRightSoft .68s cubic-bezier(.16,1,.3,1) both}
+.slide.active .band,
+.slide.active .pull,
+.slide.active .deck,
+.slide.active .prompt{animation:fadeUpSoft .62s cubic-bezier(.16,1,.3,1) .08s both}
+.slide.active .subgrid > *,
+.slide.active .grid > *,
+.slide.active .row,
+.slide.active .story,
+.slide.active .panelrow > *,
+.slide.active .mini > *,
+.slide.active .col,
+.slide.active .panel{opacity:0;animation:fadeUpSoft .56s cubic-bezier(.22,1,.36,1) both}
+.slide.active .subgrid > *:nth-child(1),.slide.active .grid > *:nth-child(1),.slide.active .panelrow > *:nth-child(1),.slide.active .mini > *:nth-child(1),.slide.active .row:nth-child(1),.slide.active .story:nth-child(1),.slide.active .col:nth-child(1),.slide.active .panel:nth-child(1){animation-delay:.14s}
+.slide.active .subgrid > *:nth-child(2),.slide.active .grid > *:nth-child(2),.slide.active .panelrow > *:nth-child(2),.slide.active .mini > *:nth-child(2),.slide.active .row:nth-child(2),.slide.active .story:nth-child(2),.slide.active .col:nth-child(2),.slide.active .panel:nth-child(2){animation-delay:.22s}
+.slide.active .subgrid > *:nth-child(3),.slide.active .grid > *:nth-child(3),.slide.active .panelrow > *:nth-child(3),.slide.active .mini > *:nth-child(3),.slide.active .row:nth-child(3),.slide.active .story:nth-child(3),.slide.active .col:nth-child(3),.slide.active .panel:nth-child(3){animation-delay:.30s}
+.stamp,.k,.eyebrow,.label,.prompt{transition:transform .28s cubic-bezier(.22,1,.36,1),opacity .28s ease}
+.slide.active .stamp,.slide.active .k,.slide.active .eyebrow,.slide.active .label{animation:fadeUpSoft .5s cubic-bezier(.22,1,.36,1) both}
+.diag,.shell:after,.railB,.dot,.plinth{transform-origin:left center}
+.slide.active .diag,.slide.active .shell:after,.slide.active .railB{animation:lineGrow .72s cubic-bezier(.16,1,.3,1) .06s both}
+.slide.active .dot{animation:fadeUpSoft .7s cubic-bezier(.16,1,.3,1) .18s both}
+.slide.active .plinth{animation:fadeUpSoft .72s cubic-bezier(.16,1,.3,1) .1s both}
+
 </style></head><body><div id="counter">01 / 04</div><div class="slide active"><div class="shell"><div class="prompt">$ weekly-report --theme terminal-ribbons-refined</div><div class="hero">Signal,<br>then trace.</div><div class="grid"><div class="tag">mode</div><div class="copy">A technical storytelling system that still feels designed, not gimmicky.</div><div class="tag">fit</div><div class="copy">AI, infra, engineering, platform, incident review.</div></div></div></div><div class="slide"><div class="shell"><div class="prompt">$ cat week.log</div><div class="panelrow"><div class="panel"><h3>01 · Composer drag-expand</h3><p>MAC-11472 root cause found, three Slack precedents traced, Pengfei agreed to decouple.</p></div><div class="panel"><h3>02 · Phase 3 workflow deck</h3><p>9-slide story using Kusto, Titan, OCV, and Slack semantic search.</p></div><div class="panel"><h3>03 · Lebun v2.3 shipped</h3><p>Speed, breadth, and stability improved across the release.</p></div></div><div class="grid"><div class="tag">reading</div><div class="copy">Short command labels on the left, narrative payload on the right.</div></div></div></div><div class="slide"><div class="shell"><div class="prompt">$ explain layout</div><div class="grid"><div class="tag">1</div><div class="copy">Use shell prompts as section headers instead of conventional slide titles.</div><div class="tag">2</div><div class="copy">Use ribbon-like diagonals to give movement without losing structure.</div><div class="tag">3</div><div class="copy">Keep contrast high and copy blocks compact.</div></div></div></div><div class="slide"><div class="shell"><div class="prompt">$ assess --id r08</div><div class="hero" style="font-size:86px">Most technical.<br>Most distinct.</div><div class="grid"><div class="tag">strength</div><div class="copy">Impossible to confuse with a normal corporate deck.</div><div class="tag">risk</div><div class="copy">Too coded if the audience wants warmth and softness.</div></div></div></div><script>
 const slides=[...document.querySelectorAll('.slide')];
 const counter=document.getElementById('counter');
-let cur=0, busy=false;
+let cur=0,busy=false;
 function paint(){counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
-function clearState(el){el.classList.remove('active','enter-next','enter-prev','exit-next','exit-prev');}
+function resetClasses(el){el.classList.remove('active','enter-next','enter-prev','exit-next','exit-prev');}
 function go(n,dir=1){
-  if(busy || n===cur) return;
+  if(busy||n===cur)return;
   busy=true;
   const prev=slides[cur];
   const nextIndex=(n+slides.length)%slides.length;
@@ -23,9 +56,14 @@ function go(n,dir=1){
   prev.classList.remove('enter-next','enter-prev');
   next.classList.remove('exit-next','exit-prev');
   prev.classList.add(dir>0?'exit-next':'exit-prev');
-  next.classList.add('active', dir>0?'enter-next':'enter-prev');
+  next.classList.add('active',dir>0?'enter-next':'enter-prev');
   cur=nextIndex; paint();
-  setTimeout(()=>{clearState(prev); next.classList.remove('enter-next','enter-prev'); next.classList.add('active'); busy=false;}, 430);
+  setTimeout(()=>{
+    resetClasses(prev);
+    next.classList.remove('enter-next','enter-prev');
+    next.classList.add('active');
+    busy=false;
+  },430);
 }
 paint();
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1,1);if(e.key==='ArrowLeft')go(cur-1,-1);});
