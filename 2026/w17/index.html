@@ -5,271 +5,241 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>W17 Weekly Update · 04.20 — 04.24</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=Inter:wght@400;700;900&display=swap');
 :root{
-  --red:#E53935;
-  --blue:#1565C0;
-  --yellow:#FFD600;
-  --black:#000000;
-  --gray:#86868B;
-  --bg:#FAFAFA;
-  --paper:#FFFFFF;
-  --line:rgba(0,0,0,.12);
+  --bg:#06100d;
+  --panel:#0a1512;
+  --panel-soft:rgba(255,255,255,.02);
+  --line:rgba(16,185,129,.18);
+  --line-strong:rgba(16,185,129,.3);
+  --text:#d1fae5;
+  --muted:#a7f3d0;
+  --soft:#6ee7b7;
+  --white:#ecfdf5;
+  --green:#34d399;
+  --blue:#60a5fa;
+  --red:#fb7185;
+  --yellow:#facc15;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--black);-webkit-font-smoothing:antialiased}
-body{font-family:'Inter',sans-serif}
-a{color:var(--blue);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
-a:hover{opacity:.72}
-.slide{position:absolute;inset:0;opacity:0;pointer-events:none;overflow:hidden;background:var(--paper)}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;-webkit-font-smoothing:antialiased}
+a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(96,165,250,.45);word-break:break-word}
+a:hover{color:#93c5fd;border-bottom-color:#93c5fd}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;padding:32px}
 .slide.active{opacity:1;pointer-events:auto}
-#counter{position:fixed;top:26px;left:38px;z-index:1000;font:700 12px 'Space Mono',monospace;letter-spacing:3px;color:var(--black);opacity:.44}
-.frame{position:absolute;inset:28px;border:1px solid var(--line);pointer-events:none}
-.grid-v,.grid-h{position:absolute;pointer-events:none;background:var(--black);opacity:.05}
-.grid-v{top:0;bottom:0;width:1px}.grid-h{left:0;right:0;height:1px}
-.label{font:700 10px 'Space Mono',monospace;letter-spacing:4px;text-transform:uppercase}
-.kicker{position:absolute;top:56px;left:72px;z-index:4}.kicker .label{display:inline-block;padding-bottom:6px;border-bottom:2px solid var(--red)}
-.tag{display:inline-flex;align-items:center;justify-content:center;padding:5px 8px;font:700 8px 'Space Mono',monospace;letter-spacing:2px;text-transform:uppercase;line-height:1;border-radius:999px}
-.t-red{background:var(--red);color:#fff}.t-blue{background:var(--blue);color:#fff}.t-yellow{background:var(--yellow);color:#000;border:1px solid #000}.t-black{background:#000;color:#fff}
-.muted{color:var(--gray)} strong{color:var(--black)}
-@keyframes fadeSlide{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
-@keyframes drawLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.slide.active .a0{animation:fadeSlide .55s cubic-bezier(.25,.1,.25,1) both}
-.slide.active .a1{animation:fadeSlide .55s cubic-bezier(.25,.1,.25,1) .1s both}
-.slide.active .a2{animation:fadeSlide .55s cubic-bezier(.25,.1,.25,1) .2s both}
-.slide.active .a3{animation:fadeSlide .55s cubic-bezier(.25,.1,.25,1) .3s both}
-.slide.active .a4{animation:fadeSlide .55s cubic-bezier(.25,.1,.25,1) .4s both}
-.slide.active .a5{animation:fadeSlide .55s cubic-bezier(.25,.1,.25,1) .5s both}
-.slide.active .shape{animation:scaleIn .75s cubic-bezier(.16,1,.3,1) both}
-.slide.active .line{animation:drawLine .85s cubic-bezier(.25,.1,.25,1) .12s both;transform-origin:left center}
-
-/* shared */
-.head{position:absolute;left:72px;right:72px;top:120px}
-.head .title{font-weight:900;font-size:clamp(34px,4.2vw,54px);line-height:.98;letter-spacing:-.05em;max-width:980px}
-.head .desc{margin-top:14px;max-width:980px;font-size:14px;line-height:1.72;color:var(--gray)}
-.card{background:#fff;position:relative;overflow:hidden}
-.card-title{font-weight:900;font-size:16px;line-height:1.1;letter-spacing:-.025em}
-.card-body{margin-top:10px;font-size:13px;line-height:1.72;color:var(--gray)}
-.card-body strong{color:var(--black)}
-.link-line{margin-top:10px;font-size:12px;line-height:1.6}
-
-/* s1 */
-.s1 .tri{position:absolute;top:74px;left:78px;width:0;height:0;border-left:22px solid transparent;border-right:22px solid transparent;border-bottom:38px solid var(--blue)}
-.s1 .circle{position:absolute;right:-8vw;bottom:-14vh;width:52vh;height:52vh;border-radius:50%;background:var(--yellow)}
-.s1 .diag{position:absolute;left:-8vw;top:10vh;width:138vw;height:2px;background:var(--red);transform:rotate(24deg)}
-.s1 .blue-rail{position:absolute;left:132px;top:108px;width:10px;height:120px;background:var(--blue)}
-.s1 .content{position:absolute;left:154px;top:50%;transform:translateY(-50%);z-index:4}
-.s1 .hero{font-weight:900;font-size:clamp(88px,11vw,170px);line-height:.82;letter-spacing:-.08em;text-transform:uppercase}
-.s1 .sub{margin-top:18px;font:700 13px 'Space Mono',monospace;letter-spacing:4px;text-transform:uppercase;color:rgba(0,0,0,.48)}
-.s1 .date{display:inline-block;margin-top:28px;padding:12px 18px;background:#000;color:#fff;font:700 14px 'Space Mono',monospace;letter-spacing:3px}
-
-/* s2 */
-.s2 .blue-band{position:absolute;left:72px;right:72px;top:120px;height:188px;background:var(--blue);padding:28px 32px 26px}
-.s2 .blue-band h2{font-weight:900;font-size:clamp(30px,3.4vw,48px);line-height:1.02;letter-spacing:-.05em;color:#fff;max-width:1020px}
-.s2 .bullets{position:absolute;left:72px;right:72px;top:346px;display:grid;grid-template-columns:1fr;gap:12px}
-.s2 .bullet{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
-.s2 .slash{font-weight:900;font-size:24px;line-height:1;color:var(--red);text-align:center}
-.s2 .bullet p{font-size:13px;line-height:1.7;color:var(--gray)}
-.s2 .marks{position:absolute;right:74px;bottom:74px;display:flex;gap:12px;align-items:center}.s2 .marks .y{width:18px;height:18px;background:var(--yellow);border-radius:50%}.s2 .marks .r{width:28px;height:10px;background:var(--red)}
-
-/* s3 */
-.s3 .head{top:128px}
-.s3 .red-rule{position:absolute;left:72px;bottom:74px;width:74px;height:4px;background:var(--red)}
-.s3 .cards{position:absolute;left:72px;right:72px;top:308px;bottom:110px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.s3 .cards .card{padding:22px 20px 18px;border-top:8px solid transparent}
-.s3 .cards .card:nth-child(1){border-top-color:#000}
-.s3 .cards .card:nth-child(2){border-top-color:var(--red)}
-.s3 .cards .card:nth-child(3){border-top-color:var(--blue)}
-.s3 .mini{font:700 9px 'Space Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,.42);margin-bottom:12px}
-
-/* s4 */
-.s4 .head{top:126px}
-.s4 .cards{position:absolute;left:72px;right:72px;top:286px;bottom:72px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.s4 .cards .card{padding:22px 20px 18px;border-top:8px solid transparent}
-.s4 .cards .card:nth-child(1){border-top-color:var(--yellow)}
-.s4 .cards .card:nth-child(2){border-top-color:var(--red)}
-.s4 .cards .card:nth-child(3){border-top-color:var(--blue)}
-.s4 .big{font-weight:900;font-size:clamp(62px,7vw,98px);line-height:.9;letter-spacing:-.06em;margin-bottom:10px}
-.s4 .subhead{font-weight:900;font-size:16px;letter-spacing:-.02em}
-.s4 ul{list-style:none;margin-top:14px}.s4 li{font-size:13px;line-height:1.68;color:var(--gray);padding:4px 0}.s4 li strong{color:var(--black)}.s4 li::before{content:'— ';opacity:.35}
-
-/* s5 */
-.s5 .news-wrap{position:absolute;left:72px;right:72px;top:142px;bottom:74px;display:grid;grid-template-columns:1.16fr .84fr;grid-template-rows:auto 1fr;gap:16px}
-.s5 .full{grid-column:1/3;padding:22px;border-left:8px solid var(--blue)}
-.s5 .cell{padding:20px;border-left:8px solid transparent}
-.s5 .cell.blue{border-left-color:var(--blue)}
-.s5 .cell.yellow{border-left-color:var(--yellow)}
-.s5 .cell.black{border-left-color:#000}
-.s5 .cell .top,.s5 .full .top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
-.s5 .cell .name,.s5 .full .name{font-weight:900;font-size:18px;line-height:1.08;letter-spacing:-.025em;max-width:82%}
-.s5 .body{margin-top:10px;font-size:13px;line-height:1.72;color:var(--gray)}
-.s5 .body strong{color:var(--black)}
-.s5 .link-line{margin-top:10px}
-
-/* s6 */
-.s6 .next{position:absolute;left:72px;top:84px;font-weight:900;font-size:clamp(86px,10vw,150px);line-height:.8;letter-spacing:-.08em;text-transform:uppercase}
-.s6 .red-bar{position:absolute;left:72px;top:244px;width:76px;height:4px;background:var(--red)}
-.s6 .intro{position:absolute;left:72px;right:72px;top:286px;font-size:24px;line-height:1.32;letter-spacing:-.03em;max-width:880px}
-.s6 .list{position:absolute;left:72px;right:72px;top:396px}
-.s6 .row{display:grid;grid-template-columns:28px 1fr auto;gap:16px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line)}
-.s6 .dot{width:12px;height:12px;background:var(--red);border-radius:50%;margin-top:5px}
-.s6 .name{font-weight:900;font-size:18px;letter-spacing:-.02em}.s6 .detail{margin-top:4px;font-size:13px;line-height:1.68;color:var(--gray)}
-.s6 .marks{position:absolute;right:74px;bottom:74px;display:flex;gap:12px;align-items:center}.s6 .marks .r{width:18px;height:18px;background:var(--red);border-radius:50%}.s6 .marks .y{width:34px;height:12px;background:var(--yellow)}
-
-@media (max-width:1200px){
-  .s3 .cards,.s4 .cards{grid-template-columns:1fr}
-  .s5 .news-wrap{grid-template-columns:1fr;grid-template-rows:auto auto auto auto}.s5 .full{grid-column:auto}
-}
-@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}}
+#counter{position:fixed;right:18px;bottom:16px;font-size:11px;letter-spacing:2px;opacity:.45;z-index:30}
+.shell{position:relative;height:100%;border:1px solid var(--line-strong);background:radial-gradient(circle at 85% 15%,rgba(16,185,129,.08),transparent 32%),linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));padding:22px 24px;overflow:hidden}
+.ribbon{position:absolute;height:38px;background:linear-gradient(90deg,rgba(16,185,129,.16),rgba(52,211,153,.04));transform:rotate(-18deg);transform-origin:left center}
+.r1{right:-80px;top:108px;width:460px}.r2{right:-140px;top:188px;width:520px;opacity:.55}
+.prompt{font-size:14px;color:var(--green)}
+.prompt::after{content:' ▌';animation:blink 1.2s step-end infinite}
+.hero{font-family:Inter,sans-serif;font-size:112px;line-height:.82;letter-spacing:-.06em;font-weight:900;margin-top:18px;max-width:820px;color:var(--white)}
+.lede{margin-top:14px;font-size:16px;line-height:1.72;color:var(--muted);max-width:760px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.tag{display:inline-flex;align-items:center;justify-content:center;padding:7px 10px;border:1px solid rgba(255,255,255,.12);border-radius:999px;font-size:10px;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.03)}
+.t-green{color:#032116;background:var(--green);border-color:transparent;font-weight:700}.t-red{color:#2c0910;background:var(--red);border-color:transparent;font-weight:700}.t-blue{color:#031425;background:var(--blue);border-color:transparent;font-weight:700}.t-yellow{color:#231600;background:var(--yellow);border-color:transparent;font-weight:700}.t-dark{color:var(--white);background:#111827;border-color:#1f2937;font-weight:700}
+.section{margin-top:22px;border-top:1px dashed var(--line);padding-top:16px}
+.grid-2{display:grid;grid-template-columns:1.08fr .92fr;gap:16px}.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid-news{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.card{border:1px solid var(--line);padding:16px;background:var(--panel-soft);min-width:0}.card.accent-red{border-top:3px solid var(--red)}.card.accent-blue{border-top:3px solid var(--blue)}.card.accent-yellow{border-top:3px solid var(--yellow)}.card.accent-green{border-top:3px solid var(--green)}
+.k{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--soft);margin-bottom:10px}
+.h{font-family:Inter,sans-serif;font-size:34px;line-height:1.02;letter-spacing:-.04em;font-weight:900;color:var(--white)}
+.h.sm{font-size:24px}.h.xs{font-size:20px}
+.body{margin-top:10px;font-size:13px;line-height:1.72;color:var(--muted)}
+.body strong{color:var(--white);font-weight:700}
+.log{margin-top:18px;border-top:1px dashed var(--line)}
+.row{display:grid;grid-template-columns:124px 1fr;gap:14px;padding:12px 0;border-bottom:1px dashed rgba(16,185,129,.16)}
+.row .label{color:var(--soft);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}.row .copy{color:var(--muted);font-size:13px;line-height:1.72}.row .copy strong{color:var(--white)}
+.list{display:flex;flex-direction:column;gap:10px}.bullet{display:grid;grid-template-columns:20px 1fr;gap:10px;padding:10px 0;border-bottom:1px dashed rgba(16,185,129,.14)}.bullet:last-child{border-bottom:none}.slash{color:var(--green);font-weight:700}.copy{font-size:12.8px;line-height:1.72;color:var(--muted)}.copy strong{color:var(--white)}
+.big-kpi{font-family:Inter,sans-serif;font-weight:900;font-size:78px;line-height:.9;letter-spacing:-.06em;color:var(--white)}
+.news-stack{display:grid;grid-template-columns:1fr 1fr;gap:14px}.news-stack .card:first-child{grid-column:1 / 3}
+.next-list{margin-top:20px;border-top:1px dashed var(--line)}
+.next-item{display:grid;grid-template-columns:18px 1fr auto;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px dashed rgba(16,185,129,.16)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--green);margin-top:5px}.item-title{font-family:Inter,sans-serif;font-size:20px;line-height:1.05;letter-spacing:-.03em;font-weight:900;color:var(--white)}.item-detail{margin-top:6px;font-size:13px;line-height:1.72;color:var(--muted)}
+.slide.enter-next,.slide.enter-prev{animation:shellFadeIn .24s cubic-bezier(.22,1,.36,1) both}.slide.exit-next,.slide.exit-prev{animation:shellFadeOut .16s ease both}
+@keyframes shellFadeIn{from{opacity:0}to{opacity:1}}@keyframes shellFadeOut{from{opacity:1}to{opacity:0}}@keyframes blink{50%{opacity:0}}@keyframes signalSweep{from{opacity:0;transform:rotate(-18deg) scaleX(.86)}to{opacity:.85;transform:rotate(-18deg) scaleX(1)}}@keyframes feedIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .prompt,.slide.active .hero,.slide.active .lede,.slide.active .tag,.slide.active .card,.slide.active .row,.slide.active .bullet,.slide.active .next-item{opacity:0;animation:feedIn .25s cubic-bezier(.22,1,.36,1) both}.slide.active .hero{animation-delay:.03s}.slide.active .lede{animation-delay:.07s}.slide.active .ribbon{animation:signalSweep .32s cubic-bezier(.16,1,.3,1) .08s both}.slide.active .tag:nth-child(1),.slide.active .card:nth-child(1),.slide.active .row:nth-child(1),.slide.active .bullet:nth-child(1),.slide.active .next-item:nth-child(1){animation-delay:.12s}.slide.active .tag:nth-child(2),.slide.active .card:nth-child(2),.slide.active .row:nth-child(2),.slide.active .bullet:nth-child(2),.slide.active .next-item:nth-child(2){animation-delay:.16s}.slide.active .tag:nth-child(3),.slide.active .card:nth-child(3),.slide.active .row:nth-child(3),.slide.active .bullet:nth-child(3),.slide.active .next-item:nth-child(3){animation-delay:.2s}.slide.active .card:nth-child(4),.slide.active .bullet:nth-child(4){animation-delay:.24s}.slide.active .bullet:nth-child(5){animation-delay:.28s}
+@media (max-width:1280px){.grid-2,.grid-3,.grid-news,.news-stack{grid-template-columns:1fr}.news-stack .card:first-child{grid-column:auto}.hero{font-size:72px}.big-kpi{font-size:58px}}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}.prompt::after{animation:none;content:''}}
 </style>
 </head>
 <body>
-<div id="counter">01/06</div>
+<div id="counter">01 / 06</div>
 
-<div class="slide active s1">
-  <div class="frame"></div>
-  <div class="grid-v" style="left:33.333%"></div><div class="grid-v" style="left:66.666%"></div>
-  <div class="grid-h" style="top:22%"></div><div class="grid-h" style="top:78%"></div>
-  <div class="tri shape"></div>
-  <div class="blue-rail shape" style="animation-delay:.1s"></div>
-  <div class="diag line"></div>
-  <div class="circle shape" style="animation-delay:.18s"></div>
-  <div class="content">
-    <div class="hero a0">Weekly<br>Update</div>
-    <div class="sub a1">David Chen · Copilot Mac Design</div>
-    <div class="date a2">04.20 — 04.24</div>
-  </div>
-</div>
-
-<div class="slide s2">
-  <div class="frame"></div>
-  <div class="kicker a0"><span class="label">Overview</span></div>
-  <div class="blue-band a1">
-    <h2>Vision intel gathered for cross-team alignment, composer expand escalated to wChromium PM, Hive v2.3 fully upgraded</h2>
-  </div>
-  <div class="bullets">
-    <div class="bullet a2"><div class="slash">/</div><p><strong>Copilot Vision intel</strong> — pulled <a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">#sq-convergence-vision</a> updates: Highlights paused, <strong>LRV near GA</strong>, Collaborator <strong>60K token risk</strong></p></div>
-    <div class="bullet a3"><div class="slash">/</div><p><strong>Composer expand</strong> — drafted <a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">cross-team reply</a> to wChromium PM Lia on drag-expand alignment, recommend <strong>align back to CMC</strong> standard</p></div>
-    <div class="bullet a4"><div class="slash">/</div><p><strong>Terminology codified</strong> — clarified CMC / Copilot Mac / wChromium / Mobile definitions, written into CLAUDE.md as team standard</p></div>
-    <div class="bullet a5"><div class="slash">/</div><p><strong>Hive v2.3 upgrade</strong> — 4 bug fixes, full script refresh, <strong>18 self-tests passed</strong>. Lebun tone quality tuned: professional mode, higher reply threshold</p></div>
-  </div>
-  <div class="marks"><div class="y shape"></div><div class="r shape" style="animation-delay:.12s"></div></div>
-</div>
-
-<div class="slide s3">
-  <div class="frame"></div>
-  <div class="kicker a0"><span class="label">01 · Copilot Design</span></div>
-  <div class="head">
-    <div class="title a1">Vision intel gathered + composer expand cross-team reply drafted</div>
-  </div>
-  <div class="cards">
-    <div class="card a2">
-      <div class="mini">Intel</div>
-      <div class="card-title">Vision Squad Status</div>
-      <div class="card-body">Pulled <a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">#sq-convergence-vision 4/17 update</a>: <strong>Highlights paused</strong> (killswitch flighting), TDR hill climbing, <strong>LRV near GA</strong> (RAI signed off, evals clean), <strong>Collaborator risk</strong> — 60K token contention slipped 4 weeks.</div>
+<div class="slide active">
+  <div class="shell">
+    <div class="ribbon r1"></div><div class="ribbon r2"></div>
+    <div class="prompt">$ weekly-report --week W17 --theme terminal-ribbons-stream</div>
+    <div class="hero">Weekly<br>Update</div>
+    <div class="lede">David Chen · Copilot Mac Design · 04.20 — 04.24</div>
+    <div class="meta">
+      <div class="tag t-green">Terminal Ribbons Stream</div>
+      <div class="tag t-dark">Work 70%</div>
+      <div class="tag t-dark">Lebun 30%</div>
     </div>
-    <div class="card a3">
-      <div class="mini">Action</div>
-      <div class="card-title">Composer Expand Reply</div>
-      <div class="card-body">Drafted reply via <a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">Mingli's thread in #sq-bc-browsing-context</a>: CMC expand behavior is the <strong>standard definition</strong>, wChromium multi-tabs causing conflicts, recommend <strong>align back to CMC</strong>. Looping in <strong>Bobby + Jeremy</strong>.</div>
-    </div>
-    <div class="card a4">
-      <div class="mini">Standard</div>
-      <div class="card-title">Terminology Codified</div>
-      <div class="card-body">Clarified platform definitions: <strong>CMC</strong> = Studio+Web, <strong>Copilot Mac</strong> = macChromium, <strong>wChromium</strong> = Windows, <strong>Mobile</strong> = iOS+Android. Written into CLAUDE.md as <strong>team reference standard</strong>.</div>
-    </div>
-  </div>
-  <div class="red-rule shape"></div>
-</div>
-
-<div class="slide s4">
-  <div class="frame"></div>
-  <div class="kicker a0"><span class="label">02 · Lebun Agent v2.3</span></div>
-  <div class="head">
-    <div class="title a1">Full upgrade — 4 bug fixes, 18 self-tests, professional tone</div>
-  </div>
-  <div class="cards">
-    <div class="card a2">
-      <div class="big" style="color:#C4A800">4</div>
-      <div class="subhead">Bug Fixes</div>
-      <div class="card-body"><strong>Critical fixes landed</strong></div>
-      <ul>
-        <li>send-brief.sh <strong>stdin pipe</strong> fix</li>
-        <li>symlink <strong>readlink -f</strong> resolution</li>
-        <li>auth.js <strong>4-layer auth</strong> + L3 headless SSO</li>
-        <li><strong>DAYOFWEEK</strong> variable fix</li>
-      </ul>
-    </div>
-    <div class="card a3">
-      <div class="big" style="color:var(--red)">18</div>
-      <div class="subhead">Self-Tests</div>
-      <div class="card-body"><strong>Full upgrade verified</strong></div>
-      <ul>
-        <li><strong>graph.js</strong> — 19 security fixes + 429 retry</li>
-        <li>Customized <strong>STAR_PEOPLE</strong> (9), <strong>STAR_GROUPS</strong> (7)</li>
-        <li>Cleaned <strong>20+ old project</strong> references</li>
-      </ul>
-    </div>
-    <div class="card a4">
-      <div class="big" style="color:var(--blue)">PRO</div>
-      <div class="subhead">Tone Quality</div>
-      <div class="card-body"><strong>Professional mode</strong></div>
-      <ul>
-        <li>Banned self-deprecation, <strong>raised REPLY threshold</strong></li>
-        <li><strong>PRIORITY 0</strong>: no parroting rule</li>
-        <li><strong>Tone switching</strong>: professional at work, relaxed casual</li>
-      </ul>
+    <div class="log">
+      <div class="row"><div class="label">mode</div><div class="copy">Use the <strong>Terminal Ribbons Stream</strong> visual language, but structure the deck around the W17 production guide.</div></div>
+      <div class="row"><div class="label">week</div><div class="copy">Connect review, Copilot design alignment, Lebun v2.3 upgrade, and next-week priorities.</div></div>
+      <div class="row"><div class="label">ratio</div><div class="copy"><strong>Work 70%</strong> · <strong>Lebun 30%</strong></div></div>
     </div>
   </div>
 </div>
 
-<div class="slide s5">
-  <div class="frame"></div>
-  <div class="kicker a0"><span class="label">03 · News Update</span></div>
-  <div class="news-wrap">
-    <div class="card full a1">
-      <div class="top"><div class="name"><a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC"><strong>Vision Squad Updates</strong></a></div><span class="tag t-blue">Watch</span></div>
-      <div class="body"><strong>Highlights paused</strong> for TDR hill climbing. <strong>LRV near GA</strong> — RAI signed off. Collaborator <strong>60K token</strong> risk.</div>
+<div class="slide">
+  <div class="shell">
+    <div class="ribbon r1"></div><div class="ribbon r2"></div>
+    <div class="prompt">$ cat overview.log</div>
+    <div class="grid-2 section">
+      <div class="card accent-blue">
+        <div class="k">Overview</div>
+        <div class="h">Vision intel gathered for cross-team alignment, composer expand escalated to wChromium PM, Hive v2.3 fully upgraded</div>
+      </div>
+      <div class="card accent-green">
+        <div class="k">Scan</div>
+        <div class="body">A terminal-style summary board: one strong signal up top, then four structured lines underneath for fast reading.</div>
+      </div>
     </div>
-    <div class="card cell blue a2">
-      <div class="top"><div class="name"><a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF"><strong>Composer Expand Alignment</strong></a></div><span class="tag t-yellow">Active</span></div>
-      <div class="body">Cross-team thread active. wChromium PM <strong>Lia + Jenny</strong> looped in.</div>
-    </div>
-    <div class="card cell yellow a3">
-      <div class="top"><div class="name"><strong>Convergence Direction</strong></div><span class="tag t-yellow">Watch</span></div>
-      <div class="body"><strong>Bebop</strong> brand explores, <strong>side panel unification</strong>, <strong>commerce</strong> signals emerging.</div>
-    </div>
-    <div class="card cell black a4">
-      <div class="top"><div class="name"><strong>Connect H2 — Window Closing</strong></div><span class="tag t-black">Due</span></div>
-      <div class="body">H2 Reflect + Next H Goals <strong>due for submission</strong>. David's draft finalized.</div>
+    <div class="section list">
+      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Copilot Vision intel</strong> — pulled <a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">#sq-convergence-vision</a> updates: Highlights paused, <strong>LRV near GA</strong>, Collaborator <strong>60K token risk</strong></div></div>
+      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Composer expand</strong> — drafted <a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">cross-team reply</a> to wChromium PM Lia on drag-expand alignment, recommend <strong>align back to CMC</strong> standard</div></div>
+      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Terminology codified</strong> — clarified CMC / Copilot Mac / wChromium / Mobile definitions, written into CLAUDE.md as team standard</div></div>
+      <div class="bullet"><div class="slash">/</div><div class="copy"><strong>Hive v2.3 upgrade</strong> — 4 bug fixes, full script refresh, <strong>18 self-tests passed</strong>. Lebun tone quality tuned: professional mode, higher reply threshold</div></div>
     </div>
   </div>
 </div>
 
-<div class="slide s6">
-  <div class="frame"></div>
-  <div class="next a0">Next<br>Week</div>
-  <div class="red-bar shape"></div>
-  <div class="intro a1">Priority: composer cross-team alignment, production dogfood quality review.</div>
-  <div class="list">
-    <div class="row a2"><div class="dot"></div><div><div class="name">Composer Cross-Team</div><div class="detail">Follow up with Lia + Jenny on expand alignment across surfaces</div></div><span class="tag t-red">Priority</span></div>
-    <div class="row a3"><div class="dot"></div><div><div class="name">Production Dogfood</div><div class="detail">Design quality review on Chromium build</div></div><span class="tag t-yellow">Design</span></div>
-    <div class="row a4"><div class="dot"></div><div><div class="name">Connect Submission</div><div class="detail">Finalize &amp; submit H2 Reflect + Next H Goals</div></div><span class="tag t-black">Ongoing</span></div>
+<div class="slide">
+  <div class="shell">
+    <div class="ribbon r1"></div><div class="ribbon r2"></div>
+    <div class="prompt">$ section 01 --copilot-design</div>
+    <div class="grid-2 section">
+      <div class="card accent-green">
+        <div class="k">01 · Copilot Design</div>
+        <div class="h">Vision intel gathered + composer expand cross-team reply drafted</div>
+      </div>
+      <div class="card accent-red">
+        <div class="k">Structure</div>
+        <div class="body">Three terminal blocks: <strong>Intel</strong>, <strong>Action</strong>, and <strong>Standard</strong>.</div>
+      </div>
+    </div>
+    <div class="grid-3 section">
+      <div class="card accent-green">
+        <div class="k">Intel</div>
+        <div class="h sm">Vision Squad Status</div>
+        <div class="body">Pulled <a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">#sq-convergence-vision 4/17 update</a>: <strong>Highlights paused</strong> (killswitch flighting), TDR hill climbing, <strong>LRV near GA</strong> (RAI signed off, evals clean), <strong>Collaborator risk</strong> — 60K token contention slipped 4 weeks.</div>
+      </div>
+      <div class="card accent-red">
+        <div class="k">Action</div>
+        <div class="h sm">Composer Expand Reply</div>
+        <div class="body">Drafted reply via <a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">Mingli's thread in #sq-bc-browsing-context</a>: CMC expand behavior is the <strong>standard definition</strong>, wChromium multi-tabs causing conflicts, recommend <strong>align back to CMC</strong>. Looping in <strong>Bobby + Jeremy</strong>.</div>
+      </div>
+      <div class="card accent-blue">
+        <div class="k">Standard</div>
+        <div class="h sm">Terminology Codified</div>
+        <div class="body">Clarified platform definitions: <strong>CMC</strong> = Studio+Web, <strong>Copilot Mac</strong> = macChromium, <strong>wChromium</strong> = Windows, <strong>Mobile</strong> = iOS+Android. Written into CLAUDE.md as <strong>team reference standard</strong>.</div>
+      </div>
+    </div>
   </div>
-  <div class="marks"><div class="r shape"></div><div class="y shape" style="animation-delay:.1s"></div></div>
+</div>
+
+<div class="slide">
+  <div class="shell">
+    <div class="ribbon r1"></div><div class="ribbon r2"></div>
+    <div class="prompt">$ section 02 --lebun-agent-v2.3</div>
+    <div class="grid-2 section">
+      <div class="card accent-yellow">
+        <div class="k">02 · Lebun Agent v2.3</div>
+        <div class="h">Full upgrade — 4 bug fixes, 18 self-tests, professional tone</div>
+      </div>
+      <div class="card accent-green">
+        <div class="k">Mode</div>
+        <div class="body">Terminal Ribbons version of the Bauhaus card slide: three dense blocks, same facts, calmer technical framing.</div>
+      </div>
+    </div>
+    <div class="grid-3 section">
+      <div class="card accent-yellow">
+        <div class="big-kpi">4</div>
+        <div class="h xs">Bug Fixes</div>
+        <div class="body"><strong>Critical fixes landed</strong></div>
+        <div class="log">
+          <div class="row"><div class="label">fix</div><div class="copy">send-brief.sh <strong>stdin pipe</strong> fix</div></div>
+          <div class="row"><div class="label">fix</div><div class="copy">symlink <strong>readlink -f</strong> resolution</div></div>
+          <div class="row"><div class="label">fix</div><div class="copy">auth.js <strong>4-layer auth</strong> + L3 headless SSO</div></div>
+          <div class="row"><div class="label">fix</div><div class="copy"><strong>DAYOFWEEK</strong> variable fix</div></div>
+        </div>
+      </div>
+      <div class="card accent-red">
+        <div class="big-kpi">18</div>
+        <div class="h xs">Self-Tests</div>
+        <div class="body"><strong>Full upgrade verified</strong></div>
+        <div class="log">
+          <div class="row"><div class="label">verify</div><div class="copy"><strong>graph.js</strong> — 19 security fixes + 429 retry</div></div>
+          <div class="row"><div class="label">verify</div><div class="copy">Customized <strong>STAR_PEOPLE</strong> (9), <strong>STAR_GROUPS</strong> (7)</div></div>
+          <div class="row"><div class="label">verify</div><div class="copy">Cleaned <strong>20+ old project</strong> references</div></div>
+        </div>
+      </div>
+      <div class="card accent-blue">
+        <div class="big-kpi">PRO</div>
+        <div class="h xs">Tone Quality</div>
+        <div class="body"><strong>Professional mode</strong></div>
+        <div class="log">
+          <div class="row"><div class="label">tone</div><div class="copy">Banned self-deprecation, <strong>raised REPLY threshold</strong></div></div>
+          <div class="row"><div class="label">tone</div><div class="copy"><strong>PRIORITY 0</strong>: no parroting rule</div></div>
+          <div class="row"><div class="label">tone</div><div class="copy"><strong>Tone switching</strong>: professional at work, relaxed casual</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <div class="shell">
+    <div class="ribbon r1"></div><div class="ribbon r2"></div>
+    <div class="prompt">$ section 03 --news-update</div>
+    <div class="news-stack section">
+      <div class="card accent-blue">
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">03 · News Update</div><div class="h sm"><a href="https://microsoft-ai.slack.com/archives/C07RL61FECC/p1776446012770799?thread_ts=1776445777.224579&cid=C07RL61FECC">Vision Squad Updates</a></div></div><div class="tag t-blue">Watch</div></div>
+        <div class="body"><strong>Highlights paused</strong> for TDR hill climbing. <strong>LRV near GA</strong> — RAI signed off. Collaborator <strong>60K token</strong> risk.</div>
+      </div>
+      <div class="card accent-blue">
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Signal</div><div class="h xs"><a href="https://microsoft-ai.slack.com/archives/C08BYC7PTQF/p1776666788509379?thread_ts=1776666674.619899&cid=C08BYC7PTQF">Composer Expand Alignment</a></div></div><div class="tag t-yellow">Active</div></div>
+        <div class="body">Cross-team thread active. wChromium PM <strong>Lia + Jenny</strong> looped in.</div>
+      </div>
+      <div class="card accent-yellow">
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Direction</div><div class="h xs">Convergence Direction</div></div><div class="tag t-yellow">Watch</div></div>
+        <div class="body"><strong>Bebop</strong> brand explores, <strong>side panel unification</strong>, <strong>commerce</strong> signals emerging.</div>
+      </div>
+      <div class="card accent-green">
+        <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><div class="k">Deadline</div><div class="h xs">Connect H2 — Window Closing</div></div><div class="tag t-dark">Due</div></div>
+        <div class="body">H2 Reflect + Next H Goals <strong>due for submission</strong>. David's draft finalized.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <div class="shell">
+    <div class="ribbon r1"></div>
+    <div class="prompt">$ next-week --priority</div>
+    <div class="hero" style="font-size:90px;max-width:760px">Next,<br>keep the stream moving.</div>
+    <div class="lede">Priority: composer cross-team alignment, production dogfood quality review.</div>
+    <div class="next-list">
+      <div class="next-item"><div class="dot"></div><div><div class="item-title">Composer Cross-Team</div><div class="item-detail">Follow up with Lia + Jenny on expand alignment across surfaces</div></div><div class="tag t-red">Priority</div></div>
+      <div class="next-item"><div class="dot"></div><div><div class="item-title">Production Dogfood</div><div class="item-detail">Design quality review on Chromium build</div></div><div class="tag t-yellow">Design</div></div>
+      <div class="next-item"><div class="dot"></div><div><div class="item-title">Connect Submission</div><div class="item-detail">Finalize &amp; submit H2 Reflect + Next H Goals</div></div><div class="tag t-dark">Ongoing</div></div>
+    </div>
+  </div>
 </div>
 
 <script>
 const slides=[...document.querySelectorAll('.slide')];
 const counter=document.getElementById('counter');
 let cur=0,busy=false,startX=null;
-function paint(){counter.textContent=String(cur+1).padStart(2,'0')+'/'+String(slides.length).padStart(2,'0');}
+function paint(){counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
 function reset(el){el.classList.remove('active','enter-next','enter-prev','exit-next','exit-prev');}
 function go(n,dir=1){if(busy||n===cur)return;busy=true;const prev=slides[cur];const nextIndex=(n+slides.length)%slides.length;const next=slides[nextIndex];prev.classList.add(dir>0?'exit-next':'exit-prev');next.classList.add('active',dir>0?'enter-next':'enter-prev');cur=nextIndex;paint();setTimeout(()=>{reset(prev);next.classList.remove('enter-next','enter-prev');next.classList.add('active');busy=false;},260)}
 paint();
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1,1);if(e.key==='ArrowLeft')go(cur-1,-1)});
-document.addEventListener('click',e=>{if(e.target.closest('a')) return; const x=e.clientX/window.innerWidth; if(x>.66) go(cur+1,1); else if(x<.33) go(cur-1,-1);});
+document.addEventListener('click',e=>{if(e.target.closest('a'))return;const x=e.clientX/window.innerWidth;if(x>.66)go(cur+1,1);else if(x<.33)go(cur-1,-1)});
 document.addEventListener('touchstart',e=>{startX=e.changedTouches[0].clientX},{passive:true});
 document.addEventListener('touchend',e=>{if(startX==null)return;const dx=e.changedTouches[0].clientX-startX;if(Math.abs(dx)>40){if(dx<0)go(cur+1,1);else go(cur-1,-1)}startX=null},{passive:true});
 </script>
