@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-07 · Receipt</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+:root{--bg:#FEFDFB;--ink:#1a1a1a;--thermal:rgba(26,26,26,.65);--faded:rgba(26,26,26,.25)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:'JetBrains Mono',monospace}
+
+/* Thermal paper texture */
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.008) 3px,rgba(0,0,0,.008) 4px);pointer-events:none;z-index:1}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;justify-content:center;align-items:center;z-index:2;transition:opacity .35s}
+.slide.active{opacity:1;pointer-events:auto}
+
+.receipt{width:420px;padding:48px 40px;position:relative}
+.receipt::before,.receipt::after{content:'';position:absolute;left:0;right:0;height:12px;background:repeating-linear-gradient(90deg,transparent,transparent 4px,var(--bg) 4px,var(--bg) 5px,transparent 5px,transparent 8px)}
+.receipt::before{top:-12px;background:repeating-conic-gradient(var(--bg) 0% 25%, transparent 0% 50%) 0 0 / 12px 12px}
+.receipt::after{bottom:-12px;background:repeating-conic-gradient(var(--bg) 0% 25%, transparent 0% 50%) 0 6px / 12px 12px}
+
+.divider{border:none;border-top:1px dashed var(--faded);margin:20px 0}
+.center{text-align:center}
+.right{text-align:right}
+.faded{color:var(--thermal)}
+.tiny{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--faded)}
+.mono-lg{font-size:28px;font-weight:800;letter-spacing:-.02em}
+.row{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0}
+.row .label{font-size:11px;color:var(--thermal)}
+.row .value{font-size:11px;font-weight:600}
+.item{margin:10px 0}
+.item .item-name{font-size:12px;font-weight:600;margin-bottom:3px}
+.item .item-desc{font-size:10px;color:var(--thermal);line-height:1.5}
+.item .item-status{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-top:4px}
+.barcode{margin-top:16px;display:flex;justify-content:center;gap:2px;opacity:.3}
+.barcode .bar{height:40px;background:var(--ink)}
+
+/* Slide-specific */
+.s1 .receipt{text-align:center}
+.s1 .store-name{font-size:18px;font-weight:800;letter-spacing:4px;text-transform:uppercase}
+.s1 .store-sub{font-size:10px;color:var(--thermal);margin-top:4px;letter-spacing:2px}
+.s1 .txn{font-size:10px;color:var(--faded);margin-top:24px;letter-spacing:1px}
+
+#counter{position:fixed;bottom:24px;right:40px;font:400 10px/1 'JetBrains Mono',monospace;letter-spacing:2px;color:var(--faded);z-index:10}
+
+@keyframes print{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .a0{animation:print .3s ease both}
+.slide.active .a1{animation:print .3s ease .05s both}
+.slide.active .a2{animation:print .3s ease .1s both}
+.slide.active .a3{animation:print .3s ease .15s both}
+.slide.active .a4{animation:print .3s ease .2s both}
+.slide.active .a5{animation:print .3s ease .25s both}
+.slide.active .a6{animation:print .3s ease .3s both}
+.slide.active .a7{animation:print .3s ease .35s both}
+</style>
+</head>
+<body>
+<div id="counter">01 / 03</div>
+
+<!-- COVER -->
+<div class="slide s1 active">
+  <div class="receipt">
+    <div class="store-name a0">WEEKLY STATUS</div>
+    <div class="store-sub a1">Microsoft Design · Copilot UX</div>
+    <hr class="divider a2">
+    <div class="mono-lg a3">W19</div>
+    <div class="faded a4" style="font-size:11px;margin-top:8px">Apr 28 – May 02, 2026</div>
+    <hr class="divider a5">
+    <div class="txn a6">TXN: 20260502-W19-DC</div>
+    <div class="txn a7">TERMINAL: DAVID-CHEN-01</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="slide s2">
+  <div class="receipt">
+    <div class="tiny a0">Order Summary</div>
+    <hr class="divider a1">
+    <div class="item a2">
+      <div class="row"><span class="item-name">Composer Escalation</span><span class="value">✓ DONE</span></div>
+      <div class="item-desc">MAC-11472 root cause. Decouple agreed w/ Pengfei.</div>
+    </div>
+    <div class="item a3">
+      <div class="row"><span class="item-name">Phase 3 Deck</span><span class="value">✓ DONE</span></div>
+      <div class="item-desc">9-slide narrative. Kusto + Titan + OCV + Slack.</div>
+    </div>
+    <div class="item a4">
+      <div class="row"><span class="item-name">Lebun v2.3</span><span class="value">✓ DONE</span></div>
+      <div class="item-desc">Speed, stability, breadth improved.</div>
+    </div>
+    <hr class="divider a5">
+    <div class="row a6"><span class="label">ITEMS COMPLETED</span><span class="value">3 / 3</span></div>
+    <div class="row a6"><span class="label">COMPLETION</span><span class="value">100%</span></div>
+    <hr class="divider a7">
+    <div class="center tiny a7" style="margin-top:8px">*** THANK YOU FOR YOUR WORK ***</div>
+    <div class="barcode a7">
+      <div class="bar" style="width:2px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:3px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:2px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:3px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:2px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:3px"></div><div class="bar" style="width:2px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:1px"></div><div class="bar" style="width:2px"></div><div class="bar" style="width:3px"></div><div class="bar" style="width:1px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="slide s3">
+  <div class="receipt center">
+    <div class="tiny a0">Customer Copy</div>
+    <hr class="divider a1">
+    <div class="mono-lg a2" style="font-size:20px">KEEP THIS RECEIPT</div>
+    <div class="faded a3" style="font-size:10px;margin-top:12px;line-height:1.6">This record serves as proof<br>that the week was not wasted.</div>
+    <hr class="divider a4">
+    <div class="tiny a5">W19-2026 · NO REFUNDS</div>
+  </div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+</script>
+</body>
+</html>

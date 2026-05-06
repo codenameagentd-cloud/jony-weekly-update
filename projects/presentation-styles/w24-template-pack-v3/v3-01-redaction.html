@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-01 · Redaction</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+:root{--paper:#FFFEF5;--ink:#1a1a1a;--red:#D4380D;--stamp:rgba(212,56,13,.12);--grid:rgba(0,0,0,.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:'IBM Plex Sans',sans-serif}
+
+/* paper texture */
+body::before{content:'';position:fixed;inset:0;background:
+  repeating-linear-gradient(0deg, transparent, transparent 23px, var(--grid) 23px, var(--grid) 24px),
+  repeating-linear-gradient(90deg, transparent, transparent 23px, var(--grid) 23px, var(--grid) 24px);
+  pointer-events:none;z-index:1;opacity:.5}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding:80px 100px;transition:opacity .4s}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* COVER */
+.s1 .classified{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:6px;text-transform:uppercase;color:var(--red);border:2px solid var(--red);display:inline-block;padding:6px 14px;transform:rotate(-2deg);position:relative}
+.s1 .classified::after{content:'';position:absolute;inset:-6px;border:1px solid var(--red);opacity:.3}
+.s1 .doc-id{font:400 12px/1.6 'IBM Plex Mono',monospace;color:rgba(26,26,26,.4);margin-top:40px;letter-spacing:1px}
+.s1 h1{font:300 72px/1.0 'IBM Plex Sans',sans-serif;letter-spacing:-.03em;margin-top:16px;max-width:700px}
+.s1 h1 strong{font-weight:600;position:relative}
+.s1 h1 strong::after{content:'';position:absolute;left:-4px;right:-4px;top:4px;bottom:4px;background:var(--stamp);z-index:-1}
+.s1 .date-stamp{font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:3px;color:var(--red);margin-top:32px;text-transform:uppercase}
+.s1 .margin-note{position:absolute;right:80px;top:50%;transform:translateY(-50%) rotate(90deg);font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:4px;color:rgba(26,26,26,.15);text-transform:uppercase;white-space:nowrap}
+
+/* CONTENT — dossier style */
+.s2{padding:60px 80px}
+.s2 .section-mark{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:5px;text-transform:uppercase;color:var(--red);margin-bottom:28px}
+.s2 .dossier{display:grid;grid-template-columns:280px 1fr;gap:0}
+.s2 .sidebar{border-right:1px solid rgba(0,0,0,.08);padding-right:40px}
+.s2 .sidebar .field{margin-bottom:28px}
+.s2 .sidebar .field-label{font:600 9px/1 'IBM Plex Mono',monospace;letter-spacing:4px;text-transform:uppercase;color:rgba(26,26,26,.35);margin-bottom:6px}
+.s2 .sidebar .field-value{font:500 15px/1.3 'IBM Plex Sans',sans-serif}
+.s2 .sidebar .field-value.big{font-size:36px;font-weight:600;letter-spacing:-.02em;color:var(--red)}
+.s2 .main-content{padding-left:48px}
+.s2 .entry{margin-bottom:32px;position:relative;padding-left:24px}
+.s2 .entry::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border:2px solid var(--red);border-radius:50%}
+.s2 .entry h3{font:600 17px/1.2 'IBM Plex Sans',sans-serif;letter-spacing:-.01em;margin-bottom:6px}
+.s2 .entry p{font:400 13px/1.7 'IBM Plex Sans',sans-serif;color:rgba(26,26,26,.62);max-width:520px}
+.s2 .entry .tag{display:inline-block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(0,0,0,.12);margin-top:8px;color:rgba(26,26,26,.5)}
+.s2 .redacted{background:var(--ink);color:var(--ink);padding:0 4px;user-select:none;cursor:pointer;transition:all .3s}
+.s2 .redacted:hover{background:transparent;color:var(--ink)}
+
+/* CLOSING */
+.s3{align-items:center;text-align:center}
+.s3 .seal{width:120px;height:120px;border:3px solid var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 32px;position:relative}
+.s3 .seal::before{content:'APPROVED';font:700 10px/1 'IBM Plex Mono',monospace;letter-spacing:4px;color:var(--red)}
+.s3 .seal::after{content:'';position:absolute;inset:8px;border:1px solid rgba(212,56,13,.3);border-radius:50%}
+.s3 h2{font:300 42px/1.1 'IBM Plex Sans',sans-serif;letter-spacing:-.02em;max-width:500px;margin:0 auto}
+.s3 .footnote{font:400 11px/1.6 'IBM Plex Mono',monospace;color:rgba(26,26,26,.3);margin-top:40px;letter-spacing:1px}
+
+/* nav hint */
+#nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:rgba(26,26,26,.2);z-index:10}
+#counter{position:fixed;bottom:24px;right:40px;font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:2px;color:rgba(26,26,26,.25);z-index:10}
+
+/* animations */
+@keyframes typeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .a0{animation:typeIn .5s ease both}
+.slide.active .a1{animation:typeIn .5s ease .1s both}
+.slide.active .a2{animation:typeIn .5s ease .2s both}
+.slide.active .a3{animation:typeIn .5s ease .3s both}
+.slide.active .a4{animation:typeIn .5s ease .4s both}
+.slide.active .a5{animation:typeIn .5s ease .5s both}
+</style>
+</head>
+<body>
+<div id="nav">← →</div>
+<div id="counter">01 / 03</div>
+
+<!-- COVER -->
+<div class="slide s1 active">
+  <div class="classified a0">Classified</div>
+  <div class="doc-id a1">DOC-2026-W19 / INTERNAL USE ONLY</div>
+  <h1 class="a2">Weekly Status<br><strong>Report</strong></h1>
+  <div class="date-stamp a3">Week 19 · April 28 – May 02, 2026</div>
+  <div class="margin-note">Microsoft Design · Copilot Experience</div>
+</div>
+
+<!-- CONTENT -->
+<div class="slide s2">
+  <div class="section-mark a0">Section II — Progress Dossier</div>
+  <div class="dossier">
+    <div class="sidebar a1">
+      <div class="field"><div class="field-label">Agent</div><div class="field-value">David Chen</div></div>
+      <div class="field"><div class="field-label">Division</div><div class="field-value">Copilot UX</div></div>
+      <div class="field"><div class="field-label">Clearance</div><div class="field-value">Level 4</div></div>
+      <div class="field"><div class="field-label">Items Active</div><div class="field-value big">7</div></div>
+      <div class="field"><div class="field-label">Completion</div><div class="field-value big">84%</div></div>
+    </div>
+    <div class="main-content">
+      <div class="entry a2">
+        <h3>Composer drag-expand escalation</h3>
+        <p>MAC-11472 root cause identified. Three precedent Slack threads traced. Pengfei agreed to decouple render pipeline from <span class="redacted">internal framework</span> dependency.</p>
+        <div class="tag">In Progress</div>
+      </div>
+      <div class="entry a3">
+        <h3>Phase 3 workflow narrative deck</h3>
+        <p>Nine-slide narrated story shipped using Kusto + Titan + OCV data. Semantic search across Slack integrated for cross-team context.</p>
+        <div class="tag">Shipped</div>
+      </div>
+      <div class="entry a4">
+        <h3>Lebun v2.3 performance release</h3>
+        <p>Speed and stability metrics improved across all benchmarks. Breadth coverage expanded to <span class="redacted">confidential scope</span>.</p>
+        <div class="tag">Shipped</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="slide s3">
+  <div class="seal a0"></div>
+  <h2 class="a1">End of briefing.</h2>
+  <div class="footnote a2">This document will self-destruct after review · W19-2026</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;
+function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+// Reveal redacted text on click
+document.querySelectorAll('.redacted').forEach(el=>{el.addEventListener('click',e=>{e.stopPropagation();el.style.background='transparent';el.style.color='var(--ink)';});});
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-04 · Darkroom</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;700&display=swap');
+:root{--bg:#0A0A0A;--fg:#E5E0D8;--amber:#C8956C;--dim:rgba(229,224,216,.25)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .5s}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* Film grain overlay */
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:100;opacity:.6}
+
+/* COVER — darkroom contact sheet feel */
+.s1{display:flex;flex-direction:column;justify-content:flex-end;padding:80px}
+.s1 .safe-light{position:absolute;top:-20%;right:-10%;width:60vw;height:60vw;background:radial-gradient(circle,rgba(200,149,108,.06) 0%,transparent 70%);pointer-events:none}
+.s1 .frame-marks{position:absolute;top:60px;right:72px;font:400 10px/1.8 'Geist Mono',monospace;color:rgba(229,224,216,.1);text-align:right;letter-spacing:1px}
+.s1 .exposure{font:400 11px/1 'Geist Mono',monospace;color:var(--amber);letter-spacing:3px;margin-bottom:20px}
+.s1 h1{font:400 clamp(52px,6.5vw,88px)/1.0 'Instrument Serif',serif;letter-spacing:-.02em;max-width:680px}
+.s1 h1 em{font-style:italic;color:var(--amber)}
+.s1 .film-edge{display:flex;gap:12px;margin-top:40px;align-items:center}
+.s1 .film-edge .sprocket{width:12px;height:8px;border:1px solid rgba(229,224,216,.1);border-radius:1px}
+.s1 .film-edge .strip-text{font:400 9px/1 'Geist Mono',monospace;color:rgba(229,224,216,.12);letter-spacing:4px;text-transform:uppercase}
+
+/* CONTENT — contact sheet grid */
+.s2{display:flex;flex-direction:column;justify-content:center;padding:56px 72px}
+.s2 .roll-id{font:500 10px/1 'Geist Mono',monospace;letter-spacing:4px;color:var(--amber);margin-bottom:32px;text-transform:uppercase}
+.s2 .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:960px}
+.s2 .frame{background:rgba(229,224,216,.03);border:1px solid rgba(229,224,216,.06);padding:28px 24px;position:relative;min-height:200px;display:flex;flex-direction:column;justify-content:space-between}
+.s2 .frame:hover{background:rgba(200,149,108,.04);border-color:rgba(200,149,108,.15)}
+.s2 .frame .frame-num{font:700 9px/1 'Geist Mono',monospace;color:var(--amber);letter-spacing:2px;margin-bottom:auto}
+.s2 .frame h3{font:400 17px/1.2 'Instrument Serif',serif;margin-bottom:8px}
+.s2 .frame p{font:400 11px/1.6 'Geist Mono',monospace;color:var(--dim);line-height:1.5}
+.s2 .frame .develop{font:400 9px/1 'Geist Mono',monospace;letter-spacing:2px;color:var(--amber);margin-top:14px;text-transform:uppercase}
+.s2 .frame.selected{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+.s2 .frame.selected::after{content:'✓';position:absolute;top:10px;right:12px;font:700 14px/1 'Geist Mono',monospace;color:var(--amber)}
+
+/* CLOSING */
+.s3{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.s3 .timer{font:400 64px/1 'Geist Mono',monospace;color:rgba(200,149,108,.15);margin-bottom:24px;letter-spacing:8px}
+.s3 h2{font:400 italic 34px/1.2 'Instrument Serif',serif;max-width:440px;color:var(--fg)}
+.s3 .chemicals{font:400 10px/1 'Geist Mono',monospace;color:var(--dim);margin-top:32px;letter-spacing:3px}
+
+#counter{position:fixed;bottom:24px;right:40px;font:400 10px/1 'Geist Mono',monospace;letter-spacing:2px;color:var(--dim);z-index:10}
+@keyframes reveal{from{opacity:0}to{opacity:1}}
+.slide.active .a0{animation:reveal .6s ease both}
+.slide.active .a1{animation:reveal .6s ease .12s both}
+.slide.active .a2{animation:reveal .6s ease .24s both}
+.slide.active .a3{animation:reveal .6s ease .36s both}
+.slide.active .a4{animation:reveal .6s ease .42s both}
+.slide.active .a5{animation:reveal .6s ease .48s both}
+.slide.active .a6{animation:reveal .6s ease .54s both}
+</style>
+</head>
+<body>
+<div id="counter">01 / 03</div>
+
+<div class="slide s1 active">
+  <div class="safe-light"></div>
+  <div class="frame-marks a0">KODAK 5222<br>DOUBLE-X<br>400 ASA<br>36 EXP</div>
+  <div class="exposure a1">f/2.8 · 1/60s · ISO 400</div>
+  <h1 class="a2">Weekly<br><em>Exposure</em></h1>
+  <div class="film-edge a3">
+    <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+    <div class="strip-text">W19 · 2026 · David Chen</div>
+    <div class="sprocket"></div><div class="sprocket"></div><div class="sprocket"></div>
+  </div>
+</div>
+
+<div class="slide s2">
+  <div class="roll-id a0">Roll 19 · Contact Sheet</div>
+  <div class="contact-grid">
+    <div class="frame selected a1"><div class="frame-num">19A</div><h3>Composer escalation</h3><p>Root cause found. Decouple agreed.</p><div class="develop">Developed</div></div>
+    <div class="frame selected a2"><div class="frame-num">19B</div><h3>Phase 3 deck</h3><p>9-slide narrative shipped.</p><div class="develop">Developed</div></div>
+    <div class="frame selected a3"><div class="frame-num">19C</div><h3>Lebun v2.3</h3><p>Performance confirmed.</p><div class="develop">Developed</div></div>
+    <div class="frame a4"><div class="frame-num">19D</div><h3>Design tokens</h3><p>Fluent 2 mapping 72%.</p><div class="develop">In developer</div></div>
+    <div class="frame a5"><div class="frame-num">19E</div><h3>Q3 planning</h3><p>Roadmap alignment pending.</p><div class="develop">Unexposed</div></div>
+    <div class="frame a6"><div class="frame-num">19F</div><h3>Team retro</h3><p>Async feedback collected.</p><div class="develop">In developer</div></div>
+  </div>
+</div>
+
+<div class="slide s3">
+  <div class="timer a0">00:00</div>
+  <h2 class="a1">The image appears<br>in the silence.</h2>
+  <div class="chemicals a2">Stop · Fix · Wash · Dry · W19</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+// Timer animation on closing slide
+let timerInterval;
+const observer=new MutationObserver(()=>{
+  const s3=document.querySelector('.s3');
+  if(s3.classList.contains('active')){
+    let sec=0;const el=s3.querySelector('.timer');
+    clearInterval(timerInterval);
+    timerInterval=setInterval(()=>{sec++;const m=String(Math.floor(sec/60)).padStart(2,'0');const s=String(sec%60).padStart(2,'0');el.textContent=m+':'+s;},1000);
+  }else{clearInterval(timerInterval);}
+});
+document.querySelectorAll('.slide').forEach(s=>observer.observe(s,{attributes:true,attributeFilter:['class']}));
+</script>
+</body>
+</html>

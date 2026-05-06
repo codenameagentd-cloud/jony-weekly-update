@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-10 · Botanical Plate</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+:root{--bg:#FCFAF5;--ink:#2D3A2D;--leaf:#4A7C59;--gold:#B8963E;--stem:rgba(74,124,89,.15);--caption:rgba(45,58,45,.45)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .5s}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* Plate border */
+.plate-border{position:fixed;inset:32px;border:1px solid var(--stem);pointer-events:none;z-index:1}
+.plate-border::before{content:'';position:absolute;inset:6px;border:1px solid rgba(74,124,89,.06)}
+
+/* COVER — botanical illustration title plate */
+.s1{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:2;position:relative}
+.s1 .plate-num{font:400 italic 13px/1 'EB Garamond',serif;color:var(--caption);letter-spacing:3px}
+.s1 .ornament{font:400 24px/1 'EB Garamond',serif;color:var(--stem);margin:16px 0}
+.s1 h1{font:500 clamp(36px,4.5vw,56px)/1.15 'EB Garamond',serif;letter-spacing:.02em;max-width:500px}
+.s1 h1 em{font-weight:400;font-style:italic;color:var(--leaf)}
+.s1 .latin{font:400 italic 16px/1 'EB Garamond',serif;color:var(--caption);margin-top:12px;letter-spacing:2px}
+.s1 .rule{width:64px;height:1px;background:var(--gold);margin:24px auto}
+.s1 .author{font:400 12px/1.6 'EB Garamond',serif;color:var(--caption);letter-spacing:2px}
+.s1 .corner-flora{position:absolute;font:400 80px/1 'EB Garamond',serif;color:rgba(74,124,89,.04)}
+.s1 .corner-flora.tl{top:48px;left:56px}.s1 .corner-flora.br{bottom:48px;right:56px;transform:rotate(180deg)}
+
+/* CONTENT — specimen catalog */
+.s2{display:flex;flex-direction:column;justify-content:center;padding:56px 72px;z-index:2;position:relative}
+.s2 .catalog-title{font:400 italic 12px/1 'EB Garamond',serif;letter-spacing:4px;color:var(--leaf);margin-bottom:28px;text-transform:uppercase}
+.s2 .specimens{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0}
+.s2 .specimen{padding:28px;border:1px solid var(--stem);margin:-1px 0 0 -1px;position:relative}
+.s2 .specimen .fig{font:500 italic 11px/1 'EB Garamond',serif;color:var(--gold);margin-bottom:12px;letter-spacing:2px}
+.s2 .specimen h3{font:600 18px/1.2 'EB Garamond',serif;margin-bottom:10px}
+.s2 .specimen p{font:400 13px/1.7 'Lora',serif;color:var(--caption);max-width:300px}
+.s2 .specimen .taxonomy{font:400 italic 10px/1 'EB Garamond',serif;color:var(--leaf);margin-top:14px;letter-spacing:1px}
+
+/* CLOSING */
+.s3{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:2;position:relative}
+.s3 .leaf-circle{width:100px;height:100px;border:1px solid var(--stem);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px;font:400 36px/1 'EB Garamond',serif;color:var(--leaf);opacity:.3}
+.s3 h2{font:400 italic 30px/1.3 'EB Garamond',serif;max-width:420px}
+.s3 .finis{font:500 11px/1 'EB Garamond',serif;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-top:28px}
+.s3 .edition{font:400 italic 10px/1 'EB Garamond',serif;color:var(--caption);margin-top:12px;letter-spacing:2px}
+
+#counter{position:fixed;bottom:24px;right:48px;font:400 italic 11px/1 'EB Garamond',serif;letter-spacing:2px;color:var(--caption);z-index:10}
+@keyframes bloom{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.slide.active .a0{animation:bloom .6s ease both}
+.slide.active .a1{animation:bloom .6s ease .12s both}
+.slide.active .a2{animation:bloom .6s ease .24s both}
+.slide.active .a3{animation:bloom .6s ease .36s both}
+.slide.active .a4{animation:bloom .6s ease .48s both}
+</style>
+</head>
+<body>
+<div class="plate-border"></div>
+<div id="counter">Plate i of iii</div>
+
+<div class="slide s1 active">
+  <div class="corner-flora tl">❦</div>
+  <div class="corner-flora br">❦</div>
+  <div class="plate-num a0">Plate I</div>
+  <div class="ornament a1">— ❧ —</div>
+  <h1 class="a2">Weekly Status<br><em>Report</em></h1>
+  <div class="latin a3">Relatio Hebdomadalis</div>
+  <div class="rule a3"></div>
+  <div class="author a4">Drawn from life by David Chen<br>Week XIX · Anno MMXXVI</div>
+</div>
+
+<div class="slide s2">
+  <div class="catalog-title a0">Catalog of Specimens</div>
+  <div class="specimens">
+    <div class="specimen a1">
+      <div class="fig">Fig. 1</div>
+      <h3>Composer Escalation</h3>
+      <p>Root cause of MAC-11472 identified through careful observation. Pipeline decoupled with Pengfei's agreement.</p>
+      <div class="taxonomy">Status: Resolved · Family: Investigata</div>
+    </div>
+    <div class="specimen a2">
+      <div class="fig">Fig. 2</div>
+      <h3>Phase 3 Narrative</h3>
+      <p>A nine-part story assembled from Kusto, Titan, OCV — enriched with semantic context from Slack.</p>
+      <div class="taxonomy">Status: Shipped · Family: Narrativa</div>
+    </div>
+    <div class="specimen a3">
+      <div class="fig">Fig. 3</div>
+      <h3>Lebun v2.3</h3>
+      <p>Improved in speed, stability, and breadth. Confirmed across all observed environments.</p>
+      <div class="taxonomy">Status: Shipped · Family: Optimata</div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s3">
+  <div class="leaf-circle a0">☘</div>
+  <h2 class="a1">Every week grows<br>from the one before.</h2>
+  <div class="finis a2">Finis</div>
+  <div class="edition a2">First Edition · W19 · 2026</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;
+const labels=['Plate i of iii','Plate ii of iii','Plate iii of iii'];
+function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=labels[cur]||'';}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+</script>
+</body>
+</html>

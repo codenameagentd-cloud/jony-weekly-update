@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-05 · Isometric Blueprint</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@400;600;700&family=Overpass:wght@300;400;600;700;900&display=swap');
+:root{--bg:#F0F4F8;--ink:#1B2838;--blue:#2563EB;--cyan:#06B6D4;--grid:rgba(37,99,235,.06);--line:rgba(27,40,56,.08)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+body{font-family:'Overpass',sans-serif}
+
+/* Isometric grid background */
+body::before{content:'';position:fixed;inset:0;
+background:
+  linear-gradient(30deg, var(--grid) 1px, transparent 1px) 0 0 / 40px 69.28px,
+  linear-gradient(150deg, var(--grid) 1px, transparent 1px) 0 0 / 40px 69.28px,
+  linear-gradient(90deg, rgba(37,99,235,.03) 1px, transparent 1px) 0 0 / 69.28px 40px;
+pointer-events:none;z-index:0}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;z-index:2;transition:opacity .4s}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* COVER */
+.s1{display:flex;flex-direction:column;justify-content:center;padding:80px 96px}
+.s1 .blueprint-stamp{display:inline-flex;align-items:center;gap:8px;font:600 10px/1 'Overpass Mono',monospace;letter-spacing:4px;text-transform:uppercase;color:var(--blue);padding:6px 12px;border:1.5px solid var(--blue);width:fit-content}
+.s1 h1{font:900 clamp(60px,8vw,120px)/0.88 'Overpass',sans-serif;letter-spacing:-.05em;margin-top:20px;max-width:800px}
+.s1 h1 span{color:var(--blue)}
+.s1 .revision{font:400 12px/1.6 'Overpass Mono',monospace;color:rgba(27,40,56,.4);margin-top:20px;letter-spacing:1px}
+.s1 .scale-bar{display:flex;align-items:center;gap:8px;margin-top:32px}
+.s1 .scale-bar .bar{display:flex}
+.s1 .scale-bar .seg{width:32px;height:6px}
+.s1 .scale-bar .seg:nth-child(odd){background:var(--blue)}
+.s1 .scale-bar .seg:nth-child(even){background:rgba(37,99,235,.2)}
+.s1 .scale-bar .unit{font:400 9px/1 'Overpass Mono',monospace;color:var(--blue);letter-spacing:2px}
+
+/* CONTENT — isometric blocks */
+.s2{display:flex;flex-direction:column;justify-content:center;padding:56px 80px}
+.s2 .section-id{font:600 10px/1 'Overpass Mono',monospace;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-bottom:32px}
+.s2 .block-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px}
+.s2 .block{background:#fff;border:1px solid var(--line);padding:0;position:relative;overflow:hidden;box-shadow:4px 4px 0 rgba(37,99,235,.06)}
+.s2 .block .block-header{background:var(--blue);padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.s2 .block .block-header h3{font:700 13px/1 'Overpass',sans-serif;color:#fff;letter-spacing:.5px}
+.s2 .block .block-header .pct{font:700 13px/1 'Overpass Mono',monospace;color:rgba(255,255,255,.7)}
+.s2 .block .block-body{padding:20px}
+.s2 .block .block-body p{font:400 12px/1.65 'Overpass',sans-serif;color:rgba(27,40,56,.6)}
+.s2 .block .progress{height:3px;background:rgba(37,99,235,.1);margin-top:16px}
+.s2 .block .progress .fill{height:100%;background:var(--cyan);transition:width .6s}
+.s2 .block .dim-label{font:600 9px/1 'Overpass Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:rgba(27,40,56,.25);margin-top:12px}
+
+/* Dimension lines */
+.s2 .dimension{position:absolute;right:-48px;top:0;bottom:0;width:1px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.s2 .dimension::before,.s2 .dimension::after{content:'';width:8px;height:1px;background:var(--blue);position:absolute}
+.s2 .dimension::before{top:0}.s2 .dimension::after{bottom:0}
+
+/* CLOSING */
+.s3{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.s3 .crosshair{width:80px;height:80px;position:relative;margin-bottom:32px}
+.s3 .crosshair::before{content:'';position:absolute;left:50%;top:0;width:1px;height:100%;background:var(--blue);transform:translateX(-50%)}
+.s3 .crosshair::after{content:'';position:absolute;top:50%;left:0;width:100%;height:1px;background:var(--blue);transform:translateY(-50%)}
+.s3 h2{font:700 40px/1.05 'Overpass',sans-serif;letter-spacing:-.03em;max-width:500px}
+.s3 h2 span{color:var(--blue)}
+.s3 .stamp{font:600 10px/1 'Overpass Mono',monospace;letter-spacing:4px;text-transform:uppercase;color:var(--blue);margin-top:28px;padding:8px 16px;border:2px solid var(--blue)}
+
+#counter{position:fixed;bottom:24px;right:40px;font:400 10px/1 'Overpass Mono',monospace;letter-spacing:2px;color:rgba(27,40,56,.25);z-index:10}
+@keyframes buildIn{from{opacity:0;transform:translate(-4px,4px)}to{opacity:1;transform:translate(0)}}
+.slide.active .a0{animation:buildIn .45s ease both}
+.slide.active .a1{animation:buildIn .45s ease .08s both}
+.slide.active .a2{animation:buildIn .45s ease .16s both}
+.slide.active .a3{animation:buildIn .45s ease .24s both}
+.slide.active .a4{animation:buildIn .45s ease .32s both}
+</style>
+</head>
+<body>
+<div id="counter">01 / 03</div>
+
+<div class="slide s1 active">
+  <div class="blueprint-stamp a0">Rev 19 · Blueprint</div>
+  <h1 class="a1">Build<br><span>Report</span></h1>
+  <div class="revision a2">W19-2026 · David Chen · Copilot UX · Rev 1.0</div>
+  <div class="scale-bar a3"><div class="bar"><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div><div class="seg"></div></div><div class="unit">1:1 SCALE</div></div>
+</div>
+
+<div class="slide s2">
+  <div class="section-id a0">Section A — Build Progress</div>
+  <div class="block-row">
+    <div class="block a1">
+      <div class="block-header"><h3>Composer</h3><div class="pct">100%</div></div>
+      <div class="block-body"><p>MAC-11472 root cause found. Render pipeline decoupled per Pengfei agreement.</p><div class="progress"><div class="fill" style="width:100%"></div></div><div class="dim-label">Elevation A1</div></div>
+    </div>
+    <div class="block a2">
+      <div class="block-header"><h3>Phase 3 Deck</h3><div class="pct">100%</div></div>
+      <div class="block-body"><p>Nine-slide narrative using Kusto, Titan, OCV + Slack semantic search.</p><div class="progress"><div class="fill" style="width:100%"></div></div><div class="dim-label">Elevation A2</div></div>
+    </div>
+    <div class="block a3">
+      <div class="block-header"><h3>Lebun v2.3</h3><div class="pct">100%</div></div>
+      <div class="block-body"><p>Speed, stability, breadth improved. All benchmarks passing.</p><div class="progress"><div class="fill" style="width:100%"></div></div><div class="dim-label">Elevation A3</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="slide s3">
+  <div class="crosshair a0"></div>
+  <h2 class="a1">Constructed to<br><span>specification.</span></h2>
+  <div class="stamp a2">Approved · W19</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+</script>
+</body>
+</html>

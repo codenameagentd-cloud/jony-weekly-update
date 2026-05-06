@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-02 · Topographic</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+:root{--bg:#0C1117;--fg:#E8E6E1;--topo:#1E6F50;--accent:#3CFFA0;--muted:rgba(232,230,225,.35)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased}
+body{font-family:'Space Grotesk',sans-serif}
+
+/* topo contour lines via SVG */
+.topo-bg{position:fixed;inset:0;z-index:0;opacity:.12;pointer-events:none}
+.topo-bg svg{width:100%;height:100%}
+.topo-bg path{fill:none;stroke:var(--accent);stroke-width:.5}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;padding:72px 80px;z-index:2;transition:opacity .45s}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* COVER */
+.s1{flex-direction:column;justify-content:flex-end}
+.s1 .coords{font:400 12px/1 'Space Mono',monospace;color:var(--accent);letter-spacing:3px;margin-bottom:20px}
+.s1 h1{font:700 clamp(56px,7vw,96px)/0.92 'Space Grotesk',sans-serif;letter-spacing:-.04em;max-width:750px}
+.s1 h1 em{font-style:normal;color:var(--accent)}
+.s1 .elevation{display:flex;align-items:center;gap:16px;margin-top:28px;font:400 13px/1 'Space Mono',monospace;color:var(--muted)}
+.s1 .elevation .bar{width:120px;height:3px;background:rgba(60,255,160,.15);position:relative;border-radius:2px}
+.s1 .elevation .bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:68%;background:var(--accent);border-radius:2px}
+.s1 .corner-mark{position:absolute;top:72px;right:80px;font:400 10px/1.6 'Space Mono',monospace;color:var(--muted);text-align:right;letter-spacing:2px}
+
+/* CONTENT — terrain card system */
+.s2{flex-direction:column;justify-content:center}
+.s2 .section-label{font:700 10px/1 'Space Mono',monospace;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:36px}
+.s2 .terrain-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:960px}
+.s2 .terrain-card{border:1px solid rgba(60,255,160,.12);padding:28px;position:relative;overflow:hidden}
+.s2 .terrain-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);opacity:0;transition:opacity .3s}
+.s2 .terrain-card:hover::before{opacity:1}
+.s2 .terrain-card .elev{font:700 11px/1 'Space Mono',monospace;color:var(--accent);letter-spacing:2px;margin-bottom:12px}
+.s2 .terrain-card h3{font:600 19px/1.15 'Space Grotesk',sans-serif;letter-spacing:-.02em;margin-bottom:10px}
+.s2 .terrain-card p{font:400 13px/1.65 'Space Grotesk',sans-serif;color:var(--muted);max-width:380px}
+.s2 .terrain-card .status{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font:500 10px/1 'Space Mono',monospace;letter-spacing:2px;text-transform:uppercase}
+.s2 .terrain-card .status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.s2 .terrain-card .status.pending::before{background:#F59E0B}
+
+/* CLOSING */
+.s3{flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.s3 .contour-ring{width:180px;height:180px;border:1px solid rgba(60,255,160,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:28px;position:relative}
+.s3 .contour-ring::before{content:'';position:absolute;inset:20px;border:1px solid rgba(60,255,160,.1);border-radius:50%}
+.s3 .contour-ring::after{content:'';position:absolute;inset:44px;border:1px solid rgba(60,255,160,.08);border-radius:50%}
+.s3 .contour-ring .peak{font:700 28px/1 'Space Grotesk',sans-serif;color:var(--accent)}
+.s3 h2{font:500 36px/1.1 'Space Grotesk',sans-serif;letter-spacing:-.02em;max-width:440px}
+.s3 .closing-coords{font:400 11px/1 'Space Mono',monospace;color:var(--muted);margin-top:24px;letter-spacing:3px}
+
+#counter{position:fixed;bottom:24px;right:40px;font:400 11px/1 'Space Mono',monospace;letter-spacing:2px;color:var(--muted);z-index:10}
+@keyframes emerge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .a0{animation:emerge .5s ease both}
+.slide.active .a1{animation:emerge .5s ease .08s both}
+.slide.active .a2{animation:emerge .5s ease .16s both}
+.slide.active .a3{animation:emerge .5s ease .24s both}
+.slide.active .a4{animation:emerge .5s ease .32s both}
+.slide.active .a5{animation:emerge .5s ease .4s both}
+</style>
+</head>
+<body>
+<div id="counter">01 / 03</div>
+
+<!-- topo background -->
+<div class="topo-bg"><svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+<path d="M0,450 Q360,320 720,400 T1440,380"/>
+<path d="M0,500 Q360,380 720,460 T1440,430"/>
+<path d="M0,550 Q360,440 720,520 T1440,490"/>
+<path d="M0,350 Q400,250 800,330 T1440,310"/>
+<path d="M0,600 Q400,500 800,580 T1440,550"/>
+<path d="M0,300 Q450,220 900,290 T1440,260"/>
+<path d="M0,650 Q450,560 900,630 T1440,610"/>
+</svg></div>
+
+<!-- COVER -->
+<div class="slide s1 active">
+  <div class="corner-mark a0">W19 · 2026<br>N25.0330<br>E121.5654</div>
+  <div class="coords a1">25°03′N 121°56′E</div>
+  <h1 class="a2">Mapping<br>the <em>terrain</em></h1>
+  <div class="elevation a3"><div class="bar"></div>Week 19 progress: 68%</div>
+</div>
+
+<!-- CONTENT -->
+<div class="slide s2">
+  <div class="section-label a0">Elevation Report</div>
+  <div class="terrain-grid">
+    <div class="terrain-card a1">
+      <div class="elev">+2,400m</div>
+      <h3>Composer drag-expand resolution</h3>
+      <p>Root cause mapped. Pengfei agreed to decouple the render pipeline. Three Slack precedents traced.</p>
+      <div class="status">Summit reached</div>
+    </div>
+    <div class="terrain-card a2">
+      <div class="elev">+1,800m</div>
+      <h3>Phase 3 narrated deck</h3>
+      <p>Nine slides shipped. Kusto, Titan, OCV integrated with semantic Slack search.</p>
+      <div class="status">Summit reached</div>
+    </div>
+    <div class="terrain-card a3">
+      <div class="elev">+1,200m</div>
+      <h3>Lebun v2.3 performance</h3>
+      <p>Speed, stability, breadth all improved. Release confirmed across benchmarks.</p>
+      <div class="status">Summit reached</div>
+    </div>
+    <div class="terrain-card a4">
+      <div class="elev">+600m</div>
+      <h3>Q3 design system alignment</h3>
+      <p>Token mapping in progress. Fluent 2 ↔ internal component parity at 72%.</p>
+      <div class="status pending">Ascending</div>
+    </div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="slide s3">
+  <div class="contour-ring a0"><div class="peak">▲</div></div>
+  <h2 class="a1">The summit is the view,<br>not the height.</h2>
+  <div class="closing-coords a2">END SURVEY · W19-2026</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+</script>
+</body>
+</html>

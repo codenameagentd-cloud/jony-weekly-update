@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-06 · Ink Wash</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+SC:wght@400;600;700&display=swap');
+:root{--bg:#F7F5F0;--ink:#2C2825;--wash:rgba(44,40,37,.06);--accent:#8B7355;--mist:rgba(44,40,37,.3)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .6s}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* Ink wash background */
+.wash-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.wash-bg .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.04}
+.wash-bg .b1{width:60vw;height:60vw;background:var(--ink);top:-20%;right:-15%}
+.wash-bg .b2{width:40vw;height:40vw;background:var(--accent);bottom:-10%;left:-10%}
+
+/* COVER — ink wash/scroll aesthetic */
+.s1{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;z-index:2;position:relative}
+.s1 .season{font:400 13px/1 'Cormorant Garamond',serif;letter-spacing:6px;text-transform:uppercase;color:var(--accent)}
+.s1 h1{font:700 clamp(48px,6.5vw,84px)/1.05 'Cormorant Garamond',serif;letter-spacing:-.02em;margin-top:20px}
+.s1 .brush-line{width:120px;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:28px auto}
+.s1 .sub{font:400 italic 18px/1.5 'Cormorant Garamond',serif;color:var(--mist);max-width:400px}
+.s1 .chop{width:40px;height:52px;border:1.5px solid var(--accent);display:flex;align-items:center;justify-content:center;margin-top:32px;font:600 14px/1 'Noto Serif SC',serif;color:var(--accent);transform:rotate(0deg)}
+
+/* CONTENT — scroll sections */
+.s2{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;height:100%;z-index:2;position:relative}
+.s2 .vert-line{background:linear-gradient(180deg,transparent,rgba(139,115,85,.15),transparent)}
+.s2 .column{padding:60px 36px;display:flex;flex-direction:column;justify-content:center}
+.s2 .column .verse-num{font:600 11px/1 'Cormorant Garamond',serif;color:var(--accent);letter-spacing:4px;margin-bottom:20px}
+.s2 .column h3{font:700 22px/1.15 'Cormorant Garamond',serif;margin-bottom:14px}
+.s2 .column p{font:400 13px/1.75 'Cormorant Garamond',serif;color:var(--mist);line-height:1.8}
+.s2 .column .ink-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;margin-top:20px;opacity:.5}
+.s2 .column .state{font:400 italic 12px/1 'Cormorant Garamond',serif;color:var(--accent);margin-top:12px;letter-spacing:1px}
+
+/* CLOSING — meditation */
+.s3{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;z-index:2;position:relative}
+.s3 .enso{width:140px;height:140px;border:2px solid var(--ink);border-radius:50%;position:relative;margin-bottom:32px;opacity:.08}
+.s3 .enso::before{content:'';position:absolute;top:-8px;left:50%;width:16px;height:16px;background:var(--bg);transform:translateX(-50%)}
+.s3 h2{font:400 italic 32px/1.3 'Cormorant Garamond',serif;max-width:440px}
+.s3 .seal{font:400 11px/1 'Cormorant Garamond',serif;color:var(--accent);letter-spacing:4px;margin-top:32px;text-transform:uppercase}
+
+#counter{position:fixed;bottom:24px;right:40px;font:400 11px/1 'Cormorant Garamond',serif;letter-spacing:2px;color:var(--mist);z-index:10}
+@keyframes ink{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:blur(0)}}
+.slide.active .a0{animation:ink .7s ease both}
+.slide.active .a1{animation:ink .7s ease .15s both}
+.slide.active .a2{animation:ink .7s ease .3s both}
+.slide.active .a3{animation:ink .7s ease .45s both}
+.slide.active .a4{animation:ink .7s ease .6s both}
+</style>
+</head>
+<body>
+<div id="counter">01 / 03</div>
+<div class="wash-bg"><div class="blob b1"></div><div class="blob b2"></div></div>
+
+<div class="slide s1 active">
+  <div class="season a0">立夏 · Week Nineteen</div>
+  <h1 class="a1">Weekly<br>Reflections</h1>
+  <div class="brush-line a2"></div>
+  <div class="sub a3">A quiet account of the week's work,<br>composed with restraint.</div>
+  <div class="chop a4">陳</div>
+</div>
+
+<div class="slide s2">
+  <div class="column a0">
+    <div class="verse-num">壹</div>
+    <h3>Composer Escalation</h3>
+    <p>The root of MAC-11472 surfaced through patience — three Slack threads, one conversation with Pengfei, and an agreement to untangle what was coupled too tightly.</p>
+    <div class="ink-dot"></div>
+    <div class="state">Resolved</div>
+  </div>
+  <div class="vert-line"></div>
+  <div class="column a1">
+    <div class="verse-num">貳</div>
+    <h3>Phase 3 Narrative</h3>
+    <p>Nine slides that tell a story rather than list facts. Kusto, Titan, OCV woven together with semantic search — context from Slack threads that would otherwise be lost.</p>
+    <div class="ink-dot"></div>
+    <div class="state">Shipped</div>
+  </div>
+  <div class="vert-line"></div>
+  <div class="column a2">
+    <div class="verse-num">參</div>
+    <h3>Lebun v2.3</h3>
+    <p>Faster, broader, more stable. The numbers improved, but the real gain is consistency — fewer edge cases, fewer surprises.</p>
+    <div class="ink-dot"></div>
+    <div class="state">Shipped</div>
+  </div>
+</div>
+
+<div class="slide s3">
+  <div class="enso a0"></div>
+  <h2 class="a1">The brush pauses,<br>but the ink remembers.</h2>
+  <div class="seal a2">End · W19 · 2026</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+</script>
+</body>
+</html>

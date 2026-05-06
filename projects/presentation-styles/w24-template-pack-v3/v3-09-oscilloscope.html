@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>V3-09 · Oscilloscope</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Lexend:wght@300;400;500;600&display=swap');
+:root{--bg:#0B1A0B;--phosphor:#33FF66;--dim:rgba(51,255,102,.25);--grid-c:rgba(51,255,102,.06);--scanline:rgba(0,0,0,.15)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--phosphor);-webkit-font-smoothing:none}
+body{font-family:'Share Tech Mono',monospace}
+
+/* CRT effects */
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,var(--scanline),var(--scanline) 1px,transparent 1px,transparent 3px);pointer-events:none;z-index:100}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.4));pointer-events:none;z-index:99}
+
+/* phosphor grid */
+.grid-bg{position:fixed;inset:0;background:
+  repeating-linear-gradient(0deg,transparent,transparent 39px,var(--grid-c) 39px,var(--grid-c) 40px),
+  repeating-linear-gradient(90deg,transparent,transparent 39px,var(--grid-c) 39px,var(--grid-c) 40px);
+  pointer-events:none;z-index:1}
+
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding:72px 80px;z-index:10;transition:opacity .3s}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* Phosphor glow text */
+.glow{text-shadow:0 0 8px rgba(51,255,102,.6),0 0 20px rgba(51,255,102,.3)}
+
+/* COVER */
+.s1 .sys-line{font-size:11px;color:var(--dim);letter-spacing:2px;margin-bottom:4px}
+.s1 h1{font-size:clamp(48px,6vw,80px);letter-spacing:4px;line-height:1;margin-top:16px}
+.s1 .cursor{display:inline-block;width:12px;height:4px;background:var(--phosphor);animation:blink 1s step-end infinite;vertical-align:middle;margin-left:4px}
+@keyframes blink{50%{opacity:0}}
+.s1 .prompt{margin-top:28px;font-size:13px;color:var(--dim)}
+.s1 .prompt span{color:var(--phosphor)}
+
+/* Waveform */
+.waveform{margin-top:40px;height:60px;position:relative}
+.waveform svg{width:100%;height:100%}
+.waveform path{fill:none;stroke:var(--phosphor);stroke-width:1.5;filter:drop-shadow(0 0 4px rgba(51,255,102,.5))}
+
+/* CONTENT — signal readout */
+.s2 .readout-header{font-size:11px;letter-spacing:4px;color:var(--dim);margin-bottom:28px;text-transform:uppercase}
+.s2 .signals{display:flex;flex-direction:column;gap:20px;max-width:800px}
+.s2 .signal{border:1px solid rgba(51,255,102,.1);padding:20px 24px;position:relative}
+.s2 .signal::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:var(--phosphor);opacity:.4}
+.s2 .signal .ch{font-size:10px;letter-spacing:3px;color:var(--dim);margin-bottom:8px}
+.s2 .signal h3{font-size:16px;letter-spacing:1px;margin-bottom:6px}
+.s2 .signal p{font-size:11px;color:var(--dim);line-height:1.6}
+.s2 .signal .amplitude{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:10px;color:var(--phosphor)}
+.s2 .signal .amplitude .bar{flex:1;height:3px;background:rgba(51,255,102,.1);max-width:200px}
+.s2 .signal .amplitude .bar .fill{height:100%;background:var(--phosphor);box-shadow:0 0 6px rgba(51,255,102,.4)}
+
+/* CLOSING */
+.s3{align-items:center;text-align:center}
+.s3 .end-signal{font-size:11px;letter-spacing:6px;color:var(--dim);margin-bottom:20px}
+.s3 h2{font-size:32px;letter-spacing:3px}
+.s3 .flatline{width:200px;height:1px;background:var(--phosphor);margin:28px auto 0;box-shadow:0 0 8px rgba(51,255,102,.5);position:relative}
+.s3 .flatline::before{content:'';position:absolute;left:50%;top:-4px;width:8px;height:8px;background:var(--phosphor);border-radius:50%;transform:translateX(-50%);box-shadow:0 0 12px rgba(51,255,102,.6)}
+.s3 .sys-off{font-size:10px;color:var(--dim);margin-top:28px;letter-spacing:3px}
+
+#counter{position:fixed;bottom:24px;right:40px;font-size:10px;letter-spacing:2px;color:var(--dim);z-index:110}
+
+@keyframes scanIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:translateX(0)}}
+.slide.active .a0{animation:scanIn .3s ease both}
+.slide.active .a1{animation:scanIn .3s ease .08s both}
+.slide.active .a2{animation:scanIn .3s ease .16s both}
+.slide.active .a3{animation:scanIn .3s ease .24s both}
+.slide.active .a4{animation:scanIn .3s ease .32s both}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div id="counter">01 / 03</div>
+
+<div class="slide s1 active">
+  <div class="sys-line a0">SYS://COPILOT-UX/STATUS</div>
+  <div class="sys-line a0">OPERATOR: DAVID.CHEN</div>
+  <div class="sys-line a0">SESSION: W19-2026</div>
+  <h1 class="glow a1">SIGNAL<br>REPORT<span class="cursor"></span></h1>
+  <div class="prompt a2">> <span>status --week 19 --format oscilloscope</span></div>
+  <div class="waveform a3"><svg viewBox="0 0 800 60" preserveAspectRatio="none"><path d="M0,30 Q50,30 80,10 T160,30 Q190,50 240,30 T320,30 Q350,10 400,30 T480,30 Q510,50 560,30 T640,30 Q670,10 720,30 T800,30"/></svg></div>
+</div>
+
+<div class="slide s2">
+  <div class="readout-header a0">Signal Analysis · W19</div>
+  <div class="signals">
+    <div class="signal a1"><div class="ch">CH.1 · 440Hz</div><h3>COMPOSER ESCALATION</h3><p>MAC-11472 ROOT CAUSE → DECOUPLE RENDER PIPELINE → PENGFEI ACK</p><div class="amplitude">100% <div class="bar"><div class="fill" style="width:100%"></div></div></div></div>
+    <div class="signal a2"><div class="ch">CH.2 · 880Hz</div><h3>PHASE 3 DECK</h3><p>9-SLIDE NARRATIVE → KUSTO + TITAN + OCV + SLACK SEMANTIC</p><div class="amplitude">100% <div class="bar"><div class="fill" style="width:100%"></div></div></div></div>
+    <div class="signal a3"><div class="ch">CH.3 · 1320Hz</div><h3>LEBUN V2.3</h3><p>SPEED ↑ STABILITY ↑ BREADTH ↑ → ALL BENCHMARKS PASS</p><div class="amplitude">100% <div class="bar"><div class="fill" style="width:100%"></div></div></div></div>
+  </div>
+</div>
+
+<div class="slide s3">
+  <div class="end-signal a0">END OF TRANSMISSION</div>
+  <h2 class="glow a1">ALL SIGNALS<br>NOMINAL</h2>
+  <div class="flatline a2"></div>
+  <div class="sys-off a3">SYS://SHUTDOWN · W19-2026</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1);});
+</script>
+</body>
+</html>
