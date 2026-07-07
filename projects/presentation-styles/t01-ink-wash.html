@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T01. Ink Wash</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{--bg:#F5F1EB;--ink:#1A1A18;--accent:#8B4513;--muted:#7A756D;--line:rgba(26,26,24,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:'Cormorant Garamond',serif;-webkit-font-smoothing:antialiased}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;flex-direction:column;justify-content:center;padding:80px}
+.slide.active{opacity:1;pointer-events:auto}
+#counter{position:fixed;bottom:32px;right:40px;font:500 11px 'IBM Plex Mono',monospace;letter-spacing:2px;opacity:.35;z-index:99}
+.brush{position:absolute;top:0;right:0;width:45%;height:100%;background:linear-gradient(135deg,transparent 30%,rgba(139,69,19,.06) 60%,rgba(139,69,19,.12) 100%);pointer-events:none}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.slide.active .a0{animation:fade .7s ease both}
+.slide.active .a1{animation:fade .7s ease .15s both}
+.slide.active .a2{animation:fade .7s ease .3s both}
+.slide.active .a3{animation:fade .7s ease .45s both}
+
+/* S1 */
+.s1 .title{font-weight:700;font-size:clamp(72px,9vw,140px);line-height:.88;letter-spacing:-.04em}
+.s1 .sub{font:500 13px 'IBM Plex Mono',monospace;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:24px}
+.s1 .dateline{display:inline-block;margin-top:28px;border-bottom:2px solid var(--accent);padding-bottom:4px;font:600 15px 'IBM Plex Mono',monospace;letter-spacing:2px;color:var(--accent)}
+.s1 .vert{position:absolute;right:12%;top:10%;height:80%;width:1px;background:var(--accent);opacity:.15}
+
+/* S2 */
+.s2{padding:72px 80px}
+.s2 .section{font:500 11px 'IBM Plex Mono',monospace;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:32px}
+.s2 .headline{font-weight:700;font-size:clamp(28px,3.2vw,44px);line-height:1.1;letter-spacing:-.03em;max-width:900px;margin-bottom:36px}
+.s2 .items{display:flex;flex-direction:column;gap:14px}
+.s2 .item{display:grid;grid-template-columns:36px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--line)}
+.s2 .num{font:600 22px 'Cormorant Garamond',serif;color:var(--accent)}
+.s2 .name{font-weight:600;font-size:16px;line-height:1.3;margin-bottom:4px}
+.s2 .desc{font:400 13px 'IBM Plex Mono',monospace;color:var(--muted);line-height:1.6}
+
+/* S3 */
+.s3{align-items:center;text-align:center}
+.s3 .end{font-weight:700;font-size:clamp(48px,6vw,96px);letter-spacing:-.04em}
+.s3 .note{font:400 14px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:20px;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div id="counter">01 / 03</div>
+
+<div class="slide s1 active">
+  <div class="brush"></div>
+  <div class="vert a2"></div>
+  <div class="title a0">Weekly<br>Update</div>
+  <div class="sub a1">David Chen · Design Engineering</div>
+  <div class="dateline a2">W16 — APR 14–18, 2026</div>
+</div>
+
+<div class="slide s2">
+  <div class="section a0">Progress</div>
+  <div class="headline a1">Composer escalation, Phase 3 deck, Lebun v2.3</div>
+  <div class="items">
+    <div class="item a2"><div class="num">01</div><div><div class="name">Composer Drag-Expand → Cross-Team Escalation</div><div class="desc">MAC-11472 root cause found, 3 Slack precedents traced, Pengfei agreed to decouple</div></div></div>
+    <div class="item a3"><div class="num">02</div><div><div class="name">Phase 3 Workflow Deck</div><div class="desc">9-slide narrated deck covering Kusto, Titan, OCV, Slack semantic search</div></div></div>
+    <div class="item a3"><div class="num">03</div><div><div class="name">Lebun v2.3 Shipped</div><div class="desc">Speed, breadth, and stability improvements deployed</div></div></div>
+  </div>
+</div>
+
+<div class="slide s3">
+  <div class="end a0">Thank you.</div>
+  <div class="note a1">Questions → david.chen@microsoft.com</div>
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide'),counter=document.getElementById('counter');
+let cur=0;
+function go(n){slides[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');counter.textContent=String(cur+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0')}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' ')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+document.addEventListener('click',e=>{if(e.clientX>window.innerWidth/2)go(cur+1);else go(cur-1)});
+</script>
+</body>
+</html>

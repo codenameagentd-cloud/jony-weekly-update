@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A2. Editorial Modern - Cover</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #FAFAF9;
+      color: #1C1917;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px;
+    }
+    
+    .cover {
+      width: 100%;
+      max-width: 1200px;
+      aspect-ratio: 16/9;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 64px;
+    }
+    
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    
+    .date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #78716C;
+      font-weight: 500;
+    }
+    
+    .date-badge::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: linear-gradient(135deg, #F97316, #EA580C);
+      border-radius: 50%;
+    }
+    
+    .center-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #78716C;
+      margin-bottom: 32px;
+    }
+    
+    .eyebrow::before {
+      content: '';
+      width: 48px;
+      height: 2px;
+      background: linear-gradient(90deg, #F97316, #EA580C);
+    }
+    
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 96px;
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -4px;
+      margin-bottom: 24px;
+    }
+    
+    h1 span {
+      display: block;
+    }
+    
+    h1 span:nth-child(2) {
+      background: linear-gradient(135deg, #F97316 0%, #DC2626 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      font-size: 20px;
+      color: #78716C;
+      font-weight: 400;
+      max-width: 480px;
+    }
+    
+    .bottom-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .presenter {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .presenter span {
+      color: #A8A29E;
+      font-weight: 400;
+    }
+    
+    .sprint-tag {
+      background: #1C1917;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 24px;
+      border-radius: 100px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cover">
+    <div class="top-bar">
+      <div class="brand">Design Team</div>
+      <div class="date-badge">March 5, 2026</div>
+    </div>
+    
+    <div class="center-content">
+      <div class="eyebrow">Weekly Update</div>
+      <h1>
+        <span>Status</span>
+        <span>Report</span>
+      </h1>
+      <p class="subtitle">Sprint 14 progress, milestones achieved, and roadmap for the week ahead.</p>
+    </div>
+    
+    <div class="bottom-bar">
+      <div class="presenter">David Chen <span>— Principal Designer</span></div>
+      <div class="sprint-tag">Sprint 14</div>
+    </div>
+  </div>
+</body>
+</html>

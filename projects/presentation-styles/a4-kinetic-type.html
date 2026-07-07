@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A4. Kinetic Type</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0D0D0D;
+      color: #FAFAFA;
+      min-height: 100vh;
+      padding: 48px;
+      overflow: hidden;
+    }
+    
+    .slide {
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative;
+      min-height: calc(100vh - 96px);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .bg-text {
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 400px;
+      color: rgba(255,255,255,0.02);
+      top: -100px;
+      left: -50px;
+      z-index: 0;
+      pointer-events: none;
+      line-height: 0.85;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 4px;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 32px;
+    }
+    
+    .nav a {
+      font-size: 12px;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    
+    .nav a:hover, .nav a.active {
+      color: #FAFAFA;
+    }
+    
+    .main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-type {
+      position: relative;
+    }
+    
+    .overline {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #FF3366;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 140px;
+      line-height: 0.85;
+      letter-spacing: -2px;
+    }
+    
+    h1 .word {
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    
+    h1 .word:nth-child(2) {
+      color: #FF3366;
+      margin-left: 80px;
+    }
+    
+    h1:hover .word:nth-child(1) { transform: translateX(20px); }
+    h1:hover .word:nth-child(2) { transform: translateX(-20px); }
+    
+    .desc {
+      margin-top: 32px;
+      font-size: 15px;
+      color: #888;
+      line-height: 1.7;
+      max-width: 400px;
+      font-weight: 300;
+    }
+    
+    .data-panel {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(20px);
+    }
+    
+    .big-stat {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    
+    .big-stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 120px;
+      line-height: 1;
+      animation: pulse 3s ease infinite;
+    }
+    
+    .big-stat-value span {
+      color: #FF3366;
+    }
+    
+    .big-stat-label {
+      font-size: 13px;
+      color: #666;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+    
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .mini-stat {
+      text-align: center;
+    }
+    
+    .mini-stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+    }
+    
+    .mini-stat-label {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    
+    .update-list {
+      list-style: none;
+    }
+    
+    .update-list li {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 14px;
+      font-weight: 300;
+    }
+    
+    .update-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .status-line {
+      width: 24px;
+      height: 2px;
+      flex-shrink: 0;
+    }
+    
+    .status-line.done { background: #FF3366; }
+    .status-line.progress { background: #666; }
+    .status-line.planned { background: #333; }
+    
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 40px;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="bg-text">STATUS</div>
+    
+    <div class="header">
+      <div class="logo">DESIGN TEAM</div>
+      <nav class="nav">
+        <a href="#" class="active">Overview</a>
+        <a href="#">Progress</a>
+        <a href="#">Blockers</a>
+        <a href="#">Next</a>
+      </nav>
+    </div>
+    
+    <div class="main">
+      <div class="hero-type">
+        <div class="overline">Sprint 14 — Week 11</div>
+        <h1>
+          <span class="word">WEEKLY</span>
+          <span class="word">UPDATE</span>
+        </h1>
+        <p class="desc">Progress report on current sprint milestones. Key features shipped, blockers resolved, and trajectory toward our deadline.</p>
+      </div>
+      
+      <div class="data-panel">
+        <div class="big-stat">
+          <div class="big-stat-value">87<span>%</span></div>
+          <div class="big-stat-label">Sprint Completion</div>
+        </div>
+        
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <div class="mini-stat-value">12</div>
+            <div class="mini-stat-label">Shipped</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-value">3</div>
+            <div class="mini-stat-label">Resolved</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-value">5</div>
+            <div class="mini-stat-label">Days Left</div>
+          </div>
+        </div>
+        
+        <ul class="update-list">
+          <li><span class="status-line done"></span> Auth flow completed</li>
+          <li><span class="status-line done"></span> Dashboard shipped</li>
+          <li><span class="status-line progress"></span> API integration</li>
+          <li><span class="status-line planned"></span> Performance sprint</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <span>David Chen — Principal Designer</span>
+      <span>March 2026</span>
+    </div>
+  </div>
+</body>
+</html>

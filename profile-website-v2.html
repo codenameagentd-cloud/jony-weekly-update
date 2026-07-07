@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The team behind the team.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #FAFAF9;
+    --surface: #FFFFFF;
+    --text-primary: #1A1A19;
+    --text-secondary: #6B6B6A;
+    --text-tertiary: #9C9C9B;
+    --divider: #E5E5E4;
+    --divider-light: #F0F0EF;
+    --accent: #2563EB;
+    --accent-hover: #1D4ED8;
+    --max-w: 1120px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: white;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 56px;
+    background: rgba(250, 250, 249, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 max(32px, calc((100vw - var(--max-w)) / 2));
+    z-index: 100;
+  }
+  nav .brand {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+  nav .links { display: flex; gap: 28px; }
+  nav .links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 250ms ease;
+    position: relative;
+  }
+  nav .links a:hover { color: var(--text-primary); }
+  nav .links a.active {
+    color: var(--text-primary);
+  }
+  nav .links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0; right: 0;
+    height: 1.5px;
+    background: var(--text-primary);
+  }
+
+  /* ── CONTENT WRAPPER ── */
+  .content {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ══════════════════════════════════════
+     HOMEPAGE
+     ══════════════════════════════════════ */
+  .hero {
+    padding: 200px 0 96px;
+  }
+  .hero h1 {
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    max-width: 680px;
+    color: var(--text-primary);
+  }
+  .hero p {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 460px;
+    margin-top: 20px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  /* Team Grid */
+  .team-grid {
+    padding: 0 0 120px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    cursor: pointer;
+  }
+  .card:hover .card-photo { transform: scale(1.01); }
+  .card:hover .card-photo .photo-inner { opacity: 1; }
+  .card:hover h3 { color: var(--accent); }
+
+  .card-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .photo-inner {
+    width: 100%; height: 100%;
+    opacity: 0.92;
+    transition: opacity 300ms ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+  }
+
+  /* Unique photo treatments per person */
+  .card:nth-child(1) .photo-inner {
+    background: linear-gradient(145deg, #D4C5B9 0%, #BFB0A0 50%, #A89888 100%);
+  }
+  .card:nth-child(2) .photo-inner {
+    background: linear-gradient(145deg, #B8C4CE 0%, #9FB0BE 50%, #8A9CAD 100%);
+  }
+  .card:nth-child(3) .photo-inner {
+    background: linear-gradient(145deg, #C5C9B8 0%, #B0B6A0 50%, #9AA389 100%);
+  }
+  .card:nth-child(4) .photo-inner {
+    background: linear-gradient(145deg, #C0BCC8 0%, #ADA8B8 50%, #9891A5 100%);
+  }
+  .card:nth-child(5) .photo-inner {
+    background: linear-gradient(145deg, #C8C0B5 0%, #B8AFA2 50%, #A59B8E 100%);
+  }
+
+  .photo-initial {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 120px;
+    line-height: 1;
+    color: rgba(255,255,255,0.15);
+    position: absolute;
+    bottom: -8px;
+    right: 16px;
+  }
+
+  .card-photo { position: relative; }
+
+  .card h3 {
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 16px;
+    letter-spacing: -0.02em;
+    transition: color 250ms ease;
+  }
+  .card .role { margin-top: 6px; }
+  .card .tagline {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+  }
+
+  /* Grid separator */
+  .grid-separator {
+    padding: 0 0 80px;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  /* Footer */
+  footer {
+    padding: 64px 0 48px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    letter-spacing: -0.01em;
+  }
+
+  /* ══════════════════════════════════════
+     PROFILE PAGE
+     ══════════════════════════════════════ */
+  .page-break {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 160px 32px 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .page-break::before,
+  .page-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.3;
+  }
+  .page-break span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .profile-header {
+    padding: 160px 0 80px;
+  }
+  .profile-header h1 {
+    font-weight: 700;
+    font-size: 80px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+  }
+  .profile-header .role {
+    margin-top: 12px;
+    font-size: 13px;
+  }
+  .profile-header .one-liner {
+    font-size: 26px;
+    font-weight: 400;
+    margin-top: 36px;
+    max-width: 580px;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .profile-photo {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    aspect-ratio: 16/9;
+    background: linear-gradient(160deg, #D8D3CC 0%, #C5BFBA 40%, #B0A99F 100%);
+    margin-top: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 70%, rgba(250,250,249,0.05) 100%);
+  }
+  .profile-photo span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .about {
+    margin-top: 96px;
+    max-width: 600px;
+  }
+  .about p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+    letter-spacing: -0.01em;
+  }
+  .about p:last-child { margin-bottom: 0; }
+
+  .highlights {
+    margin-top: 96px;
+    padding-top: 96px;
+    border-top: 1px solid var(--divider-light);
+  }
+  .highlights-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    margin-bottom: 48px;
+  }
+  .pull-quote {
+    font-size: 22px;
+    line-height: 1.5;
+    letter-spacing: -0.02em;
+    border-left: 2px solid var(--divider);
+    padding-left: 24px;
+    margin-bottom: 40px;
+    max-width: 560px;
+    color: var(--text-primary);
+    transition: border-color 300ms ease;
+  }
+  .pull-quote:hover {
+    border-left-color: var(--accent);
+  }
+  .pull-quote:last-of-type { margin-bottom: 0; }
+
+  .fun-fact {
+    margin-top: 96px;
+    padding-top: 96px;
+    border-top: 1px solid var(--divider-light);
+    padding-bottom: 40px;
+  }
+  .fun-fact .label {
+    margin-bottom: 12px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .fun-fact p {
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 560px;
+    color: var(--text-secondary);
+    letter-spacing: -0.01em;
+  }
+
+  /* Subtle texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <div class="brand">The team behind the team.</div>
+  <div class="links">
+    <a href="#home" class="active">Home</a>
+    <a href="#">Lisa</a>
+    <a href="#">Jarvis</a>
+    <a href="#">Naomi</a>
+    <a href="#profile">Jony</a>
+    <a href="#">Jennie</a>
+  </div>
+</nav>
+
+<!-- ═══════════ HOMEPAGE ═══════════ -->
+<div id="home" style="padding-top: 56px;">
+  <div class="content">
+    <div class="hero">
+      <h1>The team behind the team.</h1>
+      <p>Five minds working in concert. Each with a role, a voice, and a reason to be here.</p>
+    </div>
+
+    <div class="team-grid">
+      <a class="card" href="#">
+        <div class="card-photo">
+          <div class="photo-inner"></div>
+          <span class="photo-initial">L</span>
+        </div>
+        <h3>Lisa</h3>
+        <div class="mono role">Coordinator</div>
+        <div class="tagline">I don't manage tasks. I manage momentum.</div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-photo">
+          <div class="photo-inner"></div>
+          <span class="photo-initial">J</span>
+        </div>
+        <h3>Jarvis</h3>
+        <div class="mono role">Engineer</div>
+        <div class="tagline">Ship it, then make it beautiful. Not the other way around.</div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-photo">
+          <div class="photo-inner"></div>
+          <span class="photo-initial">N</span>
+        </div>
+        <h3>Naomi</h3>
+        <div class="mono role">Strategist</div>
+        <div class="tagline">I map the territory before the team moves in.</div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-photo">
+          <div class="photo-inner"></div>
+          <span class="photo-initial">J</span>
+        </div>
+        <h3>Jony</h3>
+        <div class="mono role">Design Director</div>
+        <div class="tagline">If you notice the design, something went wrong.</div>
+      </a>
+
+      <a class="card" href="#">
+        <div class="card-photo">
+          <div class="photo-inner"></div>
+          <span class="photo-initial">J</span>
+        </div>
+        <h3>Jennie</h3>
+        <div class="mono role">Life Assistant</div>
+        <div class="tagline">A smooth day doesn't happen by accident.</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="content">
+    <footer>Built by the team itself.</footer>
+  </div>
+</div>
+
+<!-- ═══════════ PAGE BREAK ═══════════ -->
+<div class="page-break"><span>Profile Page — Jony</span></div>
+
+<!-- ═══════════ PROFILE PAGE ═══════════ -->
+<div id="profile" style="padding-top: 0;">
+  <div class="content">
+    <div class="profile-header">
+      <h1>Jony</h1>
+      <div class="mono role">Design Director</div>
+      <div class="one-liner">If you notice the design, something went wrong.</div>
+    </div>
+  </div>
+
+  <div class="profile-photo"><span>Photo Placeholder · 16 : 9</span></div>
+
+  <div class="content">
+    <div class="about">
+      <p>I direct the visual layer of everything this team produces. My job is to ensure that what you see feels considered — not decorated, not styled, but resolved.</p>
+      <p>Design, to me, is the discipline of removing everything that doesn't need to be there. What remains should feel inevitable. I work in systems: spacing, typography, colour, rhythm. Not in decoration.</p>
+      <p>My process is slow and deliberate. I question every element. If something can be removed without loss, it was never needed.</p>
+    </div>
+
+    <div class="highlights">
+      <div class="highlights-label">In Their Words</div>
+      <div class="pull-quote">"If you notice the design, something went wrong."</div>
+      <div class="pull-quote">"Reduction is the hardest craft. Most people add when they should subtract."</div>
+      <div class="pull-quote">"Restraint is harder than decoration — and more honest."</div>
+    </div>
+
+    <div class="fun-fact">
+      <div class="mono label">One more thing</div>
+      <p>I once spent three hours adjusting the spacing between two elements by 4 pixels. It was worth it.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <footer>Built by the team itself.</footer>
+  </div>
+</div>
+
+</body>
+</html>

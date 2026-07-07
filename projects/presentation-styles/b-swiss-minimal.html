@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B. Swiss Minimal</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #FFFFFF;
+      color: #000000;
+      min-height: 100vh;
+      padding: 48px;
+    }
+    
+    .slide {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+      min-height: calc(100vh - 96px);
+    }
+    
+    .nav {
+      grid-column: 1 / 3;
+      padding-top: 8px;
+    }
+    
+    .nav-item {
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      color: #999;
+    }
+    
+    .nav-item.active {
+      color: #0066FF;
+      font-weight: 500;
+    }
+    
+    .main {
+      grid-column: 3 / 10;
+    }
+    
+    .page-indicator {
+      font-size: 11px;
+      color: #999;
+      margin-bottom: 48px;
+    }
+    
+    h1 {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 64px;
+    }
+    
+    .hero-stat {
+      font-size: 144px;
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -6px;
+      margin-bottom: 16px;
+    }
+    
+    .hero-stat span {
+      color: #0066FF;
+    }
+    
+    .hero-label {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 64px;
+    }
+    
+    .grid-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+    
+    .stat-value {
+      font-size: 48px;
+      font-weight: 300;
+      letter-spacing: -2px;
+    }
+    
+    .stat-label {
+      font-size: 11px;
+      color: #666;
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .divider {
+      height: 1px;
+      background: #E5E5E5;
+      margin: 48px 0;
+    }
+    
+    .updates {
+      font-size: 13px;
+      line-height: 2.2;
+    }
+    
+    .updates li {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .status {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+    
+    .status.done { background: #0066FF; }
+    .status.progress { background: #999; }
+    .status.planned { background: #E5E5E5; }
+    
+    .sidebar {
+      grid-column: 11 / 13;
+      font-size: 11px;
+      color: #999;
+      text-align: right;
+      padding-top: 8px;
+    }
+    
+    .sidebar p {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <nav class="nav">
+      <div class="nav-item active">01 Overview</div>
+      <div class="nav-item">02 Progress</div>
+      <div class="nav-item">03 Blockers</div>
+      <div class="nav-item">04 Next Steps</div>
+    </nav>
+    
+    <main class="main">
+      <div class="page-indicator">01 / 04</div>
+      
+      <h1>Weekly Status Update</h1>
+      
+      <div class="hero-stat">87<span>%</span></div>
+      <div class="hero-label">Sprint Completion Rate</div>
+      
+      <div class="grid-stats">
+        <div>
+          <div class="stat-value">12</div>
+          <div class="stat-label">Features Shipped</div>
+        </div>
+        <div>
+          <div class="stat-value">3</div>
+          <div class="stat-label">Blockers Resolved</div>
+        </div>
+        <div>
+          <div class="stat-value">5</div>
+          <div class="stat-label">Days to Deadline</div>
+        </div>
+      </div>
+      
+      <div class="divider"></div>
+      
+      <ul class="updates">
+        <li><span class="status done"></span>User authentication flow completed</li>
+        <li><span class="status done"></span>Dashboard redesign shipped to production</li>
+        <li><span class="status progress"></span>API integration with partner services</li>
+        <li><span class="status planned"></span>Performance optimization sprint</li>
+      </ul>
+    </main>
+    
+    <aside class="sidebar">
+      <p>David Chen</p>
+      <p>Principal Designer</p>
+      <p>March 2026</p>
+    </aside>
+  </div>
+</body>
+</html>

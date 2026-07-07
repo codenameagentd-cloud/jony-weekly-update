@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Website — Visual Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #FAFAF9;
+    --surface: #FFFFFF;
+    --text-primary: #1A1A19;
+    --text-secondary: #6B6B6A;
+    --divider: #E5E5E4;
+    --accent: #2563EB;
+    --accent-hover: #1D4ED8;
+    --max-w: 1120px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 56px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 max(32px, calc((100vw - var(--max-w)) / 2));
+    z-index: 100;
+  }
+  nav .brand { font-weight: 700; font-size: 14px; }
+  nav .links { display: flex; gap: 32px; }
+  nav .links a {
+    font-size: 14px; color: var(--text-secondary);
+    text-decoration: none; transition: color 200ms;
+  }
+  nav .links a:hover, nav .links a.active {
+    color: var(--text-primary);
+  }
+  nav .links a.active {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+  }
+
+  /* ── CONTENT WRAPPER ── */
+  .content { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--divider);
+  }
+
+  /* ══════════════════════════════════════
+     HOMEPAGE
+     ══════════════════════════════════════ */
+  .page-home { padding-top: 56px; }
+
+  .hero {
+    padding: 160px 0 96px;
+  }
+  .hero h1 {
+    font-weight: 700; font-size: 64px; line-height: 1.08;
+    max-width: 720px;
+  }
+  .hero p {
+    font-size: 20px; color: var(--text-secondary);
+    max-width: 520px; margin-top: 16px; line-height: 1.5;
+  }
+
+  .team-grid {
+    padding: 96px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .card { text-decoration: none; color: inherit; display: block; }
+  .card:hover .card-photo { opacity: 1; }
+  .card-photo {
+    width: 100%; aspect-ratio: 4/5;
+    background: #E8E8E6;
+    border-radius: 8px;
+    opacity: 0.85;
+    transition: opacity 200ms ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-photo span {
+    font-size: 48px; color: var(--text-secondary); opacity: 0.3;
+  }
+  .card h3 { font-weight: 700; font-size: 20px; margin-top: 20px; }
+  .card .role { margin-top: 4px; }
+  .card .tagline {
+    font-size: 16px; color: var(--text-secondary); margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  footer {
+    padding: 80px 0 48px;
+    border-top: 1px solid var(--divider);
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* ══════════════════════════════════════
+     PROFILE PAGE
+     ══════════════════════════════════════ */
+  .page-profile { padding-top: 56px; }
+
+  .profile-header {
+    padding: 160px 0 80px;
+  }
+  .profile-header h1 {
+    font-weight: 700; font-size: 64px; line-height: 1.08;
+  }
+  .profile-header .role { margin-top: 8px; }
+  .profile-header .one-liner {
+    font-size: 28px; margin-top: 32px;
+    max-width: 640px; line-height: 1.4;
+  }
+
+  .profile-photo {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    aspect-ratio: 16/9;
+    background: #E8E8E6;
+    margin-top: 80px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .profile-photo span {
+    font-size: 64px; color: var(--text-secondary); opacity: 0.2;
+  }
+
+  .about {
+    margin-top: 96px;
+    max-width: 640px;
+  }
+  .about p {
+    font-size: 16px; line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .about p:last-child { margin-bottom: 0; }
+
+  .highlights {
+    margin-top: 96px;
+  }
+  .pull-quote {
+    font-size: 24px; line-height: 1.5;
+    border-left: 2px solid var(--divider);
+    padding-left: 24px;
+    margin-bottom: 48px;
+    max-width: 640px;
+  }
+  .pull-quote:last-child { margin-bottom: 0; }
+
+  .fun-fact {
+    margin-top: 96px;
+  }
+  .fun-fact .label { margin-bottom: 8px; }
+  .fun-fact p {
+    font-size: 16px; line-height: 1.6;
+    max-width: 640px;
+  }
+
+  /* ── DIVIDER BETWEEN PAGES ── */
+  .page-divider {
+    max-width: var(--max-w);
+    margin: 120px auto;
+    padding: 0 32px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+    position: relative;
+  }
+  .page-divider::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: var(--accent);
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HOMEPAGE ═══════════════════ -->
+<div class="page-home">
+  <nav>
+    <div class="brand">The team behind the team.</div>
+    <div class="links">
+      <a href="#" class="active">Home</a>
+      <a href="#">Lisa</a>
+      <a href="#">Jarvis</a>
+      <a href="#">Naomi</a>
+      <a href="#">Jony</a>
+      <a href="#">Jennie</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div class="section-label">Homepage</div>
+    <div class="hero">
+      <h1>The team behind the team.</h1>
+      <p>Five minds working in concert. Each with a role, a voice, and a reason to be here.</p>
+    </div>
+
+    <div class="team-grid">
+      <a class="card" href="#">
+        <div class="card-photo"><span>L</span></div>
+        <h3>Lisa</h3>
+        <div class="mono role">Coordinator</div>
+        <div class="tagline">I don't manage tasks. I manage momentum.</div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-photo"><span>J</span></div>
+        <h3>Jarvis</h3>
+        <div class="mono role">Engineer</div>
+        <div class="tagline">Ship it, then make it beautiful.</div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-photo"><span>N</span></div>
+        <h3>Naomi</h3>
+        <div class="mono role">Strategist</div>
+        <div class="tagline">I map the territory before the team moves in.</div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-photo"><span>J</span></div>
+        <h3>Jony</h3>
+        <div class="mono role">Design Director</div>
+        <div class="tagline">If you notice the design, something went wrong.</div>
+      </a>
+      <a class="card" href="#">
+        <div class="card-photo"><span>J</span></div>
+        <h3>Jennie</h3>
+        <div class="mono role">Life Assistant</div>
+        <div class="tagline">A smooth day doesn't happen by accident.</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="content">
+    <footer>Built by the team itself.</footer>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE BREAK ═══════════════ -->
+<div class="page-divider">▼ Profile Page Template (scrolls below)</div>
+
+<!-- ═══════════════════ PROFILE PAGE ═══════════════════ -->
+<div class="page-profile">
+  <div class="content">
+    <div class="section-label">Profile Page — Jony</div>
+    <div class="profile-header">
+      <h1>Jony</h1>
+      <div class="mono role">Design Director</div>
+      <div class="one-liner">If you notice the design, something went wrong.</div>
+    </div>
+  </div>
+
+  <div class="profile-photo"><span>16 : 9</span></div>
+
+  <div class="content">
+    <div class="about">
+      <p>I direct the visual layer of everything this team produces. My job is to ensure that what you see feels considered — not decorated, not styled, but resolved.</p>
+      <p>Design, to me, is the discipline of removing everything that doesn't need to be there. What remains should feel inevitable. I work in systems: spacing, typography, colour, rhythm. Not in decoration.</p>
+      <p>My process is slow and deliberate. I question every element. If something can be removed without loss, it was never needed.</p>
+    </div>
+
+    <div class="highlights">
+      <div class="pull-quote">"If you notice the design, something went wrong."</div>
+      <div class="pull-quote">"Reduction is the hardest craft. Most people add when they should subtract."</div>
+      <div class="pull-quote">"Restraint is harder than decoration — and more honest."</div>
+    </div>
+
+    <div class="fun-fact">
+      <div class="mono label">One more thing</div>
+      <p>I once spent three hours adjusting the spacing between two elements by 4 pixels. It was worth it.</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <footer>Built by the team itself.</footer>
+  </div>
+</div>
+
+</body>
+</html>

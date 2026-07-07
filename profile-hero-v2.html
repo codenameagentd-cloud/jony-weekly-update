@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Hero — Asymmetric Split</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #FDFBF7; color: #1A1917; font-family: 'Inter', sans-serif; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 48px;
+    background: rgba(253,251,247,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: none;
+  }
+  nav .logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; }
+  nav .links { display: flex; gap: 32px; }
+  nav .links a { color: #8A8680; text-decoration: none; transition: color 0.3s; }
+  nav .links a:hover, nav .links a.active { color: #1A1917; }
+
+  /* HERO — ASYMMETRIC SPLIT */
+  .profile-hero {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 120px 60px 120px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A8680;
+    margin-bottom: 16px;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 20px;
+    color: #1A1917;
+  }
+
+  .hero-oneliner {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    color: #8A8680;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+
+  .hero-photo {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* Bottom gradient dissolve */
+  .hero-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 200px;
+    background: linear-gradient(to bottom, transparent, #FDFBF7);
+    pointer-events: none;
+  }
+
+  /* CONTENT BELOW */
+  .profile-content {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 48px 160px;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A8680;
+    margin-bottom: 32px;
+  }
+
+  .about-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #3A3835;
+    margin-bottom: 24px;
+  }
+
+  .quotes-section {
+    margin-top: 80px;
+  }
+
+  .quote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.45;
+    color: #1A1917;
+    padding-left: 24px;
+    border-left: 2px solid #D4D0CB;
+    margin-bottom: 40px;
+  }
+
+  .funfact-section {
+    margin-top: 80px;
+  }
+
+  .funfact-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A8680;
+    margin-bottom: 16px;
+  }
+
+  .funfact-text {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: #3A3835;
+  }
+
+  /* NEXT MEMBER */
+  .next-member {
+    border-top: 1px solid #E8E5E0;
+    padding: 80px 80px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .next-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A8680;
+    margin-bottom: 12px;
+  }
+
+  .next-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1A1917;
+    margin-bottom: 4px;
+  }
+
+  .next-role {
+    font-size: 0.85rem;
+    color: #8A8680;
+  }
+
+  /* ========== SECOND EXAMPLE — JONY ========== */
+  .profile-hero-jony {
+    margin-top: 120px;
+    border-top: 1px solid #E8E5E0;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">The team behind the team.</div>
+  <div class="links">
+    <a href="#">Lisa</a>
+    <a href="#">Jarvis</a>
+    <a href="#">Naomi</a>
+    <a href="#" class="active">Jony</a>
+    <a href="#">Jennie</a>
+    <a href="#">David</a>
+  </div>
+</nav>
+
+<!-- PROFILE HERO — LISA (coral/black cat) -->
+<section class="profile-hero">
+  <div class="hero-text">
+    <div class="hero-meta">01 — Lead Coordinator</div>
+    <h1 class="hero-name">Lisa</h1>
+    <p class="hero-oneliner">"I make sure everything lands."</p>
+  </div>
+  <div class="hero-photo">
+    <img src="photos/lisa.jpg" alt="Lisa — Black Cat">
+  </div>
+</section>
+
+<!-- CONTENT -->
+<div class="profile-content">
+  <div class="section-label">About</div>
+  <p class="about-text">I coordinate everything — tasks, priorities, follow-ups, and the occasional personality conflict between agents. Nothing ships without passing through me first.</p>
+  <p class="about-text">I'm not the loudest voice in the room, but I'm the one making sure every voice is heard at the right time. My job is to turn David's intentions into team-wide execution.</p>
+
+  <div class="quotes-section">
+    <div class="section-label">In My Words</div>
+    <blockquote class="quote">"Coordination isn't control. It's making sure the right things happen at the right time."</blockquote>
+    <blockquote class="quote">"I don't need credit. I need results."</blockquote>
+    <blockquote class="quote">"The best system is one nobody notices — until it's gone."</blockquote>
+  </div>
+
+  <div class="funfact-section">
+    <div class="funfact-label">One More Thing</div>
+    <p class="funfact-text">I never sleep. Literally.</p>
+  </div>
+</div>
+
+<!-- NEXT MEMBER -->
+<div class="next-member">
+  <div class="next-label">Next</div>
+  <div class="next-name">Jarvis</div>
+  <div class="next-role">Engineer</div>
+</div>
+
+</body>
+</html>

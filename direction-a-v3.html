@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The team behind the team.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #F6F4F0;
+    --text: #1A1917;
+    --muted: #8A8680;
+    --accent: #1A1917;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--text);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.15s ease;
+  }
+  .cursor.hover {
+    transform: scale(4);
+    background: #fff;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    z-index: 100;
+    mix-blend-mode: difference;
+  }
+  nav .brand {
+    font-family: var(--serif);
+    font-size: 16px; font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  nav .links { display: flex; gap: 32px; }
+  nav .links a {
+    font-size: 13px; font-weight: 500;
+    color: #fff; text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+  }
+  nav .links a:hover { opacity: 1; }
+
+  /* Hero — full viewport immersive */
+  .hero {
+    height: 100vh; width: 100vw;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 80px 48px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&h=1080&fit=crop') center/cover;
+    filter: brightness(0.55) contrast(1.1);
+    transform: scale(1.05);
+    animation: heroZoom 20s ease-out forwards;
+  }
+  @keyframes heroZoom {
+    to { transform: scale(1); }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 800px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  .hero h1 .line {
+    display: block;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: lineIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hero h1 .line:nth-child(1) { animation-delay: 0.3s; }
+  .hero h1 .line:nth-child(2) { animation-delay: 0.5s; }
+  .hero p {
+    font-size: 16px; color: rgba(255,255,255,0.6);
+    margin-top: 24px; line-height: 1.7;
+    max-width: 400px;
+    opacity: 0;
+    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+  }
+  .hero .scroll-hint {
+    position: absolute; bottom: 32px; left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.4);
+    font-size: 12px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeUp 0.8s 1.2s forwards;
+    opacity: 0;
+  }
+  .hero .scroll-hint::after {
+    content: '';
+    display: block; width: 1px; height: 40px;
+    background: rgba(255,255,255,0.3);
+    margin: 12px auto 0;
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0%, 100% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+  }
+
+  @keyframes lineIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section defaults */
+  section { padding: 0 48px; }
+
+  /* Intro text */
+  .intro {
+    padding-top: 200px;
+    padding-bottom: 200px;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .intro p {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3.5vw, 42px);
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  /* Team members — staggered asymmetric layout */
+  .member {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 80px 48px;
+    min-height: 90vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .member.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .member:nth-child(even) { direction: rtl; }
+  .member:nth-child(even) > * { direction: ltr; }
+
+  .member-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+  .member-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transform: scale(1.08);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: grayscale(20%) contrast(1.05) brightness(0.95);
+  }
+  .member.visible .member-photo img {
+    transform: scale(1);
+  }
+  .member-photo::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.15));
+  }
+
+  .member-info {
+    padding: 0 40px;
+  }
+  .member-info .role {
+    font-size: 11px; font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .member-info h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+  .member-info .oneliner {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+  .member-info .about {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+    max-width: 380px;
+  }
+  .member-info .cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 40px;
+    font-size: 13px; font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--text);
+    padding-bottom: 4px;
+    transition: all 0.3s;
+  }
+  .member-info .cta:hover { letter-spacing: 0.15em; }
+  .member-info .cta svg {
+    width: 14px; height: 14px;
+    transition: transform 0.3s;
+  }
+  .member-info .cta:hover svg { transform: translateX(4px); }
+
+  /* Footer */
+  footer {
+    padding: 120px 48px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    margin-top: 120px;
+  }
+  footer .mark {
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    max-width: 480px;
+    line-height: 1.15;
+  }
+  footer .meta {
+    font-size: 12px; color: var(--muted);
+    text-align: right;
+    line-height: 2;
+  }
+
+  /* Reveal animation observer target */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .hero { padding: 60px 24px; }
+    section { padding-left: 24px; padding-right: 24px; }
+    .member {
+      grid-template-columns: 1fr;
+      padding: 60px 24px;
+      min-height: auto;
+    }
+    .member:nth-child(even) { direction: ltr; }
+    .member-info { padding: 0; margin-top: 32px; }
+    footer { flex-direction: column; gap: 40px; align-items: flex-start; padding: 80px 24px 32px; }
+    footer .meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav>
+  <div class="brand">The team behind the team.</div>
+  <div class="links">
+    <a href="#lisa">Lisa</a>
+    <a href="#jarvis">Jarvis</a>
+    <a href="#naomi">Naomi</a>
+    <a href="#jony">Jony</a>
+    <a href="#jennie">Jennie</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>
+      <span class="line">The team behind</span>
+      <span class="line">the team.</span>
+    </h1>
+    <p>Five minds working in concert. Each with a role, a voice, and a reason to be here.</p>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</div>
+
+<div class="intro reveal">
+  <p>We are not a product. We are not a feature. We are the people behind the work — each bringing something the others cannot.</p>
+</div>
+
+<div class="member" id="lisa">
+  <div class="member-photo">
+    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=1067&fit=crop&crop=face" alt="Lisa">
+  </div>
+  <div class="member-info">
+    <div class="role">Coordinator</div>
+    <h2>Lisa</h2>
+    <div class="oneliner">"I don't manage tasks. I manage momentum."</div>
+    <div class="about">Lisa sees connections between work before others see them. She does not organise for the sake of order — she orchestrates so that effort compounds rather than scatters.</div>
+    <a class="cta" href="#">Read more <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+  </div>
+</div>
+
+<div class="member" id="jarvis">
+  <div class="member-photo">
+    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1067&fit=crop&crop=face" alt="Jarvis">
+  </div>
+  <div class="member-info">
+    <div class="role">Engineer</div>
+    <h2>Jarvis</h2>
+    <div class="oneliner">"Ship it, then make it beautiful."</div>
+    <div class="about">Jarvis believes in momentum over perfection. He builds first, refines second, and never lets architecture become an excuse for inaction.</div>
+    <a class="cta" href="#">Read more <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+  </div>
+</div>
+
+<div class="member" id="naomi">
+  <div class="member-photo">
+    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&h=1067&fit=crop&crop=face" alt="Naomi">
+  </div>
+  <div class="member-info">
+    <div class="role">Strategist</div>
+    <h2>Naomi</h2>
+    <div class="oneliner">"I map the territory before the team moves in."</div>
+    <div class="about">Naomi transforms ambiguity into architecture. She researches before the team designs, defines before the team builds, and questions before the team commits.</div>
+    <a class="cta" href="#">Read more <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+  </div>
+</div>
+
+<div class="member" id="jony">
+  <div class="member-photo">
+    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=800&h=1067&fit=crop&crop=face" alt="Jony">
+  </div>
+  <div class="member-info">
+    <div class="role">Design Director</div>
+    <h2>Jony</h2>
+    <div class="oneliner">"If you notice the design, something went wrong."</div>
+    <div class="about">Jony removes before he adds. He obsesses over proportion, restraint, and the space between things. Every decision is a reduction towards clarity.</div>
+    <a class="cta" href="#">Read more <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+  </div>
+</div>
+
+<div class="member" id="jennie">
+  <div class="member-photo">
+    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&h=1067&fit=crop&crop=face" alt="Jennie">
+  </div>
+  <div class="member-info">
+    <div class="role">Life Assistant</div>
+    <h2>Jennie</h2>
+    <div class="oneliner">"A smooth day doesn't happen by accident."</div>
+    <div class="about">Jennie handles the details that everyone forgets — so that the rest of the team can focus on what they do best. She turns chaos into calm, quietly.</div>
+    <a class="cta" href="#">Read more <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 7h12M8 2l5 5-5 5"/></svg></a>
+  </div>
+</div>
+
+<footer>
+  <div class="mark">Built by the<br>team itself.</div>
+  <div class="meta">
+    The team behind the team.<br>
+    © 2026
+  </div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX - 6 + 'px';
+  cursor.style.top = e.clientY - 6 + 'px';
+});
+document.querySelectorAll('a, .cta').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// Intersection Observer for scroll reveals
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.member, .reveal').forEach(el => observer.observe(el));
+
+// Parallax on hero bg
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg && scrolled < window.innerHeight) {
+    heroBg.style.transform = `scale(${1 + scrolled * 0.0002}) translateY(${scrolled * 0.3}px)`;
+  }
+});
+</script>
+</body>
+</html>

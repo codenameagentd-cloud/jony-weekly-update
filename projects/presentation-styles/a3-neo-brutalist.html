@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A3. Neo Brutalist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: #F5F5F0;
+      color: #0A0A0A;
+      min-height: 100vh;
+      padding: 32px;
+    }
+    
+    .slide {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border: 2px solid #0A0A0A;
+      border-radius: 24px;
+      padding: 48px;
+      position: relative;
+      min-height: calc(100vh - 64px);
+    }
+    
+    .corner-accent {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: #CCFF00;
+      filter: blur(60px);
+      opacity: 0.7;
+    }
+    
+    .corner-accent.top { top: -40px; right: 80px; }
+    .corner-accent.bottom { bottom: -40px; left: 80px; background: #FF6B35; }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 60px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0A0A0A;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 10px 18px;
+      border-radius: 100px;
+    }
+    
+    .badge .dot {
+      width: 6px;
+      height: 6px;
+      background: #CCFF00;
+      border-radius: 50%;
+    }
+    
+    .page-indicator {
+      font-size: 72px;
+      font-weight: 700;
+      color: #E5E5E0;
+      line-height: 1;
+    }
+    
+    .main-content {
+      position: relative;
+      z-index: 1;
+    }
+    
+    .title-block {
+      margin-bottom: 64px;
+    }
+    
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 80px;
+      font-weight: 400;
+      line-height: 0.95;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+    }
+    
+    h1 em {
+      font-style: italic;
+      color: #FF6B35;
+    }
+    
+    .subtitle {
+      font-size: 18px;
+      color: #666;
+      font-weight: 400;
+      max-width: 500px;
+    }
+    
+    .metrics-strip {
+      display: flex;
+      gap: 0;
+      margin-bottom: 48px;
+      border: 2px solid #0A0A0A;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    .metric-block {
+      flex: 1;
+      padding: 32px;
+      border-right: 2px solid #0A0A0A;
+      background: white;
+      transition: background 0.2s;
+    }
+    
+    .metric-block:last-child {
+      border-right: none;
+    }
+    
+    .metric-block:hover {
+      background: #CCFF00;
+    }
+    
+    .metric-block:hover .metric-value {
+      color: #0A0A0A;
+    }
+    
+    .metric-value {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    
+    .metric-label {
+      font-size: 13px;
+      color: #666;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .updates-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    
+    .update-card {
+      background: #FAFAF8;
+      border: 1px solid #E5E5E0;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all 0.2s;
+    }
+    
+    .update-card:hover {
+      border-color: #0A0A0A;
+      transform: translateY(-2px);
+    }
+    
+    .update-card.featured {
+      background: #0A0A0A;
+      color: white;
+      border-color: #0A0A0A;
+    }
+    
+    .update-card.featured .update-meta {
+      color: #999;
+    }
+    
+    .status-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .status-icon.done { background: #CCFF00; }
+    .status-icon.progress { background: #FF6B35; color: white; }
+    .status-icon.planned { background: #E5E5E0; }
+    
+    .update-content {
+      flex: 1;
+    }
+    
+    .update-text {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    
+    .update-meta {
+      font-size: 12px;
+      color: #999;
+    }
+    
+    .footer {
+      margin-top: 48px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #999;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="corner-accent top"></div>
+    <div class="corner-accent bottom"></div>
+    
+    <div class="header">
+      <div class="badge"><span class="dot"></span> Sprint 14</div>
+      <div class="page-indicator">01</div>
+    </div>
+    
+    <div class="main-content">
+      <div class="title-block">
+        <h1>Weekly<br/><em>Status</em></h1>
+        <p class="subtitle">Progress update on current sprint. Key milestones, blockers, and next steps.</p>
+      </div>
+      
+      <div class="metrics-strip">
+        <div class="metric-block">
+          <div class="metric-value">87%</div>
+          <div class="metric-label">Complete</div>
+        </div>
+        <div class="metric-block">
+          <div class="metric-value">12</div>
+          <div class="metric-label">Shipped</div>
+        </div>
+        <div class="metric-block">
+          <div class="metric-value">3</div>
+          <div class="metric-label">Resolved</div>
+        </div>
+        <div class="metric-block">
+          <div class="metric-value">5d</div>
+          <div class="metric-label">Remaining</div>
+        </div>
+      </div>
+      
+      <div class="updates-grid">
+        <div class="update-card featured">
+          <div class="status-icon done">✓</div>
+          <div class="update-content">
+            <div class="update-text">User authentication flow completed</div>
+            <div class="update-meta">Shipped Mar 4 • Auth Team</div>
+          </div>
+        </div>
+        <div class="update-card">
+          <div class="status-icon done">✓</div>
+          <div class="update-content">
+            <div class="update-text">Dashboard redesign in production</div>
+            <div class="update-meta">Shipped Mar 3 • Design</div>
+          </div>
+        </div>
+        <div class="update-card">
+          <div class="status-icon progress">→</div>
+          <div class="update-content">
+            <div class="update-text">API integration with partners</div>
+            <div class="update-meta">70% complete • Backend</div>
+          </div>
+        </div>
+        <div class="update-card">
+          <div class="status-icon planned">○</div>
+          <div class="update-content">
+            <div class="update-text">Performance optimization</div>
+            <div class="update-meta">Planned for next sprint</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <span>David Chen — Principal Designer</span>
+      <span>March 2026</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Weekly Update — David Chen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;font-weight:400;color:rgba(255,255,255,0.9)}
+body{
+  background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  background-attachment:fixed;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(600px circle at 20% 30%,rgba(102,126,234,0.25),transparent 60%),
+    radial-gradient(500px circle at 80% 70%,rgba(240,147,251,0.2),transparent 60%),
+    radial-gradient(400px circle at 60% 20%,rgba(118,75,162,0.2),transparent 60%),
+    radial-gradient(450px circle at 30% 80%,rgba(102,126,234,0.15),transparent 60%);
+  background-size:200% 200%;
+  animation:bgShift 20s ease infinite;
+}
+@keyframes bgShift{
+  0%{background-position:0% 0%}
+  25%{background-position:50% 30%}
+  50%{background-position:100% 100%}
+  75%{background-position:30% 70%}
+  100%{background-position:0% 0%}
+}
+
+/* counter */
+#counter{position:fixed;top:32px;left:40px;font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.4);z-index:100;letter-spacing:1px}
+
+/* slides */
+.slide{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;padding:72px 80px;opacity:0;pointer-events:none;transition:opacity .35s ease;z-index:1}
+.slide.active{opacity:1;pointer-events:auto}
+
+/* float-up animation */
+@keyframes floatUp{from{transform:translateY(24px) scale(0.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.slide.active .a0{animation:floatUp .5s ease-out both}
+.slide.active .a1{animation:floatUp .5s ease-out .08s both}
+.slide.active .a2{animation:floatUp .5s ease-out .16s both}
+.slide.active .a3{animation:floatUp .5s ease-out .24s both}
+.slide.active .a4{animation:floatUp .5s ease-out .32s both}
+.slide.active .a5{animation:floatUp .5s ease-out .40s both}
+
+/* frosted glass treatment */
+.item,.callout,.card,.st,.ph,.slabel,.db{
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:16px;
+}
+
+/* typography */
+.tl{font-size:clamp(48px,7.5vw,96px);line-height:1.05;color:#fff}
+.xbold{font-weight:900;text-shadow:0 0 40px rgba(255,255,255,0.15)}
+.big{font-size:clamp(56px,8vw,112px);font-weight:700;line-height:1;color:#fff;text-shadow:0 0 30px rgba(118,75,162,0.4)}
+.big-sub{font-size:14px;font-weight:400;color:rgba(255,255,255,0.5);margin-top:8px;max-width:340px}
+.sub{font-weight:400;font-size:15px;margin-top:16px;color:rgba(255,255,255,0.6);letter-spacing:1px}
+
+/* highlight */
+.yh{display:inline-block;background:linear-gradient(90deg,#667eea,#764ba2,#f093fb);color:#fff;border-radius:8px;padding:2px 14px}
+
+/* tags */
+.tag{display:inline-block;font-family:'Space Mono',monospace;font-size:10px;padding:4px 12px;letter-spacing:.5px}
+.tb{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:100px}
+.ty{background:linear-gradient(90deg,#764ba2,#f093fb);color:#fff;border:none;border-radius:100px}
+
+/* label */
+.label{font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.7)}
+.slabel{display:inline-block;padding:8px 20px;border-radius:16px}
+
+/* callout */
+.callout{background:rgba(255,255,255,0.1);padding:24px;font-size:13px;line-height:1.8;color:rgba(255,255,255,0.85)}
+.callout ul{padding-left:18px}
+.callout li{margin-bottom:4px}
+
+/* items */
+.item{display:flex;align-items:center;gap:16px;padding:16px 20px}
+.item-num{font-family:'Space Mono',monospace;font-size:13px;color:rgba(255,255,255,0.3);min-width:28px}
+.item-left{flex:1}
+.item-name{font-weight:700;font-size:14px;margin-bottom:3px;color:#fff}
+.item-desc{font-weight:400;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6}
+.item-right{flex-shrink:0}
+
+/* stat row */
+.stat-row{display:flex;gap:12px}
+.st{flex:1;padding:20px;text-align:center}
+.st-n{font-size:28px;font-weight:700;color:#fff}
+.st-l{font-size:11px;font-weight:400;color:rgba(255,255,255,0.5);margin-top:4px;letter-spacing:.5px}
+
+/* phases */
+.phases{display:flex;gap:14px}
+.ph{flex:1;padding:24px;position:relative}
+.ph .ph-l{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:10px}
+.ph h3{font-size:15px;font-weight:700;margin-bottom:10px;color:#fff}
+.ph ul{padding-left:16px;font-size:12px;font-weight:400;color:rgba(255,255,255,0.65);line-height:1.8}
+.ph.now{background:rgba(255,255,255,0.1);border-color:transparent;position:relative;overflow:hidden}
+.ph.now::before{
+  content:'';position:absolute;inset:-1px;border-radius:17px;padding:1px;
+  background:linear-gradient(135deg,#667eea,#764ba2,#f093fb,#667eea);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+
+/* cards */
+.card{padding:24px;position:relative}
+.card-label{font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:12px}
+.card ul{padding-left:16px;font-size:12px;font-weight:400;color:rgba(255,255,255,0.7);line-height:1.9}
+.card.before{opacity:0.55}
+.card.after{background:rgba(255,255,255,0.1);border-left:4px solid;border-image:linear-gradient(180deg,#667eea,#764ba2,#f093fb) 1}
+
+/* detail */
+.detail-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);padding-bottom:8px;margin-bottom:12px;border-bottom:2px solid transparent;border-image:linear-gradient(90deg,#764ba2,transparent) 1}
+.detail-list{padding-left:16px;font-size:12px;font-weight:400;color:rgba(255,255,255,0.7);line-height:1.9}
+.detail-list strong{font-weight:700;color:#fff}
+
+/* footer rule */
+.footer-rule{grid-column:1/-1;height:1px;background:rgba(255,255,255,0.05);margin-top:auto}
+
+/* deco elements */
+.deco{position:absolute;border-radius:50%;pointer-events:none;filter:blur(60px);opacity:0.15}
+.deco1{width:350px;height:350px;background:linear-gradient(135deg,#667eea,#764ba2);bottom:-120px;right:-80px}
+.deco2{width:280px;height:280px;background:linear-gradient(135deg,#f093fb,#667eea);top:-100px;left:-60px}
+
+/* vr hr */
+.vr{position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,0.03)}
+.hr{position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,0.03)}
+
+/* ds lines */
+.ds{position:absolute;bottom:60px;left:80px;right:80px;height:1px;background:linear-gradient(90deg,rgba(102,126,234,0.3),rgba(240,147,251,0.3),transparent)}
+.ds2{position:absolute;bottom:56px;left:80px;right:80px;height:1px;background:linear-gradient(90deg,transparent,rgba(102,126,234,0.15),rgba(240,147,251,0.15))}
+
+/* cm */
+.cm{position:absolute;bottom:40px;right:80px;font-size:11px;color:rgba(255,255,255,0.2)}
+
+/* ---------- S1 ---------- */
+.s1{justify-content:center;align-items:flex-start}
+.s1 .tb0{margin-left:6vw}
+.s1 .db{position:absolute;bottom:72px;right:80px;font-family:'Space Mono',monospace;font-size:14px;color:rgba(255,255,255,0.4);letter-spacing:2px;padding:10px 20px}
+
+/* ---------- S2 ---------- */
+.s2{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;gap:24px;align-items:start}
+.s2 .header{grid-column:1/-1}
+.s2 .left{padding-top:24px}
+.s2 .right{display:flex;flex-direction:column;gap:20px}
+
+/* ---------- S3 ---------- */
+.s3{display:flex;flex-direction:column;gap:12px}
+.s3 .top{margin-bottom:8px}
+.s3 .list{display:flex;flex-direction:column;gap:12px;flex:1;overflow-y:auto}
+
+/* ---------- S4 ---------- */
+.s4{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:20px 32px}
+.s4 .header{grid-column:1/-1;display:flex;align-items:center;gap:24px}
+.s4 .header .big{font-size:clamp(40px,5vw,64px)}
+.s4 .phases{grid-column:1/-1}
+.s4 .detail-left,.s4 .detail-right{padding:0 4px}
+
+/* ---------- S5 ---------- */
+.s5{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr auto;gap:24px;align-items:start}
+.s5 .header{grid-column:1/-1}
+.s5 .left{padding-top:16px}
+.s5 .right{display:flex;flex-direction:column;gap:16px}
+
+/* ---------- S6 ---------- */
+.s6{display:flex;flex-direction:column;gap:12px}
+.s6 .mind{font-size:clamp(48px,7vw,88px);font-weight:900;line-height:1.05;margin-bottom:8px;background:linear-gradient(90deg,#667eea,#764ba2,#f093fb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.s6 .list{display:flex;flex-direction:column;gap:12px}
+
+/* responsive */
+@media(max-width:768px){
+  .slide{padding:48px 28px}
+  #counter{top:20px;left:24px}
+  .s2,.s5{grid-template-columns:1fr}
+  .s4{grid-template-columns:1fr}
+  .phases{flex-direction:column}
+  .tl{font-size:clamp(36px,10vw,56px)}
+}
+</style>
+</head>
+<body>
+<div id="counter">01/06</div>
+<div class="slide s1 active" data-i="0">
+  <div class="vr"></div><div class="hr"></div>
+  <div class="tb0 a0"><div class="tl xbold">WEEKLY</div><div class="tl xbold"><span class="yh">UPDATE</span></div><p class="sub">David Chen</p></div>
+  <div class="db a1">03.28 — 04.03</div>
+  <div class="cm"></div>
+</div>
+<div class="slide s2" data-i="1">
+  <div class="header"><div class="slabel a0"><span class="label">Copilot Mac Chromium</span></div></div>
+  <div class="left a1"><div class="big"><span class="yh">179</span></div><div class="big-sub">issues closed this week · 158 Chromium-labeled</div></div>
+  <div class="right">
+    <div class="callout a2"><ul><li>Dev Build 正式發布 workstream-wide internal dogfood on staging</li><li>被列入官方公告核心貢獻者（Designer / Tester / PM 代表）on Slack</li></ul></div>
+    <div class="stat-row a3"><div class="st"><div class="st-n">171</div><div class="st-l">In Progress</div></div><div class="st"><div class="st-n">58</div><div class="st-l">PR / Merged</div></div><div class="st"><div class="st-n">250+</div><div class="st-l">Backlog</div></div></div>
+  </div>
+  <div class="footer-rule"></div><div class="deco deco1"></div>
+</div>
+<div class="slide s3" data-i="2">
+  <div class="top"><div class="slabel a0"><span class="label">Design Discussion</span></div></div>
+  <div class="list">
+    <div class="item a1"><div class="item-num">01</div><div class="item-left"><div class="item-name">Navigation & Panel Layout</div><div class="item-desc">釐清 sidebar / IAB / browser panel 三者共存規則，提議統一 Pages 互斥邏輯，待 May 出新 spec</div></div><div class="item-right"><span class="tag tb">[SPEC]</span></div></div>
+    <div class="item a2"><div class="item-num">02</div><div class="item-left"><div class="item-name">Win→Mac Leverage 品質落差</div><div class="item-desc">從 Windows leverage 的還原度比 CMC 更差，建議優先對齊 CMC</div></div><div class="item-right"><span class="tag tb">[REVIEW]</span></div></div>
+    <div class="item a3"><div class="item-num">03</div><div class="item-left"><div class="item-name">Browser 空條問題</div><div class="item-desc">MAC-11473 — 所有 browser window 頂部空白條，4/3 修復驗證通過</div></div><div class="item-right"><span class="tag ty">[FIXED]</span></div></div>
+    <div class="item a4"><div class="item-num">04</div><div class="item-left"><div class="item-name">Sidebar Profile 滾動</div><div class="item-desc">MAC-11601 — profile section 應固定不隨列表滾動，已歸類 Design-Fit</div></div><div class="item-right"><span class="tag tb">[FILED]</span></div></div>
+    <div class="item a5"><div class="item-num">05</div><div class="item-left"><div class="item-name">Browser 出現頻率</div><div class="item-desc">建議降低 browser panel 出現頻率，配合 Sergey 整體 vision</div></div><div class="item-right"><span class="tag tb">[REVIEW]</span></div></div>
+  </div>
+  <div class="deco deco1"></div>
+</div>
+<div class="slide s4" data-i="3">
+  <div class="header"><div class="slabel a0"><span class="label">AI Transformation</span></div><div class="big a1">Phase <span class="yh">3</span></div></div>
+  <div class="phases a2">
+    <div class="ph"><div class="ph-l">Phase 1</div><h3>Get everyone started</h3><ul><li>AI curiosity</li><li>Experimentation</li><li>Learning by doing</li></ul></div>
+    <div class="ph"><div class="ph-l">Phase 2</div><h3>Change how we design</h3><ul><li>Static → dynamic</li><li>Designers → builders</li><li>AI-augmented craft</li></ul></div>
+    <div class="ph now"><div class="ph-l">Phase 3 · Now</div><h3>Change how we work</h3><ul><li>AI as team memory</li><li>Knowledge automation</li><li>Intelligent workflows</li></ul></div>
+  </div>
+  <div class="detail-left a3"><div class="detail-title">本週推進</div><ul class="detail-list"><li>組織 4/1、4/3 兩場 hands-on session</li><li>帶領團隊完成 <strong>Claude Code + connector</strong> 配置</li><li>接入 <strong>Slack、M365、Linear</strong> 三大數據源</li></ul></div>
+  <div class="detail-right a3"><div class="detail-title">Why It Matters</div><ul class="detail-list"><li><strong>Connector = AI agent team memory</strong></li><li>即時排除 MCP、路徑、proxy 等環境故障</li><li>目標：全員覆蓋，可複製 onboarding 流程</li></ul></div>
+  <div class="deco deco1"></div>
+</div>
+<div class="slide s5" data-i="4">
+  <div class="header"><div class="slabel a0"><span class="label">CMC Bug Reporting Skill · v1.2.0</span></div></div>
+  <div class="left a1"><div class="big"><span class="yh">2×</span></div><div class="big-sub">faster bug filing — from ~5 min to ~2.5 min per issue</div></div>
+  <div class="right">
+    <div class="card before a2"><div class="card-label">Before · ~5 min</div><ul><li>Linear 手動選 Team → Project → Label</li><li>重複填模板欄位</li><li>中文自己翻譯成英文</li></ul></div>
+    <div class="card after a3"><div class="card-label">After · ~2.5 min</div><ul><li>回答問題即可建立 issue</li><li>中文直接輸入，自動翻譯</li><li>截圖自動判斷類型</li><li>版本號記憶，自動帶入</li></ul></div>
+  </div>
+  <div class="footer-rule"></div><div class="deco deco1"></div>
+</div>
+<div class="slide s6" data-i="5">
+  <div class="mind a0">NEXT<br>WEEK</div>
+  <div class="list">
+    <div class="item a1"><div><div class="item-name">Chromium Dogfood</div><div class="item-desc">持續 design quality review，配合 critical PR merge</div></div><div class="item-right"><span class="tag tb">[ONGOING]</span></div></div>
+    <div class="item a2"><div><div class="item-name">Split-window spec</div><div class="item-desc">Follow up May 的新互斥邏輯設計</div></div><div class="item-right"><span class="tag ty">[NEW]</span></div></div>
+    <div class="item a3"><div><div class="item-name">MAC-11487</div><div class="item-desc">跟進 chat 雙擊頂部視窗切換問題</div></div><div class="item-right"><span class="tag tb">[BUG]</span></div></div>
+    <div class="item a4"><div><div class="item-name">Phase 3 推進</div><div class="item-desc">1:1 輔導，目標全員 connector 覆蓋</div></div><div class="item-right"><span class="tag tb">[ONGOING]</span></div></div>
+    <div class="item a5"><div><div class="item-name">CMC Bug Skill</div><div class="item-desc">根據團隊 feedback 迭代</div></div><div class="item-right"><span class="tag ty">[ITERATE]</span></div></div>
+  </div>
+  <div class="ds"></div><div class="ds2"></div><div class="deco deco1"></div><div class="deco deco2"></div>
+</div>
+<script>
+(function(){
+  var c=0,s=document.querySelectorAll('.slide'),t=s.length,ct=document.getElementById('counter'),lk=false;
+  function p(n){return n<10?'0'+n:''+n}
+  function go(i){
+    if(i<0||i>=t||i===c||lk)return;lk=true;
+    var o=s[c];o.classList.remove('active');
+    o.querySelectorAll('.a0,.a1,.a2,.a3,.a4,.a5,.item,.tag').forEach(function(e){e.style.animation='none';void e.offsetHeight;e.style.animation=''});
+    c=i;s[c].classList.add('active');ct.textContent=p(c+1)+'/'+p(t);
+    setTimeout(function(){lk=false},400)
+  }
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(c+1)}
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(c-1)}
+  });
+  var tx=0;
+  document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX});
+  document.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(c+(d<0?1:-1))});
+  document.addEventListener('click',function(e){
+    if(e.target.closest('.tag,a,button'))return;
+    if(e.clientX>innerWidth*.65)go(c+1);else if(e.clientX<innerWidth*.35)go(c-1)
+  });
+})();
+</script>
+</body>
+</html>

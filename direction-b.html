@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direction B — Dark Cinematic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #111110;
+    color: #E8E8E6;
+    -webkit-font-smoothing: antialiased;
+  }
+  nav {
+    height: 56px;
+    background: rgba(17,17,16,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 80px;
+  }
+  nav .brand { font-weight: 700; font-size: 13px; letter-spacing: -0.01em; color: #E8E8E6; }
+  nav .links { display: flex; gap: 28px; }
+  nav .links a { font-size: 13px; font-weight: 500; color: #666; text-decoration: none; }
+  nav .links a.active { color: #E8E8E6; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+
+  .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: #6B8AFF; margin-bottom: 80px; padding-top: 32px;
+  }
+
+  .hero { padding: 160px 0 80px; }
+  .hero h1 { font-weight: 700; font-size: 72px; line-height: 1.02; letter-spacing: -0.035em; max-width: 680px; color: #FFFFFF; }
+  .hero p { font-size: 18px; color: #888; max-width: 440px; margin-top: 20px; line-height: 1.6; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; padding-bottom: 80px; }
+  .card { text-decoration: none; color: inherit; }
+  .card-photo {
+    width: 100%; aspect-ratio: 3/4; border-radius: 6px; overflow: hidden; position: relative;
+  }
+  .card:nth-child(1) .card-photo { background: linear-gradient(145deg, #3D3428, #2A2219); }
+  .card:nth-child(2) .card-photo { background: linear-gradient(145deg, #283038, #1C2328); }
+  .card:nth-child(3) .card-photo { background: linear-gradient(145deg, #2E3328, #21261C); }
+  .initial {
+    position: absolute; bottom: -8px; right: 16px;
+    font-weight: 700; font-size: 120px; color: rgba(255,255,255,0.05);
+  }
+  .card h3 { font-weight: 700; font-size: 18px; margin-top: 16px; letter-spacing: -0.02em; color: #E8E8E6; }
+  .card .role { font-family: 'JetBrains Mono', monospace; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-top: 6px; }
+  .card .tag { font-size: 15px; color: #888; margin-top: 8px; line-height: 1.5; }
+
+  footer { padding: 48px 0; text-align: center; font-size: 13px; color: #444; border-top: 1px solid rgba(255,255,255,0.06); }
+</style>
+</head>
+<body>
+<nav>
+  <div class="brand">The team behind the team.</div>
+  <div class="links">
+    <a class="active" href="#">Home</a>
+    <a href="#">Lisa</a>
+    <a href="#">Jarvis</a>
+    <a href="#">Naomi</a>
+    <a href="#">Jony</a>
+    <a href="#">Jennie</a>
+  </div>
+</nav>
+<div class="wrap">
+  <div class="label">Direction B — Dark Cinematic</div>
+  <div class="hero">
+    <h1>The team behind the team.</h1>
+    <p>Five minds working in concert. Each with a role, a voice, and a reason to be here.</p>
+  </div>
+  <div class="grid">
+    <a class="card" href="#">
+      <div class="card-photo"><span class="initial">L</span></div>
+      <h3>Lisa</h3>
+      <div class="role">Coordinator</div>
+      <div class="tag">I don't manage tasks. I manage momentum.</div>
+    </a>
+    <a class="card" href="#">
+      <div class="card-photo"><span class="initial">J</span></div>
+      <h3>Jarvis</h3>
+      <div class="role">Engineer</div>
+      <div class="tag">Ship it, then make it beautiful.</div>
+    </a>
+    <a class="card" href="#">
+      <div class="card-photo"><span class="initial">N</span></div>
+      <h3>Naomi</h3>
+      <div class="role">Strategist</div>
+      <div class="tag">I map the territory before the team moves in.</div>
+    </a>
+  </div>
+</div>
+<div class="wrap"><footer>Built by the team itself.</footer></div>
+</body>
+</html>

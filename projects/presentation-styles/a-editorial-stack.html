@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A. Editorial Stack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: #F8F6F2;
+      color: #2C2416;
+      min-height: 100vh;
+      padding: 60px;
+    }
+    
+    .slide {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .page-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 180px;
+      font-weight: 700;
+      color: rgba(44, 36, 22, 0.06);
+      position: absolute;
+      right: -20px;
+      top: -40px;
+      line-height: 1;
+      z-index: 0;
+    }
+    
+    .header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 80px;
+    }
+    
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C4654A;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 600;
+      line-height: 1.05;
+      max-width: 600px;
+    }
+    
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: #2C2416;
+      margin: 60px 0;
+    }
+    
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .metric {
+      margin-bottom: 40px;
+    }
+    
+    .metric-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      color: #C4654A;
+      line-height: 1;
+    }
+    
+    .metric-label {
+      font-size: 14px;
+      color: #6B5D4D;
+      margin-top: 8px;
+      font-weight: 300;
+    }
+    
+    .update-list {
+      list-style: none;
+    }
+    
+    .update-list li {
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(44, 36, 22, 0.1);
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+    
+    .update-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .tag {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: #C4654A;
+      color: #F8F6F2;
+      padding: 4px 10px;
+      margin-right: 12px;
+      font-weight: 600;
+    }
+    
+    .footer {
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(44, 36, 22, 0.15);
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #6B5D4D;
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="page-number">01</div>
+    
+    <div class="header">
+      <div class="eyebrow">Weekly Status Update</div>
+      <h1>Project Progress Overview</h1>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="content">
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-value">87%</div>
+          <div class="metric-label">Sprint Completion Rate</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">12</div>
+          <div class="metric-label">Features Shipped This Week</div>
+        </div>
+        <div class="metric">
+          <div class="metric-value">3</div>
+          <div class="metric-label">Blockers Resolved</div>
+        </div>
+      </div>
+      
+      <div class="updates">
+        <ul class="update-list">
+          <li><span class="tag">Done</span> User authentication flow completed</li>
+          <li><span class="tag">Done</span> Dashboard redesign shipped to production</li>
+          <li><span class="tag">In Progress</span> API integration with partner services</li>
+          <li><span class="tag">Planned</span> Performance optimization sprint</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <span>David Chen — Principal Designer</span>
+      <span>March 2026</span>
+    </div>
+  </div>
+</body>
+</html>
